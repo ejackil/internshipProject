@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}{% endblock %} - Ferret & Goose</title>
+    {% endblock %}
+  </head>
+  <body>
+    <nav>
+        <div class="nav-element">
+            <h1>Ferret & Goose</h1>
+        </div>
+        <div class="nav-element"><a href="#">Menu</a></div>
+        <div class="nav-element"><a href="#">Make a booking</a></div>
+        <div class="nav-element"><a href="#">About</a></div>
+        <div class="nav-element"><a href="#">Contact Us</a></div>
+    </nav>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+
+    </div>
+  </body>
