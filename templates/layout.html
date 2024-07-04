@@ -2,7 +2,7 @@
 <html>
   <head>
     {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="static\css\layout.css">
     <title>{% block title %}{% endblock %} - Ferret & Goose</title>
     {% endblock %}
   </head>
@@ -15,9 +15,16 @@
         <div class="nav-element"><a href="#">Make a booking</a></div>
         <div class="nav-element"><a href="#">About</a></div>
         <div class="nav-element"><a href="#">Contact Us</a></div>
+        <div class="nav-element"><a href="#">Reviews</a></div>
     </nav>
     <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
-
+        <div id="social-media">Follow us on all social media @ferretandgoose
+          <br>
+            <img class="social-media-icon" id="X" src="static\images\x-icon.png">
+            <img class="social-media-icon" id="Instagram" src="static\images\instagram-icon.png">
+            <img class="social-media-icon" id="Facebook" src="static\images\facebook-icon.png">
+        </div>
     </div>
   </body>
+</html>
