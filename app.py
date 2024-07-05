@@ -57,6 +57,26 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/about")
+def about():
+    pass
+
+
+@app.route("/contact")
+def contact():
+    pass
+
+
+@app.route("/menu")
+def menu():
+    pass
+
+
+@app.route("/reviews")
+def reviews():
+    pass
+
+
 @app.route("/api/bookings/<table_id>")
 def get_bookings(table_id):
     date = request.args.get("date")
