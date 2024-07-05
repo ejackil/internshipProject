@@ -6,7 +6,7 @@ body {
 }
 
 nav {
-    background-color: FFFFFF;
+    background-color: #FFFFFF;
     position: fixed;
     height: 90px;
     width: 100%;
@@ -19,6 +19,7 @@ nav {
     flex-direction: row;
     align-content: center;
     justify-content: left;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #navbar-spacer {
@@ -89,6 +90,7 @@ nav {
     box-sizing: border-box;
     overflow: hidden;
     height: 135px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #social-media {
