@@ -69,7 +69,7 @@ def contact():
 
 @app.route("/menu")
 def menu():
-    pass
+    return render_template("menu.html")
 
 
 @app.route("/reviews")
