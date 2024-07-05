@@ -37,3 +37,8 @@ class Reservation(db.Model):
 
 with app.app_context():
     db.create_all()
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
