@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Bookings{% endblock %}
+{% block content %}
+<form id="create_form" action="/" method="post">
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name" placeholder="Enter first name.."><br>
+
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" placeholder="Enter last name.."><br>
+
+    <label for="time">Time:</label>
+    <input type="text" id="time" name="time" placeholder="Enter your desired time.."><br>
+
+    <label for="date">Date:</label>
+    <input type="text" id="date" name="date" placeholder="Enter your desired date.."><br>
+
+    <label for="phone.no">Phone Number:</label>
+    <input type="text" id="phone.no" name="phone.no" placeholder="Enter your phone number.."><br>
+
+    <button onclick="table">Table</button>
+
+    <input type="submit" value="Submit Booking"><br>
+
+    <img src="birdseyeview.jpg" alt="Tables" width = "800" height="400">
+
+</form>
+{% endblock %}
