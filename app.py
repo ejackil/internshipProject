@@ -1,3 +1,4 @@
+from sqlalchemy import select, func, text
 from flask import Flask, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 
@@ -29,8 +30,8 @@ class User(db.Model):
 class Reservation(db.Model):
     __tablename__ = "reservations"
     reservation_id = db.Column(db.Integer, primary_key=True)
-    start_time = db.Column(db.TIMESTAMP)
-    end_time = db.Column(db.TIMESTAMP)
+    start_time = db.Column(db.DateTime)
+    end_time = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     table_id = db.Column(db.Integer, db.ForeignKey("tables.table_id"), nullable=False)
 
@@ -42,3 +43,18 @@ with app.app_context():
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/api/bookings/<table_id>")
+def get_bookings(table_id):
+    date = request.args.get("date")
+
+    statement = (select(Reservation.start_time, Reservation.end_time)
+                 .where(Reservation.table_id == table_id)
+                 .where(func.datediff(Reservation.start_time, date) == 0)
+                 )
+
+    reservations = [{"start_time": row[0], "end_time": row[1]}
+                    for row in db.session.execute(statement)]
+
+    return list(reservations)
