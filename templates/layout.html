@@ -9,7 +9,7 @@
   <body>
     <nav>
         <div class="nav-element">
-            <h1>Ferret & Goose</h1>
+            <h1 id="title">Ferret & Goose</h1>
         </div>
         <div class="nav-element"><a href="#">Menu</a></div>
         <div class="nav-element"><a href="#">Make a booking</a></div>
@@ -17,13 +17,26 @@
         <div class="nav-element"><a href="#">Contact Us</a></div>
         <div class="nav-element"><a href="#">Reviews</a></div>
     </nav>
+    <div id="navbar-spacer"></div>
     <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer-spacer"></div>
     <div id="footer">
         <div id="social-media">Follow us on all social media @ferretandgoose
           <br>
-            <img class="social-media-icon" id="X" src="static\images\x-icon.png">
-            <img class="social-media-icon" id="Instagram" src="static\images\instagram-icon.png">
-            <img class="social-media-icon" id="Facebook" src="static\images\facebook-icon.png">
+            <a href="https://x.com/"><img class="social-media-icon" id="X" src="static\images\x-icon.png"></a> 
+            <a href="https://www.instagram.com/"><img class="social-media-icon" id="Instagram" src="static\images\instagram-icon.png"></a> 
+            <a href="https://www.facebook.com/"><img class="social-media-icon" id="Facebook" src="static\images\facebook-icon.png"></a> 
+        </div>
+        <div id="mailing-list">
+          Join our mailing list for coupons
+          <br>
+          <form id="email-input" type="email">
+            <input type="email" id="email" name="mailing-list-email" placeholder="Enter email address..">
+<!-- TODO: Make mailing list database and implement form functionality -->
+          </form>
+        </div>
+        <div id="copyright">
+            <p>&copy; 2024 Ferret and Goose Ltd.</p>
         </div>
     </div>
   </body>
