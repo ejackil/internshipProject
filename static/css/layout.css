@@ -87,8 +87,7 @@ nav {
     justify-content: space-between;
     padding: 15px;
     box-sizing: border-box;
-    overflow: hidden;
-    height: 135px;
+    min-height: 135px;
 }
 
 #social-media {
