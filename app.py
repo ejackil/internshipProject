@@ -58,3 +58,8 @@ def get_bookings(table_id):
                     for row in db.session.execute(statement)]
 
     return list(reservations)
+
+
+@app.route("/booking")
+def booking():
+    return render_template("booking.html")

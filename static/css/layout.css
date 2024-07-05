@@ -47,6 +47,7 @@ nav {
 
 .nav-element:has(a):hover {
     background-color:  #3e6347;
+    color: #ffffff
 }
 
 .nav-element > a {
