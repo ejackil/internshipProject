@@ -1,0 +1,35 @@
+body {
+    font-family: 'Merriweather', merriweather;
+    margin: 0;
+    padding: 0;
+    background-color: #152c24; /* Dark forest green background */
+    color: #ffffff; /* White text color for contrast */
+}
+
+.container {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #1e4439; /* Slightly lighter green container background */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Darker box shadow for depth */
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff; /* White text color for headings */
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.menu-item {
+    border-bottom: 1px solid #305a4c; /* Darker green border bottom */
+    padding: 15px 0;
+}
+
+.menu-item:last-child {
+    border-bottom: none
+}
