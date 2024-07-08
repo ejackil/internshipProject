@@ -26,11 +26,17 @@ class User(db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
     phone_number = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(64), nullable=False)
+    password = db.Column(db.String(20), nullable=False)
 
-    def __init__(self, first_name, last_name, phone_number):
+
+
+    def __init__(self, first_name, last_name, phone_number, email, password):
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
+        self.email = email
+        self.password = password
 
 class Email(db.Model):
     __tablename__ = "mailing_list"
@@ -73,7 +79,6 @@ def about():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
-
 
 @app.route("/menu")
 def menu():
@@ -146,6 +151,20 @@ def booking():
 
     return render_template("booking.html")
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    statement = (select(User.email, User.password)
+                 .where(User.email == email)
+                 .where(User.password == password)
+                 )
+    users = db.session.execute(statement)
+
+    if len(list(users)) == 0:
+        return render_template("login.html")
+
+    return redirect(request.origin)
+
     return render_template("login.html")
