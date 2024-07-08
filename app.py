@@ -1,5 +1,5 @@
 from sqlalchemy import select, func
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 
@@ -32,6 +32,14 @@ class User(db.Model):
         self.last_name = last_name
         self.phone_number = phone_number
 
+class Email(db.Model):
+    __tablename__ = "mailing_list"
+    email_id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(50), nullable=False)
+   
+    def __init__(self, email):
+        self.email = email
+
 
 class Reservation(db.Model):
     __tablename__ = "reservations"
@@ -59,12 +67,12 @@ def index():
 
 @app.route("/about")
 def about():
-    pass
+    return render_template("about.html")
 
 
 @app.route("/contact")
 def contact():
-    pass
+    return render_template("contact.html")
 
 
 @app.route("/menu")
@@ -74,7 +82,24 @@ def menu():
 
 @app.route("/reviews")
 def reviews():
-    pass
+    return render_template("reviews.html")
+
+@app.route("/mailinglist", methods=["POST"])
+def add_email():
+    email = request.form.get("email")
+    
+    statement = (select(Email)
+                 .where(Email.email == email)
+                 )
+    
+    emails = db.session.execute(statement)
+
+    if len(list(emails)) == 0:
+        email = Email(email)
+        db.session.add(email)
+        db.session.commit()
+    
+    return redirect(request.origin)
 
 
 @app.route("/api/bookings/<table_id>")
