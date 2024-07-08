@@ -5,6 +5,12 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#title {
+    text-transform: capitalize;
+    letter-spacing: normal;
+    font-size: 20px;
+}
+
 nav {
     background-color: #FFFFFF;
     color: #000000;
@@ -13,7 +19,6 @@ nav {
     width: 100%;
     top: 0px;
     left: 0px;
-    border-bottom: 2px solid #ede8f5;
     z-index: 1000000;
 
     display: flex;
