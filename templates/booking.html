@@ -5,7 +5,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/booking.css') }}">
 {% endblock %}
 {% block content %}
+<img id="table" src="static/images/tablesbooking.jpg">
+
 <form id="create_form" action="{{ url_for('booking') }}" method="post">
+    <h1 id ='title45'>Make a Booking</h1>
+
     <label for="first_name">First Name:</label>
     <input type="text" id="first_name" name="first_name" placeholder="Enter first name.."><br>
 
@@ -46,32 +50,10 @@
     <label for="phone_number">Phone Number:</label>
     <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.."><br>
 
-    <button type="button" onclick="table()">Book a Table</button><br>
-
     <input type="submit" onclick="submit" value="Submit Booking"><br>
 
     <div id="image-container"></div>
+
 </form>
-
-<script>
-        function submit() {
-            alert("Table booked!");
-        }
-
-        function table() {
-            // Get the image container
-            var container = document.getElementById('image-container');
-
-            // Create the image element
-            var img = document.createElement('img');
-            img.src = 'static/images/birdseyeview.jpg'; // Replace with the path to your image
-            img.alt = 'Birdseye View';
-
-            // Clear any existing image and append the new image
-            container.innerHTML = '';
-            container.appendChild(img);
-        }
-
-    </script>
 {% endblock %}
 
