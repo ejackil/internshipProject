@@ -5,7 +5,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/booking.css') }}">
 {% endblock %}
 {% block content %}
-<form id="create_form" action="/" method="post">
+<img id="table" src="static/images/tablesbooking.jpg">
+
+<form id="create_form" action="{{ url_for('booking') }}" method="post">
+    <h1 id ='title45'>Make a Booking</h1>
+
     <label for="first_name">First Name:</label>
     <input type="text" id="first_name" name="first_name" placeholder="Enter first name.."><br>
 
@@ -13,62 +17,43 @@
     <input type="text" id="last_name" name="last_name" placeholder="Enter last name.."><br>
 
     <label for="time">Time:</label>
-    <select name ="time" id = "time">
-        <option value ="12">12:00</option>
-        <option value ="12.5">12:30</option>
-        <option value ="13">13:00</option>
-        <option value ="13.5">13:30</option>
-        <option value ="14">14:00</option>
-        <option value ="14.5">14:30</option>
-        <option value ="15">15:00</option>
-        <option value ="15.5">15:30</option>
-        <option value ="16">16:00</option>
-        <option value ="16.5">16:30</option>
-        <option value ="17">17:00</option>
-        <option value ="17.5">17:30</option>
-        <option value ="18">18:00</option>
-        <option value ="18.5">18:30</option>
-        <option value ="19">19:00</option>
-        <option value ="19.5">19:30</option>
-        <option value ="20">20:00</option>
-        <option value ="20.5">20:30</option>
-        <option value ="21">21:00</option>
-        <option value ="21.5">21:30</option>
-        <option value ="22">22:00</option>
+    <select name="time" id ="time">
+        <option value ="12:00">12:00</option>
+        <option value ="12:30">12:30</option>
+        <option value ="13:00">13:00</option>
+        <option value ="13:30">13:30</option>
+        <option value ="14:00">14:00</option>
+        <option value ="14:30">14:30</option>
+        <option value ="15:00">15:00</option>
+        <option value ="15:30">15:30</option>
+        <option value ="16:00">16:00</option>
+        <option value ="16:30">16:30</option>
+        <option value ="17:00">17:00</option>
+        <option value ="17:30">17:30</option>
+        <option value ="18:00">18:00</option>
+        <option value ="18:30">18:30</option>
+        <option value ="19:00">19:00</option>
+        <option value ="19:30">19:30</option>
+        <option value ="20:00">20:00</option>
+        <option value ="20:30">20:30</option>
+        <option value ="21:00">21:00</option>
+        <option value ="21:30">21:30</option>
+        <option value ="22:00">22:00</option>
     </select>
 
     <label for="date">Date:</label>
     <input type="date" id="date" name="date" placeholder="Enter your desired date.."><br>
 
-    <label for="phone.no">Phone Number:</label>
-    <input type="text" id="phone.no" name="phone.no" placeholder="Enter your phone number.."><br>
+    <label for="table_id">Table ID:</label>
+    <input id="table_id" type="number" name="table_id">
 
-    <button type="button" onclick="table()">Book a Table</button><br>
+    <label for="phone_number">Phone Number:</label>
+    <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.."><br>
 
     <input type="submit" onclick="submit" value="Submit Booking"><br>
 
     <div id="image-container"></div>
+
 </form>
-
-<script>
-        function submit() {
-            alert("Table booked!");
-        }
-
-        function table() {
-            // Get the image container
-            var container = document.getElementById('image-container');
-
-            // Create the image element
-            var img = document.createElement('img');
-            img.src = 'static/images/birdseyeview.jpg'; // Replace with the path to your image
-            img.alt = 'Birdseye View';
-
-            // Clear any existing image and append the new image
-            container.innerHTML = '';
-            container.appendChild(img);
-        }
-
-    </script>
 {% endblock %}
 

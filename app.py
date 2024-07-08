@@ -67,12 +67,12 @@ def index():
 
 @app.route("/about")
 def about():
-    pass
+    return render_template("about.html")
 
 
 @app.route("/contact")
 def contact():
-    pass
+    return render_template("contact.html")
 
 
 @app.route("/menu")
@@ -82,7 +82,7 @@ def menu():
 
 @app.route("/reviews")
 def reviews():
-    pass
+    return render_template("reviews.html")
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
@@ -145,3 +145,7 @@ def booking():
         db.session.commit()
 
     return render_template("booking.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")

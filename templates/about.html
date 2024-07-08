@@ -1,28 +1,15 @@
 {% extends "layout.html" %}
 {% block title %}About{% endblock %}
+    
 {% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
 
-  {{ super() }}
-
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website Title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/about.css">
-
-</head>
+{% block content %}
 <body>
-    <header>
-        <div class="container">
-            <h1 style = "color:green;">Ferret and Goose</h1>
-        </div>
-    </header>
     <main>
-        < class="container">
+        <div class="container">
             <section id="about-us">
                 <h3>About Us</h3>
                 <p>Welcome to Gourmet Haven, where culinary excellence meets a delightful dining experience. Our restaurant is committed to offering the finest cuisine, crafted with the freshest ingredients, and served in a warm and inviting atmosphere.</p>
@@ -72,10 +59,5 @@ Thank you for choosing Ferret and Goose—where every meal is crafted with care 
 </body>
 
 </html>
-
-
-
-{% endblock %}
-{% block content %}
 
 {% endblock %}
