@@ -145,3 +145,7 @@ def booking():
         db.session.commit()
 
     return render_template("booking.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")

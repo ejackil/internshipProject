@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap");
 
 body {
-    background: #
-FFFFFF
-;
+    background: #FFFFFF
 }
 
 .form-wrapper {
@@ -107,7 +105,7 @@ form .remember-me {
 
 form .remember-me input {
     margin-right: 5px;
-    accent-color: #b3b3b3;
+    accent-color: #3e6347;
 }
 
 form .form-help :where(label, a) {
