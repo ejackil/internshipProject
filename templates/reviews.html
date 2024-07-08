@@ -1,10 +1,161 @@
 {% extends "layout.html" %}
-{% block title %}Reviews{% endblock %}
+{% block title %}About{% endblock %}
 {% block head %}
-
-  {{ super() }}
-
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviews.css') }}">
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #3e6347;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        .review {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .review:last-child {
+            border-bottom: none;
+        }
+        .review h2 {
+            margin: 0;
+            color: #333;
+        }
+        .review p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .review .date {
+            font-size: 0.9em;
+            color: #999;
+        }
+        .good-review {
+            background-color: #ffffff;
+        }
+        .bad-review {
+            background-color: #ffffff;
+        }
+    </style>
 {% endblock %}
 {% block content %}
+<body>
+    <div class="container">
+        <h1>Restaurant Reviews</h1>
+        <div class="review good-review">
 
+
+
+            <h2>A Lakeside Gem!
+                <div class="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">☆</span>
+            </div></h2>
+            <p class="date">June 20, 2024 - Leah Ryan</p>
+            <p>Ferret and Goose is an absolute gem! The lakeside setting is stunning, and the food is exceptional. The Gooseberry Glazed Duck was perfectly cooked and bursting with flavor. The ambiance is warm and inviting, making it perfect for both a romantic dinner and a family gathering. Highly recommend. Will be returning!</p>
+            <br>
+             <h2>Fantastic Flavors and Scenic Views
+                <div class="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div></h2>
+            <p class="date">August 12, 2023 - Grace McGlynn</p>
+            <p>Dining at Ferret and Goose is an unforgettable experience. The attention to detail in both the dishes and the decor is remarkable. The Mushroom Risotto was creamy and rich, a true testament to their commitment to quality local ingredients. The view of the lake at sunset is breathtaking. Five stars!!</p>
+
+            <br>
+             <h2>A Must-Visit Lakeside Restaurant
+                <div class="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">☆</span>
+            </div></h2>
+            <p class="date">February 3, 2023 - Isabelle Madden</p>
+            <p>From the moment we arrived at Ferret and Goose, we were enchanted. The ambiance, with its blend of modern elegance and historic charm, is second to none. The dishes are creative and delicious, with a clear emphasis on local, fresh ingredients. Watching the sunset over the lake while enjoying our meal was pure magic.</p>
+
+         <br>
+             <h2>A Culinary Catastrophe
+                <div class="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">☆</span>
+                <span class="star" data-rating="4">☆</span>
+                <span class="star" data-rating="5">☆</span>
+            </div></h2>
+            <p class="date">April 21, 2022 - Caoimhe Naughton</p>
+            <p> Ferret and Goose fell short in many ways. The wait time was excessive, and the food was cold when it finally arrived. The ambiance was nice, but it couldn't compensate for the lackluster meal. The Ferret Mushroom Risotto was underseasoned and boring. I expected much more for the price.</p>
+
+            <br>
+             <h2>Waste of Time and Money
+                <div class="stars">
+                <span class="star" data-rating="1">☆</span>
+                <span class="star" data-rating="2">☆</span>
+                <span class="star" data-rating="3">☆</span>
+                <span class="star" data-rating="4">☆</span>
+                <span class="star" data-rating="5">☆</span>
+            </div></h2>
+            <p class="date">October 5, 2023 - Luke Quilty </p>
+            <p> My experience at Ferret and Goose was a complete disaster from start to finish. We arrived for our reservation only to be told they had no record of it, despite my confirmation email. After waiting for 45 minutes, we were finally seated at a cramped table near the noisy kitchen. Our waiter was rude and inattentive, taking another 30 minutes to take our order. When the food eventually arrived, it was an utter mess. The Stuffed portobello mushrooms was burnt and inedible, and the Ferret Mushroom Risotto was cold and flavorless. To top it off, we found a hair in one of the dishes. We asked to speak with the manager, who was dismissive and unapologetic. The final insult was the exorbitant bill, which they refused to adjust despite the horrible experience. We left feeling utterly disappointed and ripped off. Avoid this place at all costs!</p>
+
+         <br>
+             <h2>Top Notch Cuisine by the Water
+                <div class="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">☆</span>
+            </div></h2>
+            <p class="date">January 14 2022- Kealan Ryan McIntyre </p>
+            <p>I can't say enough good things about Ferret and Goose. The service is impeccable, and the menu is innovative and delicious. We had the Seasonal Tasting Menu, and each course was a delight. The lakeside location adds a magical touch. It's my new favorite spot for special occasions.</p>
+
+        <br>
+             <h2>
+                <div class="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">☆</span>
+            </div></h2>
+            <p class="date">January 14 2022- Kealan Ryan McIntyre </p>
+            <p>I can't say enough good things about Ferret and Goose. The service is impeccable, and the menu is innovative and delicious. We had the Seasonal Tasting Menu, and each course was a delight. The lakeside location adds a magical touch. It's my new favorite spot for special occasions.</p>
+
+    <div class="review">
+
+        </div>
+        <!-- Add more reviews as needed -->
+
+    <div class="review-form">
+        <h2>Leave a Review</h2>
+        <div class="stars" id="new-review-stars">
+            <span class="star" data-rating="1">★</span>
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
+        </div>
+
+        <textarea id="review-text" placeholder="Write your review here..."></textarea>
+        <button id="submit-review">Submit Review</button>
+    </div>
+        </div>
+</body>    
 {% endblock %}

@@ -1,0 +1,44 @@
+body {
+background-color:#152c24;
+}
+
+#contact-title {
+p.solid {border-style: solid;}
+text-align: centre;
+background-color:#385141;
+color: #ffffff; 
+font-family: "Tahoma", Times, serif;
+text-align: center;
+padding: 5px;
+text-shadow: 2px 2px 4px #000000;
+margin: 0px;
+border: 1px solid#000000;
+}
+
+p {
+  font-size: 20px;
+}
+
+form {
+font-family: "Century Gothic";
+text-align: center;
+color:white;
+padding: 5px;
+}
+
+input[type=text] {
+width: 600px;
+height: 50px;
+border: 2px solid#000000;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #ffffff;
+  font-size: 20px;
+}
+
+#reason {
+width: 600px;
+height: 200px;
+padding-top: 0px;
+}
