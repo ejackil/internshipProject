@@ -21,8 +21,7 @@ header {
 header h1 {
   margin-bottom: 10px;
 }
-div h3{
-}
+
 nav ul {
   list-style: none;
   display: flex;
@@ -68,48 +67,6 @@ section p {
   height: auto;
   border: 2px solid #333;
   margin-bottom: 10px;
-}
-
-form {
-  background-color: #ffaf80;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-form label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-form input,
-form button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-form button {
-  background-color: #6495ED;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-form button:hover {
-  background-color: #4178c0; /* Darker blue on hover */
-}
-
-footer {
-  text-align: center;
-  padding: 20px 0;
-  background-color: #333;
-  color: #fff;
-  margin-top: 40px;
 }
 
 #goose-box {
