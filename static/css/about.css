@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
@@ -5,6 +9,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
+    scroll-behavior: smooth;
 }
 
 .container {
@@ -229,6 +234,19 @@ h1 {text-align: center}
 
 h1 {
     text-align: center;
+}
+
+
+.top-link {
+    display: inline-block;
+    text-align: right;
+    margin-top: 20px;
+    float: right;
+}
+
+.top-link img {
+   width: 20px;
+   height: 20px;
 }
 
 
