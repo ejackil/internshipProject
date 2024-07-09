@@ -160,7 +160,8 @@ def booking():
 
         db.session.commit()
 
-    return render_template("booking.html")
+    # numbers above 4 break the layout for now
+    return render_template("booking.html", num_tables=4)
 
 
 def require_token(func):

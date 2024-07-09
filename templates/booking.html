@@ -7,6 +7,7 @@
 {% endblock %}
 {% block content %}
     <div id="tables">
+        {% for i in range(num_tables) %}
         <div class="table-container">
             <div class="booking-table"></div>
             <div data-angle=0deg class="booking-chair" style="transform: translateY(-50%)"></div>
@@ -14,27 +15,7 @@
             <div data-angle=180deg class="booking-chair" style="transform: translateY(-50%)"></div>
             <div data-angle=270deg class="booking-chair" style="transform: translateY(-50%)"></div>
         </div>
-        <div class="table-container">
-            <div class="booking-table"></div>
-            <div data-angle=0deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=90deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=180deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=270deg class="booking-chair" style="transform: translateY(-50%)"></div>
-        </div>
-        <div class="table-container">
-            <div class="booking-table"></div>
-            <div data-angle=0deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=90deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=180deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=270deg class="booking-chair" style="transform: translateY(-50%)"></div>
-        </div>
-        <div class="table-container">
-            <div class="booking-table"></div>
-            <div data-angle=0deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=90deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=180deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=270deg class="booking-chair" style="transform: translateY(-50%)"></div>
-        </div>
+        {% endfor %}
     </div>
 
     <form id="create_form" action="{{ url_for('booking') }}" method="post">
