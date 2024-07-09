@@ -1,5 +1,5 @@
 from sqlalchemy import select, func
-from flask import Flask, render_template, url_for, request, redirect, session
+from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 from functools import wraps
@@ -27,11 +27,11 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
-    phone_number = db.Column(db.String(20), nullable=False)
+    phone_number = db.Column(db.String(20))
     email = db.Column(db.String(64))
     password = db.Column(db.String(20))
 
-    def __init__(self, first_name, last_name, phone_number, email=None, password=None):
+    def __init__(self, first_name, last_name, phone_number=None, email=None, password=None):
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
@@ -90,11 +90,6 @@ def menu():
 @app.route("/reviews")
 def reviews():
     return render_template("reviews.html")
-
-
-@app.route("/signup", methods=["GET", "POST"])
-def signup():
-    return render_template("signup.html")
 
 
 @app.route("/mailinglist", methods=["POST"])
@@ -156,7 +151,7 @@ def booking():
                                        "%Y-%m-%d %H:%M")
         end_time = start_time + timedelta(hours=2)
 
-        user = User(first_name, last_name, phone_number)
+        user = User(first_name, last_name, phone_number=phone_number)
         db.session.add(user)
         db.session.flush()
 
@@ -179,10 +174,43 @@ def require_token(func):
     return check_token
 
 
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "GET":
+        return render_template("signup.html")
+
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    if not all((first_name, last_name, email, password)):
+        flash("All fields must be filled out")
+        return render_template("/signup")
+
+    statement = (select(User)
+                 .where(User.email == email))
+    users = db.session.execute(statement)
+
+    if list(users):
+        flash("Email in use")
+        return render_template("/signup")
+
+# TODO: hash password
+    user = User(first_name, last_name, email=email, password=password)
+
+    db.session.add(user)
+    db.session.commit()
+
+    # code 307 preserves the http method of the request
+    return redirect(url_for("login", email=email, password=password), code=307)
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template('login.html')
+
     email = request.form.get("email")
     password = request.form.get("password")
 
@@ -193,11 +221,9 @@ def login():
     user_id = db.session.execute(statement)
 
     if not user_id:
-# TODO flash login failed
+        flash("No user with that email")
         return render_template("login.html")
 
-    # user_id = User.user_id
     session['user_id'] = list(user_id)[0][0]
 
-    return render_template('index.html')
-    # return redirect(request.origin)
+    return redirect(url_for("index"))
