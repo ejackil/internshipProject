@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="static\css\signup.css">
+  {% endblock %}
+{% block content %}
+<div class="container">
+    <form id="create_form" action="{{ url_for('signup') }}" method="POST">
+        <h2>Sign Up</h2>
+        <label for="first_name">First Name:</label>
+        <input type="text" id="signup-first_name" name="first_name" placeholder="Enter first name.." required><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="signup-last_name" name="last_name" placeholder="Enter last name.." required><br>
+
+        <!-- <label for="phone-number">Phone Number:</label>
+        <input type="text" id="signup-phone-number" name="last_name" placeholder="Enter phone number.."><br> -->
+
+        <label for="email">Email:</label>
+        <input type="email" id="signup-email" name="email" placeholder="Enter email.." required><br>
+
+        <label for="password">Create Password:</label>
+        <input type="password" id="signup-password" name="password" placeholder="Enter password.." required><br>
+
+        <label for="password">Confirm Password:</label>
+        <input type="password" id="signup-confirm-password" name="" placeholder="Enter password.." required><br>
+        
+        <p id="password-error" hidden>*Your passwords don't match</p>
+        <input type="submit" value="Submit">
+       
+        <script>
+            const input_password = document.getElementById("signup-password");
+            const check_password = document.getElementById("signup-confirm-password");
+            const password_submit = document.getElementById("create_form");
+            const error_message = document.getElementById("password-error");
+
+            password_submit.addEventListener("submit", (e) => {
+                if (input_password.value !== check_password.value) {
+                    e.preventDefault();
+                    error_message.hidden = false;
+                }
+            });
+
+        </script>
+    </form>
+</div>
+{% endblock %}
