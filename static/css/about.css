@@ -41,12 +41,48 @@ section {
   margin-bottom: 40px;
 }
 
-section h2 {
-  color: #333;
-  margin-bottom: 10px;
-  border-bottom: 2px solid #6495ED; /* Cornflower blue underline */
-  display: inline-block;
+h2 {
+    position: relative;
+    color: #333;
+    margin-bottom: 10px;
+    padding: 20px;
+    text-align: center;
+    background-color: white;
+    z-index: 1;
+    border: 0;
 }
+
+h2::before,
+h2::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+}
+
+h2::before {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 10px solid transparent;
+    background: linear-gradient(to right, #3e6347, white),
+                linear-gradient(to bottom, #3e6347, white);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
+h2::after {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 10px solid transparent;
+    background: linear-gradient(to left, #3e6347, white),
+                linear-gradient(to top, #3e6347, white);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+}
+
 
 section p {
   margin-bottom: 10px;
