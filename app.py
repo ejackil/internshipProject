@@ -1,7 +1,8 @@
 from sqlalchemy import select, func
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
+from functools import wraps
 
 USERNAME = "root"
 PASSWORD = ""
@@ -9,6 +10,7 @@ HOST = "localhost"
 DB_NAME = "internship_project"
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = '0EHLMjwfynimjRhI6Nl3mOaZMmmTu7JE'
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}/{DB_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
@@ -151,20 +153,35 @@ def booking():
 
     return render_template("booking.html")
 
+def require_token(func):
+    @wraps(func)
+    def check_token(*args, **kwargs):
+        if 'user_id' not in session:
+# TODO flash access denied
+            return redirect(url_for("login"))
+        return func(*args, **kwargs)
+
+    return check_token
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method=="GET":
+        return render_template('login.html')
     email = request.form.get("email")
     password = request.form.get("password")
 
-    statement = (select(User.email, User.password)
+    statement = (select(User.user_id)
                  .where(User.email == email)
                  .where(User.password == password)
                  )
-    users = db.session.execute(statement)
+    user_id = db.session.execute(statement)
 
-    if len(list(users)) == 0:
+    if not user_id:
+#TODO flash login failed 
         return render_template("login.html")
 
-    return redirect(request.origin)
+    # user_id = User.user_id
+    session['user_id'] = list(user_id)[0][0]
 
-    return render_template("login.html")
+    return render_template('index.html')
+    # return redirect(request.origin)
