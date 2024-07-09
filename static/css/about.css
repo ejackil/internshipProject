@@ -172,10 +172,13 @@ h1 {text-align: center}
     display: inline-block;
 }
 
-.dropdown > button {
+.dropdown > button:first-child {
     width: 30px;
     height: 30px;
     filter: invert();
+    border-radius: 0px;
+
+    background-repeat: no-repeat;
 }
 
 .dropdown-content {
