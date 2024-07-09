@@ -91,6 +91,10 @@ def menu():
 def reviews():
     return render_template("reviews.html")
 
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
     email = request.form.get("email")
