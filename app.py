@@ -28,17 +28,16 @@ class User(db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
     phone_number = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(64), nullable=False)
-    password = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(64))
+    password = db.Column(db.String(20))
 
-
-
-    def __init__(self, first_name, last_name, phone_number, email, password):
+    def __init__(self, first_name, last_name, phone_number, email=None, password=None):
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
         self.email = email
         self.password = password
+
 
 class Email(db.Model):
     __tablename__ = "mailing_list"
@@ -82,6 +81,7 @@ def about():
 def contact():
     return render_template("contact.html")
 
+
 @app.route("/menu")
 def menu():
     return render_template("menu.html")
@@ -90,6 +90,12 @@ def menu():
 @app.route("/reviews")
 def reviews():
     return render_template("reviews.html")
+
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    return render_template("signup.html")
+
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
@@ -118,8 +124,16 @@ def get_bookings(table_id):
                  .where(func.datediff(Reservation.start_time, date) == 0)
                  )
 
-    reservations = [{"start_time": row[0], "end_time": row[1]}
-                    for row in db.session.execute(statement)]
+    reservations = []
+    for row in db.session.execute(statement):
+        start_time, end_time = row
+        start_time, end_time = start_time.time(), end_time.time()
+
+        time_format = "%H:%M"
+        start_time_str = start_time.strftime(time_format)
+        end_time_str = end_time.strftime(time_format)
+
+        reservations.append({"start_time": start_time_str, "end_time": end_time_str})
 
     return reservations
 
@@ -153,6 +167,7 @@ def booking():
 
     return render_template("booking.html")
 
+
 def require_token(func):
     @wraps(func)
     def check_token(*args, **kwargs):
@@ -163,9 +178,10 @@ def require_token(func):
 
     return check_token
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method=="GET":
+    if request.method == "GET":
         return render_template('login.html')
     email = request.form.get("email")
     password = request.form.get("password")
@@ -177,7 +193,7 @@ def login():
     user_id = db.session.execute(statement)
 
     if not user_id:
-#TODO flash login failed 
+# TODO flash login failed
         return render_template("login.html")
 
     # user_id = User.user_id
