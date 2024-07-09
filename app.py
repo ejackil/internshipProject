@@ -153,18 +153,18 @@ def booking():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # email = request.form.get("email")
-    # password = request.form.get("password")
-    #
-    # statement = (select(User.email, User.password)
-    #              .where(User.email == email)
-    #              .where(User.password == password)
-    #              )
-    # users = db.session.execute(statement)
-    #
-    # if len(list(users)) == 0:
-    #     return render_template("login.html")
-    #
-    # return redirect(request.origin)
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    statement = (select(User.email, User.password)
+                 .where(User.email == email)
+                 .where(User.password == password)
+                 )
+    users = db.session.execute(statement)
+
+    if len(list(users)) == 0:
+        return render_template("login.html")
+
+    return redirect(request.origin)
 
     return render_template("login.html")

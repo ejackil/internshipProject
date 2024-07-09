@@ -1,27 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap");
 
-#content {
-    background: #FFFFFF;
-    text-align: center;
-    min-height: calc(100% - 225px);
-    margin: 100;
-    display: grid;
-    justify-content: space-around;
-    align-items: space-around;
+body {
+    background: #FFFFFF
 }
 
-
-
 .form-wrapper {
+    position: absolute;
     left: 50%;
     top: 50%;
     border-radius: 4px;
     padding: 70px;
-    width: 400px;
-    background-color: #004526;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: #e5e5e5;
-    margin-top: 70px;
+    width: 450px;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, .75);
 }
 
 .form-wrapper h2 {
@@ -30,26 +21,30 @@
 }
 
 .form-wrapper form {
-    margin: 20px 0 45px;
+    margin: 25px 0 65px;
 }
 
-.form-control {
+form .form-control {
+    height: 50px;
     position: relative;
-    margin-bottom: 20px;
-    width: 100%;
+    margin-bottom: 16px;
 }
 
 .form-control input {
-    height: 50px;
-    width: 100%; /* Use full width of the container */
-    background: #3e6347;
+    height: 100%;
+    width: 100%;
+    background: #333;
     border: none;
-    outline: none; /* Changed from shadow to none */
+    outline: none;
     border-radius: 4px;
-    color: #fff; /* Changed text color for better visibility */
+    color: #fff;
     font-size: 1rem;
     padding: 0 20px;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.form-control input:is(:focus, :valid) {
+    background: #444;
+    padding: 16px 20px 0;
 }
 
 .form-control label {
@@ -59,11 +54,11 @@
     transform: translateY(-50%);
     font-size: 1rem;
     pointer-events: none;
-    color: #fff;
+    color: #8c8c8c;
     transition: all 0.1s ease;
 }
 
-.form-control input:is(:focus, :valid) ~ label {
+.form-control input:is(:focus, :valid)~label {
     font-size: 0.75rem;
     transform: translateY(-130%);
 }
@@ -77,18 +72,26 @@ form button {
     font-weight: 500;
     border-radius: 4px;
     border: none;
-    outline: none; /* Changed from shadow to none */
+    outline: none;
     margin: 25px 0 10px;
     cursor: pointer;
     transition: 0.1s ease;
 }
 
 form button:hover {
-    background: #3e6348;
+    background: #3C5D44;
+}
+
+.form-wrapper a {
+    text-decoration: none;
 }
 
 .form-wrapper a:hover {
     text-decoration: underline;
+}
+
+.form-wrapper :where(label, p, small, a) {
+    color: #b3b3b3;
 }
 
 form .form-help {
@@ -98,7 +101,6 @@ form .form-help {
 
 form .remember-me {
     display: flex;
-    align-items: center; /* Align items vertically */
 }
 
 form .remember-me input {
@@ -106,7 +108,23 @@ form .remember-me input {
     accent-color: #3e6347;
 }
 
+form .form-help :where(label, a) {
+    font-size: 0.9rem;
+}
 
+.form-wrapper p a {
+    color: #fff;
+}
+
+.form-wrapper small {
+    display: block;
+    margin-top: 15px;
+    color: #b3b3b3;
+}
+
+.form-wrapper small a {
+    color: #0071eb;
+}
 
 @media (max-width: 740px) {
     body::before {
@@ -129,4 +147,4 @@ form .remember-me input {
     .form-wrapper form {
         margin: 25px 0 40px;
     }
-
+}
