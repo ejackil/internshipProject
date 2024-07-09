@@ -167,59 +167,65 @@ ul li b {
 
 h1 {text-align: center}
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 4px;
-            overflow: hidden;
-        }
+.dropdown > button {
+    width: 30px;
+    height: 30px;
+    filter: invert();
+}
 
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 4px;
+    overflow: hidden;
+}
 
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
 
-        .dropdown button {
-            background-color: #4CAF50; /* Green */
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
-        .dropdown button:hover {
-            background-color: #45a049;
-        }
+.dropdown button {
+    background-color: #3E6347;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
 
-        .container {
-            text-align: left;
-            margin-top: 50px;
-        }
+.dropdown button:hover {
+    background-color: #45a049;
+}
 
-        h1 {
-            text-align: center;
-        }
+.container {
+    text-align: left;
+    margin-top: 50px;
+}
+
+h1 {
+    text-align: center;
+}
 
 
