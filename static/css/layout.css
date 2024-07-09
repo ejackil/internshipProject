@@ -79,6 +79,10 @@ nav {
     text-decoration: color(#ffffff);
 }
 
+#login-tab {
+    margin-left: auto;
+}
+
 #title {
     color: #ffffff;
     font-size: 30px;

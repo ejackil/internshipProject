@@ -1,7 +1,8 @@
 from sqlalchemy import select, func
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
+from functools import wraps
 
 USERNAME = "root"
 PASSWORD = ""
@@ -9,6 +10,7 @@ HOST = "localhost"
 DB_NAME = "internship_project"
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = '0EHLMjwfynimjRhI6Nl3mOaZMmmTu7JE'
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}/{DB_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
@@ -26,17 +28,16 @@ class User(db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
     phone_number = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(64), nullable=False)
-    password = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(64))
+    password = db.Column(db.String(20))
 
-
-
-    def __init__(self, first_name, last_name, phone_number, email, password):
+    def __init__(self, first_name, last_name, phone_number, email=None, password=None):
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
         self.email = email
         self.password = password
+
 
 class Email(db.Model):
     __tablename__ = "mailing_list"
@@ -80,6 +81,7 @@ def about():
 def contact():
     return render_template("contact.html")
 
+
 @app.route("/menu")
 def menu():
     return render_template("menu.html")
@@ -88,6 +90,12 @@ def menu():
 @app.route("/reviews")
 def reviews():
     return render_template("reviews.html")
+
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    return render_template("signup.html")
+
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
@@ -116,8 +124,16 @@ def get_bookings(table_id):
                  .where(func.datediff(Reservation.start_time, date) == 0)
                  )
 
-    reservations = [{"start_time": row[0], "end_time": row[1]}
-                    for row in db.session.execute(statement)]
+    reservations = []
+    for row in db.session.execute(statement):
+        start_time, end_time = row
+        start_time, end_time = start_time.time(), end_time.time()
+
+        time_format = "%H:%M"
+        start_time_str = start_time.strftime(time_format)
+        end_time_str = end_time.strftime(time_format)
+
+        reservations.append({"start_time": start_time_str, "end_time": end_time_str})
 
     return reservations
 
@@ -151,20 +167,37 @@ def booking():
 
     return render_template("booking.html")
 
+
+def require_token(func):
+    @wraps(func)
+    def check_token(*args, **kwargs):
+        if 'user_id' not in session:
+# TODO flash access denied
+            return redirect(url_for("login"))
+        return func(*args, **kwargs)
+
+    return check_token
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "GET":
+        return render_template('login.html')
     email = request.form.get("email")
     password = request.form.get("password")
 
-    statement = (select(User.email, User.password)
+    statement = (select(User.user_id)
                  .where(User.email == email)
                  .where(User.password == password)
                  )
-    users = db.session.execute(statement)
+    user_id = db.session.execute(statement)
 
-    if len(list(users)) == 0:
+    if not user_id:
+# TODO flash login failed
         return render_template("login.html")
 
-    return redirect(request.origin)
+    # user_id = User.user_id
+    session['user_id'] = list(user_id)[0][0]
 
-    return render_template("login.html")
+    return render_template('index.html')
+    # return redirect(request.origin)
