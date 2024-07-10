@@ -7,22 +7,22 @@
 {% block content %}
 <form id="create_form" action="{{ url_for('signup') }}" method="POST">
     <h2>Sign Up</h2>
-    <label for="first_name">First Name:</label>
+    <label for="signup-first_name">First Name:</label>
     <input type="text" id="signup-first_name" name="first_name" placeholder="Enter first name.." required><br>
 
-    <label for="last_name">Last Name:</label>
+    <label for="signup-last_name">Last Name:</label>
     <input type="text" id="signup-last_name" name="last_name" placeholder="Enter last name.." required><br>
 
     <!-- <label for="phone-number">Phone Number:</label>
     <input type="text" id="signup-phone-number" name="last_name" placeholder="Enter phone number.."><br> -->
 
-    <label for="email">Email:</label>
+    <label for="signup-email">Email:</label>
     <input type="email" id="signup-email" name="email" placeholder="Enter email.." required><br>
 
-    <label for="password">Create Password:</label>
+    <label for="signup-password">Create Password:</label>
     <input type="password" id="signup-password" name="password" placeholder="Enter password.." required><br>
 
-    <label for="password">Confirm Password:</label>
+    <label for="signup-confirm-password">Confirm Password:</label>
     <input type="password" id="signup-confirm-password" name="" placeholder="Enter password.." required><br>
         
     <p id="password-error" hidden>*Your passwords don't match</p>
