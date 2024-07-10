@@ -124,7 +124,7 @@ label {
     text-shadow: 2.25px 2.25px black;
 }
 
-input[type="text"], input[type="email"], textarea, message1 {
+input[type="text"],textarea, message1 {
     width: 100%;
     padding: 12px;
     border: 1px solid #000000;
@@ -133,7 +133,19 @@ input[type="text"], input[type="email"], textarea, message1 {
     margin-bottom: 16px;
     font-size: 1.5em;
     color: #000000;
+    font-family: 'Bodoni',bodoni ;
 
+}
+
+input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    font-size: 1.5em;
+    color: #000000;
     font-family: 'Bodoni',bodoni ;
 
 }

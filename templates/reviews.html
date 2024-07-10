@@ -1,10 +1,4 @@
-{% extends "layout.html" %}
-{% block title %}About{% endblock %}
-{% block head %}
-{{ super() }}
 <link rel="stylesheet" href="../static/css/reviews.css">
-{% endblock %}
-{% block content %}
 <div class="container">
         <h1>Restaurant Reviews</h1>
         <div class="review good-review">
@@ -111,7 +105,7 @@
             <br>
 
         </div>
-    <br><br><br><br><br>
+    <br><br>
 
     <div id="submitbox" class="review">
     <form action="/submitContact" method="POST">
@@ -119,13 +113,16 @@
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" placeholder="Your name..">
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Your email..">
+
+        <label for="review_email">Email:</label>
+        <div class="email1">
+        <input type="email" id="review_email" name="email" placeholder="Your email..">
 
         <label for="message">Message:</label>
         <div class = "message1">
         <textarea id="message" name="message" placeholder="Your message..">
 </textarea>
+        </div>
         </div>
 
                     <!-- Submit Button -->
@@ -135,4 +132,4 @@
 </div>
 
 <script src="scripts.js"></script>
-{% endblock %}
+
