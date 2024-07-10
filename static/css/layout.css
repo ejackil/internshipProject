@@ -130,6 +130,10 @@ nav * {
     border-radius: 0 0 4px 4px;
 }
 
+#account-dropdown > form {
+    padding: 0;
+}
+
 #account-dropdown * {
     padding: 10px;
     border-top: 2px solid #004526;
@@ -139,10 +143,12 @@ nav * {
 #logout-button {
     cursor: pointer;
     background-color: inherit;
-    padding: 0;
+    padding: 10px;
     border: none;
     font-size: 20px;
     color: white;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #title {
