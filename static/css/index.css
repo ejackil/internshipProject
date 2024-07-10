@@ -15,7 +15,7 @@
     --white-color: #fff;
     --light-gray-color: #f2f2f2;
     /* Site Max-Width */
-    --site-max-width: 1300px;
+    --site-max-width: 90%;
 }
 html {
     scroll-behavior: smooth;
@@ -89,6 +89,7 @@ header {
     padding-top: 85px;
     min-height: calc(100vh - 85px);
     justify-content: space-between;
+    right: 50%;
 }
 
 .hero_container .text_section h2 {
@@ -146,6 +147,7 @@ header {
 }
 .hero_container .image_section {
     max-width: 45%;
+    margin-right: 2.5%;
 }
 .hero_container .image_section img {
     width: 100%;
@@ -164,6 +166,7 @@ header {
     gap: 40px;
     align-items: flex-start;
     flex-wrap: wrap;
+    max-width: 70%;
 }
 
 .services .services_items {
@@ -203,6 +206,7 @@ header {
     gap: 80px;
     align-items: center;
     flex-wrap: wrap;
+    max-width: 70%;
 }
 .why_container .why_items img {
     width: 30%;
@@ -234,6 +238,7 @@ header {
     padding: 60px 20px 100px;
 }
 .gallery .gallery_container {
+    max-width: 70%;
     display: flex;
     justify-content: space-between;
     gap: 32px;
@@ -268,7 +273,7 @@ header {
     }
 
     .events_container {
-        width: 90%;
+        width: 70%;
     }
 
     .events_items {
@@ -304,3 +309,4 @@ header {
         margin-bottom: 0;
         color: #ffffff;
     }
+}
