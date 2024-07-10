@@ -164,10 +164,25 @@
             <span class="star" data-rating="5">★</span>
         </div>
 
-        <textarea id="review-text" placeholder="Write your review here..."></textarea>
-        <button id="submit-review">Submit Review</button>
+        <form action="/submitContact" method="POST">
+<!-- Name Input -->
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required>
+
+                <!-- Email Input -->
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required>
+
+                <!-- Message Input -->
+<label for="message">Message:</label>
+<textarea id="message" name="message" required></textarea>
+
+                <!-- Submit Button -->
+<input type="submit" value="Submit">
+</form>
     </div>
 
     <script src="scripts.js"></script>
+        </div>
 
 </html>
