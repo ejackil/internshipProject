@@ -6,7 +6,7 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
-/* Defining Custome Variables */
+/* Defining Custom Variables */
 :root {
     /* Colors */
     --primary-color: #3b141c;
@@ -23,7 +23,7 @@ html {
 body {
     background-color: #ffffff;
 }
-/* Setting for the whole website */
+
 a {
     text-decoration: none;
 }
@@ -90,6 +90,7 @@ header {
     min-height: calc(100vh - 85px);
     justify-content: space-between;
 }
+
 .hero_container .text_section h2 {
     font-size: 40px;
     color: #f3961c;
@@ -148,6 +149,7 @@ header {
 }
 .hero_container .image_section img {
     width: 100%;
+    object-fit: contain;
 }
 /* Services Section */
 .services {
@@ -250,12 +252,13 @@ header {
     transition: transform 0.4s ease;
 }
 .gallery_container .gallery_items:hover img {
-    transform: scale(1.3);
+    transform: scale(1.05);
 }
 /* Upcoming Events Section */
 .upcoming_events {
         padding: 20px;
         background: #1e4439;
+        margin: 0px -20px;
     }
 
     .section_container {
