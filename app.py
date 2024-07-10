@@ -250,6 +250,16 @@ def login():
         flash("Invalid username or password")
         return render_template("login.html")
 
+    session["logged_in"] = True
     session['user_id'] = list(user_id)[0][0]
 
     return redirect(url_for("index"))
+
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    if session["logged_in"]:
+        session["logged_in"] = False
+        session["user_id"] = None
+
+    return "Logged out"
