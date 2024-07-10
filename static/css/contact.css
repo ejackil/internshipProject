@@ -1,40 +1,31 @@
 body {
-background-color:#152c24;
+background-color:#3e6347;
 }
 
-#contact-title {
+h1 {
 p.solid {border-style: solid;}
 text-align: centre;
-background-color:#385141;
-color: #ffffff; 
+color:white;
 font-family: "Tahoma", Times, serif;
 text-align: center;
-padding: 5px;
 text-shadow: 2px 2px 4px #000000;
-margin: 0px;
-border: 1px solid#000000;
-}
-
-p {
-  font-size: 20px;
 }
 
 form {
 font-family: "Century Gothic";
 text-align: center;
-color:white;
-padding: 5px;
+color:white
 }
 
 input[type=text] {
 width: 600px;
 height: 50px;
-border: 2px solid#000000;
+
 }
 
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: #ffffff;
-  font-size: 20px;
+  background-color: #white;
+
 }
 
 #reason {
