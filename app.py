@@ -262,4 +262,4 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
-    return "Logged out"
+    return redirect(url_for("index"))
