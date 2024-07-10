@@ -94,6 +94,11 @@ nav {
 }
 
 #login-tab {
+    background-color: #3e6347;
+    color: #ffffff;
+}
+
+#signup-tab, #account-tab {
     margin-left: auto;
     background-color: #3e6347;
     color: #ffffff;
