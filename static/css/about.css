@@ -85,9 +85,6 @@ ul li {
     transition: background-color 0.3s ease-in-out;
 }
 
-ul li:hover {
-    background-color: #f2f2f2;
-}
 
 ul li b {
     color: #004526;
@@ -98,7 +95,6 @@ ul li b {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 0;
 }
 
 #goose-box div {
