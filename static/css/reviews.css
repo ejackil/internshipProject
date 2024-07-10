@@ -26,7 +26,7 @@ h1 {
 }
 .review {
         border-bottom: 1px solid #eee;
-        padding: 10px 0;
+        padding: 20px 20px;
         border: 2px solid #000000
 }
 .review:last-child {
@@ -124,7 +124,7 @@ label {
     text-shadow: 2.25px 2.25px black;
 }
 
-input[type="text"], input[type="email"], textarea {
+input[type="text"], input[type="email"], textarea, message1 {
     width: 100%;
     padding: 12px;
     border: 1px solid #000000;
@@ -133,6 +133,8 @@ input[type="text"], input[type="email"], textarea {
     margin-bottom: 16px;
     font-size: 1.5em;
     color: #000000;
+
+    font-family: 'Bodoni',bodoni ;
 
 }
 

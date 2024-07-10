@@ -2,15 +2,12 @@
 {% block title %}About{% endblock %}
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/reviews.css') }}">
+<link rel="stylesheet" href="../static/css/reviews.css">
 {% endblock %}
 {% block content %}
 <div class="container">
         <h1>Restaurant Reviews</h1>
         <div class="review good-review">
-
-
-
             <h2>A Lakeside Gem!
                 <div class="stars">
                 <span class="star" data-rating="1">★</span>
@@ -126,8 +123,10 @@
         <input type="email" id="email" name="email" placeholder="Your email..">
 
         <label for="message">Message:</label>
+        <div class = "message1">
         <textarea id="message" name="message" placeholder="Your message..">
 </textarea>
+        </div>
 
                     <!-- Submit Button -->
         <input type="submit" value="Submit">
