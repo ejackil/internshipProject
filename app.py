@@ -215,7 +215,7 @@ def signup():
 
     if not all((first_name, last_name, email, password)):
         flash("All fields must be filled out")
-        return render_template("/signup")
+        return render_template("signup.html")
 
     statement = (select(User)
                  .where(User.email == email))
@@ -223,7 +223,7 @@ def signup():
 
     if list(users):
         flash("Email in use")
-        return render_template("/signup")
+        return render_template("signup.html")
 
 # TODO: hash password
     user = User(first_name, last_name, email=email, password=password)
