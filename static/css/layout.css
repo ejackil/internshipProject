@@ -21,6 +21,8 @@ nav {
     left: 0px;
     z-index: 1000000;
 
+    border: 2px solid #004526;
+
     display: flex;
     flex-direction: row;
     align-content: center;
@@ -77,6 +79,12 @@ nav {
     background-color: #3e6347;
     border-right: 2px solid 0;
     text-decoration: color(#ffffff);
+}
+
+#login-tab {
+    margin-left: auto;
+    background-color: #3e6347;
+    color: #ffffff;
 }
 
 #title {

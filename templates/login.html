@@ -6,25 +6,25 @@
 {% endblock %}
 {% block content %}
 <div class="form-wrapper">
-    <h2>Sign In</h2>
-    <form action="#">
+    <h2>Log In</h2>
+    <form action="{{ url_for('login') }}" method="POST">
         <div class="form-control">
-            <input type="text" name="email" id="email" required>
-            <label for="email">Email or phone number</label>
+            <input type="text" name="email" id="login-email" required>
+            <label for="login-email">Email</label>
         </div>
         <div class="form-control">
             <input type="text" name="password" id="password" required>
             <label for="password">Password</label>
         </div>
-        <button type="submit">Sign In</button>
+        <button type="submit">Log in</button>
         <div class="form-help">
             <div class="remember-me">
                 <input type="checkbox" id="remember-me">
                 <label for="remember-me">Remember me</label>
             </div>
-            <a href="#">Need help?</a>
+            <a href="#" style="color: #ffffff;">Need help?</a>
         </div>
     </form>
-    <p>New to Ferret & Goose? <a href="#">Sign up now</a></p>
+    <p>New to Ferret & Goose? <a href="/signup" style="color: #ffffff;">Sign up now</a></p>
 </div>
 {% endblock %}

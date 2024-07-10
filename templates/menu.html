@@ -1,35 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Menu</title>
-    <link rel="stylesheet" href="../static/css/menu.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Entrées</h1>
-        <div class="menu-item">
-            <h2>Goose and Mushroom Tartlets</h2>
-            <p>Goose and Mushroom Tartlets are savory appetizers featuring tender, diced goose meat and sautéed mushrooms seasoned with shallots, garlic, and thyme, all encased in crispy puff pastry. They are baked until golden brown and served warm, making them a delicious starter for any meal or gathering.</p>
-            <p class="price">€7.50</p>
-        </div>
-        <div class="menu-item">
-            <h2>Goose and Wild Mushroom Soup</h2>
-            <p>Goose and wild mushroom soup blends tender diced goose meat with earthy wild mushrooms in a savory broth, seasoned with garlic, onions, and fresh herbs. Served hot, it's a hearty and flavorful dish, perfect with crusty bread for dipping.</p>
-            <p class="price">€7.00</p>
-        </div>
-        <div class="menu-item">
-            <h2>Roasted Vegetable Satay Skewers</h2>
-            <p>A flavorful vegetarian delight featuring marinated assorted vegetables, grilled to perfection and served on skewers. Accompanied by a creamy peanut sauce, these skewers offer a savory blend of smoky flavors and satisfying textures.</p>
-            <p class="price">€6.00</p>
-        </div>
-        <div class="menu-item">
-            <h2>Goose Gourmet Flatbread</h2>
-            <p>Goose gourmet flatbread features tender goose meat atop a crisp flatbread crust, complemented by gourmet cheeses like Gorgonzola, caramelized onions, and roasted garlic. Finished with fresh arugula and a balsamic drizzle, it's a savory delight ideal for appetizers or a light meal.</p>
-            <p class="price">€6.50</p>
-        </div>
+{% extends "layout.html" %}
+{% block title %}Restaurant Menu{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Entrées</h1>
+    <div class="menu-item">
+        <h2>Goose and Mushroom Tartlets</h2>
+        <p>Goose and Mushroom Tartlets are savory appetizers featuring tender, diced goose meat and sautéed mushrooms seasoned with shallots, garlic, and thyme, all encased in crispy puff pastry. They are baked until golden brown and served warm, making them a delicious starter for any meal or gathering.</p>
+        <p class="price">€7.50</p>
     </div>
+    <div class="menu-item">
+        <h2>Goose and Wild Mushroom Soup</h2>
+        <p>Goose and wild mushroom soup blends tender diced goose meat with earthy wild mushrooms in a savory broth, seasoned with garlic, onions, and fresh herbs. Served hot, it's a hearty and flavorful dish, perfect with crusty bread for dipping.</p>
+        <p class="price">€7.00</p>
+    </div>
+    <div class="menu-item">
+        <h2>Roasted Vegetable Satay Skewers</h2>
+        <p>A flavorful vegetarian delight featuring marinated assorted vegetables, grilled to perfection and served on skewers. Accompanied by a creamy peanut sauce, these skewers offer a savory blend of smoky flavors and satisfying textures.</p>
+        <p class="price">€6.00</p>
+    </div>
+    <div class="menu-item">
+        <h2>Goose Gourmet Flatbread</h2>
+        <p>Goose gourmet flatbread features tender goose meat atop a crisp flatbread crust, complemented by gourmet cheeses like Gorgonzola, caramelized onions, and roasted garlic. Finished with fresh arugula and a balsamic drizzle, it's a savory delight ideal for appetizers or a light meal.</p>
+        <p class="price">€6.50</p>
+    </div>
+</div>
 <div class="container">
         <h1>Plat de Résistance</h1>
         <div class="menu-item">
@@ -100,27 +98,54 @@
         </div>
     </div>
 <div class="container">
-        <h1>Refreshments</h1>
-        <div class="menu-item">
-            <h2>Grey Goose Delight</h2>
-            <p>A refreshing blend of Grey Goose vodka, tart cranberry juice, and fresh lime juice, with a hint of orange liqueur. Garnished with a lime wheel. Perfect for any occasion.</p>
-            <p class="price">€8.50</p>
-        </div>
-        <div class="menu-item">
-            <h2>Pina Colada</h2>
-            <p>A tropical blend of creamy coconut milk, tangy pineapple juice, and smooth white rum, garnished with a pineapple slice and a cherry. Sip and transport yourself to a sunny beach paradise.</p>
-            <p class="price">€10.00</p>
-        </div>
-        <div class="menu-item">
-            <h2>Whiskey Sour</h2>
-            <p>A timeless classic cocktail blending the smooth warmth of whiskey with the tangy zest of fresh lemon juice, balanced with a touch of sweetness. Served over ice with a citrus twist, it's a refreshing and sophisticated choice for discerning palates.</p>
-            <p class="price">€8.00</p>
-        </div>
-        <div class="menu-item">
-            <h2>Aperol Spritz</h2>
-            <p>A refreshing and bubbly cocktail featuring Aperol, prosecco, and a splash of soda water. With its vibrant orange hue and citrus notes, it's the perfect balance of bitter and sweet, served over ice with a slice of orange. Ideal for a sunny afternoon or as a lively apéritif.</p>
-            <p class="price">€6.50</p>
-        </div>
+    <h1>Refreshments</h1>
+    <div class="menu-item">
+        <h2>Grey Goose Delight</h2>
+        <p>A refreshing blend of Grey Goose vodka, tart cranberry juice, and fresh lime juice, with a hint of orange liqueur. Garnished with a lime wheel. Perfect for any occasion.</p>
+        <p class="price">€8.50</p>
     </div>
-</body>
-</html>
+    <div class="menu-item">
+        <h2>Pina Colada</h2>
+        <p>A tropical blend of creamy coconut milk, tangy pineapple juice, and smooth white rum, garnished with a pineapple slice and a cherry. Sip and transport yourself to a sunny beach paradise.</p>
+        <p class="price">€10.00</p>
+    </div>
+    <div class="menu-item">
+        <h2>Whiskey Sour</h2>
+        <p>A timeless classic cocktail blending the smooth warmth of whiskey with the tangy zest of fresh lemon juice, balanced with a touch of sweetness. Served over ice with a citrus twist, it's a refreshing and sophisticated choice for discerning palates.</p>
+        <p class="price">€8.00</p>
+    </div>
+    <div class="menu-item">
+        <h2>Aperol Spritz</h2>
+        <p>A refreshing and bubbly cocktail featuring Aperol, prosecco, and a splash of soda water. With its vibrant orange hue and citrus notes, it's the perfect balance of bitter and sweet, served over ice with a slice of orange. Ideal for a sunny afternoon or as a lively apéritif.</p>
+        <p class="price">€6.50</p>
+    </div>
+</div>
+
+
+<div class="container">
+    <h1>Allergies</h1>
+    <div class="menu-item">
+        <h2>Wheat</h2>
+    </div>
+    <div class="menu-item">
+        <h2>Egg</h2>
+    </div>
+    <div class="menu-item">
+        <h2>Fish</h2>
+    </div>
+    <div class="menu-item">
+        <h2>Peanuts</h2>
+    </div>
+    <div class="menu-item">
+        <h2>Tree Nut</h2>
+    </div>
+    <div class="menu-item">
+        <h2>Soy</h2>
+    </div>
+    <div class="menu-item">
+        <h2>Sesame</h2>
+    </div>
+    <div class="menu-item">
+        <h2>Shellfish</h2>
+    </div>
+{% endblock %}
