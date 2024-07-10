@@ -32,3 +32,9 @@ h1 {
 
 .menu-item:last-child {
     border-bottom: none
+}
+
+.small-svg {
+    width: 75px;  /* Adjust the width as needed */
+
+}
