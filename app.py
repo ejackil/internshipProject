@@ -63,6 +63,21 @@ class Reservation(db.Model):
         self.table_id = table_id
 
 
+class Complaint(db.Model):
+    __tablename__ = 'contact_table'
+    id = db.Column(db.Integer, primary_key=True)
+    fname = db.Column(db.String(100))
+    lname = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    complaint = db.Column(db.String(100))
+
+    def __init__(self, fname, lname, email, complaint):
+        self.fname = fname
+        self.lname = lname
+        self.email = email
+        self.complaint = complaint
+
+
 with app.app_context():
     db.create_all()
 
@@ -77,9 +92,19 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["POST", "GET"])
 def contact():
-    return render_template("contact.html")
+    if request.method == 'POST':
+        fname = request.form['fname']
+        lname = request.form['lname']
+        email = request.form['email']
+        complaint = request.form['reason']
+
+        contact = Complaint(fname, lname, email, complaint)
+        db.session.add(contact)
+        db.session.commit()
+
+    return render_template('contact.html')
 
 
 @app.route("/menu")
