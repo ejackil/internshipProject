@@ -247,7 +247,7 @@ def login():
     user_id = db.session.execute(statement)
 
     if not user_id:
-        flash("No user with that email")
+        flash("Invalid username or password")
         return render_template("login.html")
 
     session['user_id'] = list(user_id)[0][0]
