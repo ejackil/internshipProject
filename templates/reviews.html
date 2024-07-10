@@ -1,15 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Reviews</title>
-    <link rel="stylesheet" href="../static/css/reviews.css">
-</head>
+{% extends "layout.html" %}
+{% block title %}About{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviews.css') }}">
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #3e6347;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        .review {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .review:last-child {
+            border-bottom: none;
+        }
+        .review h2 {
+            margin: 0;
+            color: #333;
+        }
+        .review p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .review .date {
+            font-size: 0.9em;
+            color: #999;
+        }
+        .good-review {
+            background-color: #ffffff;
+        }
+        .bad-review {
+            background-color: #ffffff;
+        }
+    </style>
+{% endblock %}
+{% block content %}
 <body>
 <div class="container">
         <h1>Restaurant Reviews</h1>
         <div class="review good-review">
+
+
+
             <h2>A Lakeside Gem!
                 <div class="stars">
                 <span class="star" data-rating="1">★</span>

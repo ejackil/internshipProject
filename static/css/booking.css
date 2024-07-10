@@ -1,25 +1,25 @@
 #content {
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
     align-items: center;
+    height: 1px;
     min-height: calc(100vh - 225px);
-    margin: 0;
-    background-color: #f0f0f0;
 }
 
 #create_form {
+    background-color: #f0f0f0;
     height: 100%;
     padding: 20px;
-    border-radius: 8px;
-    width: 40%;
+    width: 30%;
 }
 
-#create_form > label {
+#create_form label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
 }
 
-#create_form > input[type="text"], #create_form > input[type="submit"] {
+#create_form input, #create_form select {
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
@@ -28,24 +28,79 @@
     border-radius: 4px;
 }
 
-#create_form > input[type="submit"] {
-    background-color: #4CAF50;
+#create_form input[type="submit"] {
+    background-color: #3e6347;
     color: white;
     border: none;
     cursor: pointer;
+    transition: all 100ms ease;
 }
 
-#create_form > input[type="submit"]:hover {
+#create_form input[type="submit"]:hover {
     background-color: #45a049;
 }
 
-#table {
-    display: block;
-    margin-left: 0;
-    width: 60%;
-}
-
-#title45 {
+#booking-title {
     text-align: center;
 }
 
+#booking-info {
+    color: #3e6347;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#tables {
+    height: 100%;
+    width: 70%;
+
+    display: grid;
+    gap: 50px;
+    grid-template-columns: auto auto;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+}
+
+.table-container {
+    height: 300px;
+    width: 300px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 200ms ease;
+}
+
+.table-container:hover {
+    transform: scale(105%);
+}
+
+.table-selected {
+    transform: scale(105%);
+}
+
+.table-container > * {
+    position: absolute;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+.booking-table {
+    height: 60%;
+    width: 60%;
+    border-radius: 50%;
+    background-color: #3e6347;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.booking-chair {
+    width: 20%;
+    height: 26%;
+
+    background-color: darkgrey;
+
+    top: 50%;
+    left: 0;
+    transform-origin: 250% 50%;
+}
