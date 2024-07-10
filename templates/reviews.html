@@ -1,4 +1,10 @@
-<link rel="stylesheet" href="../static/css/reviews.css">
+{% extends "layout.html" %}
+{% block title %}Bookings{% endblock %}
+{% block head%}
+    {{ super() }}
+    <link rel="stylesheet" href="../static/css/reviews.css">
+{% endblock %}
+{% block content %}
 <div class="container">
         <h1>Restaurant Reviews</h1>
         <div class="review good-review">
@@ -130,6 +136,4 @@
         </form>
     </div>
 </div>
-
-<script src="scripts.js"></script>
-
+{% endblock %}
