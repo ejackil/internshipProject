@@ -185,8 +185,11 @@ def booking():
 
         db.session.commit()
 
-    # numbers above 4 break the layout for now
-    return render_template("booking.html", num_tables=4)
+    statement = select(Table)
+    rows = db.session.execute(statement)
+    tables = [{"id": row[0].table_id, "capacity": row[0].capacity} for row in rows]
+
+    return render_template("booking.html", tables=tables)
 
 
 def require_token(func):
