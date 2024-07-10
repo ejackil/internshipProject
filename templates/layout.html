@@ -2,7 +2,7 @@
 <html>
   <head>
     {% block head %}
-    <link rel="stylesheet" href="static\css\layout.css">
+    <link rel="stylesheet" href="../static/css/layout.css">
     <title>{% block title %}{% endblock %} - Ferret & Goose</title>
     {% endblock %}
   </head>
@@ -14,9 +14,24 @@
         <div class="nav-element"><a href="{{ url_for('menu') }}">Menu</a></div>
         <div class="nav-element"><a href="{{ url_for('booking') }}">Booking</a></div>
         <div class="nav-element"><a href="{{ url_for('about') }}">About</a></div>
-        <div class="nav-element"><a href="{{ url_for('contact') }}">Contact Us</a></div>
+        <div class="nav-element"><a href="{{ url_for('contact') }}">Contact</a></div>
         <div class="nav-element"><a href="{{ url_for('reviews') }}">Reviews</a></div>
-         <div class="nav-element"><a href="{{ url_for('login') }}">Login</a></div>
+
+        {% if not session["logged_in"] %}
+            <div id="signup-tab" class="nav-element"><a href="{{ url_for('signup') }}">Sign Up</a></div>
+            <div id="login-tab" class="nav-element"><a href="{{ url_for('login') }}">Log In</a></div>
+        {% else %}
+            <div id="account-tab" class="nav-element">
+                <div>Account</div>
+                <div id="account-dropdown">
+                    <a href="#">Account Settings</a>
+                    <a href="#">My Bookings</a>
+                    <form action="/logout" method="POST">
+                        <input type="submit" id="logout-button" value="Log Out">
+                    </form>
+                </div>
+            </div>
+        {% endif %}
     </nav>
     <div id="navbar-spacer"></div>
     <div id="content">{% block content %}{% endblock %}</div>
@@ -24,9 +39,9 @@
     <div id="footer">
         <div id="social-media">Follow us on all social media @ferretandgoose
           <br>
-            <a href="https://x.com/"><img class="social-media-icon" id="X" src="static\images\x-icon.png"></a> 
-            <a href="https://www.instagram.com/"><img class="social-media-icon" id="Instagram" src="static\images\instagram-icon.png"></a> 
-            <a href="https://www.facebook.com/"><img class="social-media-icon" id="Facebook" src="static\images\facebook-icon.png"></a> 
+            <a href="https://x.com/Ferret_nd_Goose"><img class="social-media-icon" id="X" src="static\images\x-icon.png"></a>
+            <a href="https://www.instagram.com/"><img class="social-media-icon" id="Instagram" src="static\images\instagram-icon.png"></a>
+            <a href="https://www.facebook.com/profile.php?id=61562048469025"><img class="social-media-icon" id="Facebook" src="static\images\facebook-icon.png"></a>
         </div>
         <div id="mailing-list">
           Join our mailing list for coupons

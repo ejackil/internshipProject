@@ -20,6 +20,9 @@ nav {
     top: 0px;
     left: 0px;
     z-index: 1000000;
+    box-sizing: border-box;
+
+    border: 2px solid #004526;
 
     display: flex;
     flex-direction: row;
@@ -39,7 +42,7 @@ nav {
 
 .nav-element {
     height: 100%;
-    color: 0;
+    color: black;
     
     width: 10%;
     min-width: 40px;
@@ -57,12 +60,25 @@ nav {
     color: #ffffff
 }
 
-.nav-element > a {
+.nav-element > a, .nav-element > div, #account-dropdown > * {
     margin: 0;
     color: inherit;
     text-align: center;
     text-decoration: none;
     font-size: 20px;
+}
+
+nav * {
+    text-shadow: none;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.nav-element a h1 {
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 .nav-element > img {
@@ -75,8 +91,64 @@ nav {
     max-width: none;
     flex-direction: row;
     background-color: #3e6347;
-    border-right: 2px solid 0;
-    text-decoration: color(#ffffff);
+}
+
+#login-tab {
+    background-color: #3e6347;
+    color: #ffffff;
+}
+
+#signup-tab, #account-tab {
+    margin-left: auto;
+    background-color: #3e6347;
+    color: #ffffff;
+}
+
+#account-tab {
+    position: relative;
+}
+
+#account-tab:hover #account-dropdown, #account-dropdown:hover {
+    visibility: visible;
+}
+
+#account-dropdown {
+    visibility: hidden;
+    position: absolute;
+    box-sizing: border-box;
+
+    top: 100%;
+    right: 0px;
+    min-width: 100%;
+    background-color: #3e6347;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    border-radius: 0 0 4px 4px;
+}
+
+#account-dropdown > form {
+    padding: 0;
+}
+
+#account-dropdown * {
+    padding: 10px;
+    border-top: 2px solid #004526;
+    box-sizing: border-box;
+}
+
+#logout-button {
+    cursor: pointer;
+    background-color: inherit;
+    padding: 10px;
+    border: none;
+    font-size: 20px;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #title {

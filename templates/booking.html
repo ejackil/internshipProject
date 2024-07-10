@@ -3,57 +3,69 @@
 {% block head%}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/booking.css') }}">
+    <script src="{{ url_for('static', filename='js/table_booking.js') }}"></script>
 {% endblock %}
 {% block content %}
-<img id="table" src="static/images/tablesbooking.jpg">
+    <div id="tables">
+        {% for i in range(num_tables) %}
+        <div class="table-container">
+            <div class="booking-table"></div>
+            <div data-angle=0deg class="booking-chair" style="transform: translateY(-50%)"></div>
+            <div data-angle=90deg class="booking-chair" style="transform: translateY(-50%)"></div>
+            <div data-angle=180deg class="booking-chair" style="transform: translateY(-50%)"></div>
+            <div data-angle=270deg class="booking-chair" style="transform: translateY(-50%)"></div>
+        </div>
+        {% endfor %}
+    </div>
 
-<form id="create_form" action="{{ url_for('booking') }}" method="post">
-    <h1 id ='title45'>Make a Booking</h1>
+    <form id="create_form" action="{{ url_for('booking') }}" method="post">
+        <h1 id="booking-title">Make a Booking</h1>
 
-    <label for="first_name">First Name:</label>
-    <input type="text" id="first_name" name="first_name" placeholder="Enter first name.."><br>
+        <p id="booking-info">Select a table to begin booking</p>
 
-    <label for="last_name">Last Name:</label>
-    <input type="text" id="last_name" name="last_name" placeholder="Enter last name.."><br>
+        <div id="date-group" hidden>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+        </div>
 
-    <label for="time">Time:</label>
-    <select name="time" id ="time">
-        <option value ="12:00">12:00</option>
-        <option value ="12:30">12:30</option>
-        <option value ="13:00">13:00</option>
-        <option value ="13:30">13:30</option>
-        <option value ="14:00">14:00</option>
-        <option value ="14:30">14:30</option>
-        <option value ="15:00">15:00</option>
-        <option value ="15:30">15:30</option>
-        <option value ="16:00">16:00</option>
-        <option value ="16:30">16:30</option>
-        <option value ="17:00">17:00</option>
-        <option value ="17:30">17:30</option>
-        <option value ="18:00">18:00</option>
-        <option value ="18:30">18:30</option>
-        <option value ="19:00">19:00</option>
-        <option value ="19:30">19:30</option>
-        <option value ="20:00">20:00</option>
-        <option value ="20:30">20:30</option>
-        <option value ="21:00">21:00</option>
-        <option value ="21:30">21:30</option>
-        <option value ="22:00">22:00</option>
-    </select>
+        <div id="time-group" hidden>
+            <label for="time">Time:</label>
+            <select name="time" id="time" required>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+                <option value="22:00">22:00</option>
+            </select>
+        </div>
 
-    <label for="date">Date:</label>
-    <input type="date" id="date" name="date" placeholder="Enter your desired date.."><br>
+        <div id="personal-info-group" hidden>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter first name.." required><br>
 
-    <label for="table_id">Table ID:</label>
-    <input id="table_id" type="number" name="table_id">
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter last name.." required><br>
 
-    <label for="phone_number">Phone Number:</label>
-    <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.."><br>
-
-    <input type="submit" onclick="submit" value="Submit Booking"><br>
-
-    <div id="image-container"></div>
-
-</form>
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.." required><br>
+        </div>
+        <input id="submit" type="submit" value="Submit Booking" hidden><br>
+        <input id="table-id" type="number" name="table_id" hidden>
+    </form>
 {% endblock %}
-
