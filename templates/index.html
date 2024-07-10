@@ -1,10 +1,211 @@
-{% extends "layout.html" %}
-{% block title %}Home Page{% endblock %}
-{% block head %}
+ {% extends "layout.html" %}
+  {% block title %}Home{% endblock %}
+  {% block head%}
+      {{ super() }}
+      <meta name="viewport" content="width = device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="../static/css/index.css">
+  {% endblock %}
+  {% block content %}
+<body>
+    <!-- Hero Section -->
+    <section class="hero_section">
+      <div class="section_container">
+        <div class="hero_container">
+          <div class="text_section">
+            <h2>A Taste Of Excellence</h2>
+            <h3>Savour The Moment At Ferret & Goose</h3>
+            <p>
+              From our kitchen to your table, Ferret & Goose offers a delightful escape into the world of fine dining, where every bite is a celebration of flavor, tradition, and the joy of good food shared.
+            </p>
+            <div class="hero_section_button">
+              <button class="button">Order Online</button>
+              <button class="button">Book A Table</button>
+            </div>
+          </div>
+          <div class="image_section">
+            <img src="../static/images/goose_meal.jpg" alt="meal" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Services Section -->
+    <section class="services" id="service">
+      <h2 class="section_title1">Our Services</h2>
+      <div class="section_container">
+        <div class="service_container">
+          <div class="services_items">
+            <img src="../static/images/goose_giftshop.png" alt="Gift Shop" style="width: 275px; height: 275px;" />
+            <div class="services_text">
+              <h3>Goose Gift Shop</h3>
+              <p>
+                Dive into our Goose Gift Shop for delightful gifts and charming goodies inspired by our feathered friends.
+              </p>
+            </div>
+          </div>
+          <div class="services_items">
+            <img src="../static/images/goose_boat.jpg" alt="goose_boats" style="width: 275px; height: 275px;" />
+            <div class="services_text">
+              <h3>Goose Boats</h3>
+              <p>
+                Hop into our Goose Paddle Boats for a whimsical water adventure! Ideal for families and couples!
+              </p>
+            </div>
+          </div>
+          <div class="services_items">
+            <img src="../static/images/refreshments2.jpg" alt="Refreshments" style="width: 275px; height: 275px; " />
+            <div class="services_text">
+              <h3>Refreshments</h3>
+              <p>Discover our refreshing alcoholic drinks, perfect for complementing your meal with vibrant flavors and quality ingredients.</p>
+            </div>
+          </div>
+          <div class="services_items">
+            <img src="../static/images/kids_menu.png" alt="Kids Menu" style="width: 275px; height: 275px;"/>
+            <div class="services_text">
+              <h3>Kids Menu</h3>
+              <p>
+                Explore our Kids Menu, filled with tasty and nutritious options designed just for young diners. From fun twists on classics to wholesome favorites, every dish promises to delight and satisfy little appetites.
+              </p>
+            </div>
+          </div>
+          <div class="services_items">
+            <img
+                    src="../static/images/smashing_food.jpg" alt="Smashing Food" style="width: 275px; height: 275px;" />
+            <div class="services_text">
+              <h3>Smashing Food!</h3>
+              <p>Experience culinary excellence with our smashing dishes crafted from quality ingredients and expert skill. Join us for a delightful dining experience!</p>
+            </div>
+          </div>
+          <div class="services_items">
+            <img src="../static/images/lakeside_view.png" alt="Lakeside View" style="width: 275px; height: 275px;" />
+            <div class="services_text">
+              <h3>Lakeside View</h3>
+              <p>
+                Enjoy stunning lakeside dining at our restaurant. With panoramic views and a serene atmosphere, it's the perfect setting for any occasion.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Why Us Section -->
+    <section class="why_us" id="why">
+      <h2 class="section_title2">Why Us?</h2>
+      <div class="section_container">
+        <div class="why_container">
+          <div class="why_items">
+            <img src="../static/images/deliciousfood.png" alt="Delicious" style="width: 275px; height: 275px;" />
+            <div class="why_us_text">
+              <h3>Delicious Food</h3>
+              <p>
+                With a lavish spread of finger licking food, we serve to satisfy
+                your palate and take you on a culinary treat.
+              </p>
+            </div>
+          </div>
+          <div class="why_items">
+            <img src="../static/images/pleasant2.jpg" alt="Pleasant" style="width: 275px; height: 275px;" />
+            <div class="why_us_text">
+              <h3>Pleasant Ambience</h3>
+              <p>
+                We seek to serve all our guests with the perfect dining
+                experience. We provide perfect ambience to cherish special
+                moments.
+              </p>
+            </div>
+          </div>
+          <div class="why_items">
+            <img src="../static/images/hospitality.jpg" alt="Hospitality" style="width: 275px; height: 275px;" />
+            <div class="why_us_text">
+              <h3>Hospitality</h3>
+              <p>
+                Our staff members are happy to help. We go the extra mile to
+                make you happy.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+      <h2 class="section_title2">Gallery</h2>
+      <div class="section_container">
+        <div class="gallery_container">
+          <div class="gallery_items">
+            <img src="../static/images/gallery_food.png" alt="Gallery Image" />
+          </div>
+          <div class="gallery_items">
+            <img src="../static/images/gallery_boats.png" alt="Gallery Image" />
+          </div>
+          <div class="gallery_items">
+            <img src="../static/images/gallery_cocktails.png" alt="Gallery Image" />
+          </div>
+          <div class="gallery_items">
+            <img src="../static/images/gallery_staff.png" alt="Gallery Image" />
+          </div>
+          <div class="gallery_items">
+            <img src="../static/images/gallery_dessert.png" alt="Gallery Image" />
+          </div>
+          <div class="gallery_items">
+            <img src="../static/images/gallery_food2.png" alt="Gallery Image" />
+          </div>
+          <div class="gallery_items">
+            <img src="../static/images/gallery_food3.png" alt="Gallery Image" />
+          </div>
+          <div class="gallery_items">
+            <img src="../static/images/gallery_landscape.png" alt="Gallery Image" />
+          </div>
+          <div class="gallery_items">
+            <img src="../static/images/gallery_icecream.jpg" alt="Gallery Image" />
+          </div>
+        </div>
+      </div>
+      <!-- Upcoming Events Section -->
+      <section class="upcoming_events" id="events">
+        <h2 class="section_title1">Upcoming Events</h2>
+        <div class="section_container">
+          <div class="events_container">
+            <div class="events_items">
+              <img src="../static/images/goosebumps.png" alt="Gossebumps" class="event_image" />
+              <div class="upcoming_events_text">
+                <h3> Goosebumps haunted house</h3>
+                <p>
+                  Embark on the "Goosebumps" haunted house adventure at Ferret and Goose! Navigate through chilling corridors and eerie rooms filled with ghostly surprises. Brace yourself for heart-pounding thrills and spine-tingling encounters with the supernatural. Afterward, unwind with comforting dishes and spirited drinks at our restaurant. Experience "Goosebumps" for a hauntingly unforgettable time!
+                </p>
+              </div>
+            </div>
+            <div class="events_items">
+              <img src="../static/images/goose.egg.png" alt="Pleasant" class="event_image" />
+              <div class="upcoming_events_text">
+                <h3>Goose Egg Hunt</h3>
+                <p>
+                  Join us for a whimsical Goose Easter Egg Hunt at Ferret and Goose! Delight in exploring our grounds as you search for hidden goose-themed Easter eggs. Enjoy the thrill of discovery amidst our charming scenery, filled with surprises and festive cheer. After the hunt, gather with family and friends to savor delicious Easter treats and joyful moments at our restaurant. Hop along for a delightful Goose Easter Egg Hunt, where every discovery brings smiles and laughter!
+                </p>
+              </div>
+            </div>
+            <div class="events_items">
+              <img src="../static/images/pet_farm.png" alt="Pleasant" class="event_image" />
+              <div class="upcoming_events_text">
+                <h3>Goose Pet Farm</h3>
+                <p>
+                  Welcome to our charming Goose Pet Farm at Ferret and Goose! Discover a serene oasis where friendly geese roam freely amidst scenic surroundings. Enjoy interacting with these delightful birds, feeding them treats and learning about their unique behaviors. Whether you're seeking a peaceful escape or a fun family outing, our Goose Pet Farm offers a delightful experience for all ages, filled with gentle companionship and natural beauty.
 
-  {{ super() }}
-
-{% endblock %}
-{% block content %}
-
+                </p>
+              </div>
+            </div>
+            <div class="events_items">
+              <img src="../static/images/cooking_class.png" alt="Pleasant" class="event_image" />
+              <div class="upcoming_events_text">
+                <h3>Ferret & Goose Cooking Classes</h3>
+                <p>
+                  Experience the art of cooking at Ferret and Goose with our hands-on cookery classes. Led by expert chefs, learn new skills, master signature dishes, and enjoy a fun and educational culinary adventure with fresh, locally-sourced ingredients. Perfect for all levels, from beginners to seasoned cooks, our classes promise a delightful journey into the world of flavors and techniques.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+</body>
+</html>
 {% endblock %}
