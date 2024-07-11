@@ -8,8 +8,10 @@
   </head>
   <body>
     <nav>
-        <div class="nav-element">
-            <a href="{{ url_for('index') }}"><h1 id="title">Ferret & Goose</h1></a>
+        <div class="nav-element" id="logo">
+            <a href="{{ url_for('index') }}">
+                <img src="static/images/LPR.png" class="small-image">
+            </a>
         </div>
         <div class="nav-element"><a href="{{ url_for('menu') }}">Menu</a></div>
         <div class="nav-element"><a href="{{ url_for('booking') }}">Booking</a></div>
