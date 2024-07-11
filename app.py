@@ -270,3 +270,7 @@ def logout():
         session["user_id"] = None
 
     return redirect(url_for("index"))
+
+@app.route("/accountsettings", methods=["POST", "GET"])
+def accountsettings():
+    return render_template("accountsettings.html")
