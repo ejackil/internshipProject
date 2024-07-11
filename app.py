@@ -116,6 +116,10 @@ def menu():
 def reviews():
     return render_template("reviews.html")
 
+@app.route("/mybookings")
+def mybookings():
+    return render_template("mybookings.html")
+
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
@@ -185,8 +189,11 @@ def booking():
 
         db.session.commit()
 
-    # numbers above 4 break the layout for now
-    return render_template("booking.html", num_tables=4)
+    statement = select(Table)
+    rows = db.session.execute(statement)
+    tables = [{"id": row[0].table_id, "capacity": row[0].capacity} for row in rows]
+
+    return render_template("booking.html", tables=tables)
 
 
 def require_token(func):
@@ -212,7 +219,7 @@ def signup():
 
     if not all((first_name, last_name, email, password)):
         flash("All fields must be filled out")
-        return render_template("/signup")
+        return render_template("signup.html")
 
     statement = (select(User)
                  .where(User.email == email))
@@ -220,7 +227,7 @@ def signup():
 
     if list(users):
         flash("Email in use")
-        return render_template("/signup")
+        return render_template("signup.html")
 
 # TODO: hash password
     user = User(first_name, last_name, email=email, password=password)

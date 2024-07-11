@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const last_name_input = document.getElementById("last-name");
     const phone_number_input = document.getElementById("phone-number");
 
-    const chairs = document.getElementsByClassName("booking-chair");
+    const chairs = document.querySelectorAll(".booking-chair-6, .booking-chair-4, .booking-chair-2");
     for (const chair of chairs) {
         chair.style.transform += `rotate(${chair.dataset.angle})`;
     }
@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const table_id_input = document.getElementById("table-id");
     const table_display = document.getElementById("booking-info");
     const tables = document.getElementsByClassName("table-container");
+    const form = document.getElementById("create_form")
 
     Array.from(tables).forEach((table, i) => {
         table.addEventListener("click", (e) => {
@@ -26,8 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            table_display.innerHTML = `Booking for table ${i + 1}`;
-            table_id_input.value = i;
+            table_display.innerHTML = `Booking for table ${table.dataset.id}`;
+            table_id_input.value = table.dataset.id;
 
             for (other_table of tables) {
                 other_table.classList.remove("table-selected");
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    const table_background = document.getElementById("tables");
+    const table_background = document.getElementById("content");
     table_background.addEventListener("click", () => {
         table_display.innerHTML = "Select a table to begin booking";
         table_id_input.value = "";
@@ -91,5 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
     time_input.addEventListener("change", () => {
         personal_info_group.hidden = false;
         submit_button.hidden = false;
+    });
+
+    form.addEventListener("click", (e) => {
+        e.stopPropagation();
+        console.log("test");
     });
 });
