@@ -8,8 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const first_name_input = document.getElementById("first-name");
     const last_name_input = document.getElementById("last-name");
     const phone_number_input = document.getElementById("phone-number");
+    const inputs = document.querySelectorAll("#create_form input:not([id='submit']), #create_form select");
 
-    const chairs = document.getElementsByClassName("booking-chair");
+    const chairs = document.querySelectorAll(".booking-chair-6, .booking-chair-4, .booking-chair-2");
     for (const chair of chairs) {
         chair.style.transform += `rotate(${chair.dataset.angle})`;
     }
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const table_id_input = document.getElementById("table-id");
     const table_display = document.getElementById("booking-info");
     const tables = document.getElementsByClassName("table-container");
+    const form = document.getElementById("create_form")
 
     Array.from(tables).forEach((table, i) => {
         table.addEventListener("click", (e) => {
@@ -26,8 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            table_display.innerHTML = `Booking for table ${i + 1}`;
-            table_id_input.value = i;
+            table_display.innerHTML = `Booking for table ${table.dataset.id}`;
+            table_id_input.value = table.dataset.id;
 
             for (other_table of tables) {
                 other_table.classList.remove("table-selected");
@@ -44,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    const table_background = document.getElementById("tables");
+    const table_background = document.getElementById("content");
     table_background.addEventListener("click", () => {
         table_display.innerHTML = "Select a table to begin booking";
         table_id_input.value = "";
@@ -62,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         time_input.value = "";
     });
 
-    date_input.addEventListener("change", async () => {
+    date_input.addEventListener("input", async () => {
         time_input.value = "";
         personal_info_group.hidden = true;
 
@@ -91,5 +93,51 @@ document.addEventListener("DOMContentLoaded", () => {
     time_input.addEventListener("change", () => {
         personal_info_group.hidden = false;
         submit_button.hidden = false;
+    });
+
+    form.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+
+    if (window.sessionStorage.getItem("saved_info") && !window.sessionStorage.getItem("ignore_saved_info")) {
+        info = JSON.parse(window.sessionStorage.getItem("saved_info"));
+
+        for (const [id, value] of Object.entries(info)) {
+            if (id === "table-id" && value) {
+                table = document.querySelector(`.table-container:nth-child(${value})`);
+                table.classList.add("table-selected");
+            }
+
+            document.getElementById(id).value = value;
+        }
+
+        if (info["table-id"]) {
+            date_group.hidden = false;
+        }
+        if (info["date"]) {
+            time_group.hidden = false;
+        }
+        if (info["time"]) {
+            personal_info_group.hidden = false;
+            submit_button.hidden = false;
+        }
+
+        window.sessionStorage.removeItem("saved_info");
+    } else if (window.sessionStorage.getItem("ignore_saved_info")) {
+        window.sessionStorage.removeItem("saved_info");
+        window.sessionStorage.removeItem("ignore_saved_info");
+    }
+
+    form.addEventListener("submit", () => {
+        window.sessionStorage.setItem("ignore_saved_info", true)
+    });
+
+    window.addEventListener("pagehide", (e) => {
+        saved_info = {};
+        for (const input of inputs) {
+            saved_info[input.id] = input.value;
+        }
+
+        window.sessionStorage.setItem("saved_info", JSON.stringify(saved_info));
     });
 });

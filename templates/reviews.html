@@ -1,16 +1,13 @@
 {% extends "layout.html" %}
-{% block title %}About{% endblock %}
-{% block head %}
-{{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/reviews.css') }}">
+{% block title %}Bookings{% endblock %}
+{% block head%}
+    {{ super() }}
+    <link rel="stylesheet" href="../static/css/reviews.css">
 {% endblock %}
 {% block content %}
 <div class="container">
         <h1>Restaurant Reviews</h1>
         <div class="review good-review">
-
-
-
             <h2>A Lakeside Gem!
                 <div class="stars">
                 <span class="star" data-rating="1">★</span>
@@ -114,7 +111,7 @@
             <br>
 
         </div>
-    <br><br><br><br><br>
+    <br><br>
 
     <div id="submitbox" class="review">
     <form action="/submitContact" method="POST">
@@ -122,18 +119,45 @@
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" placeholder="Your name..">
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Your email..">
+
+        <label for="review_email">Email:</label>
+        <div class="email1">
+        <input type="email" id="review_email" name="email" placeholder="Your email..">
 
         <label for="message">Message:</label>
+        <div class = "message1">
         <textarea id="message" name="message" placeholder="Your message..">
 </textarea>
 
+ <label for="star-rating">Star Rating:</label>
+<title>5 Star Review Rating Button</title>
+
+                  <div id="ratingbox" class="review">
+    <form action="/submitContact" method="POST">
+
+<div class="star-rating">
+    <input type="radio" id="5-stars" name="rating" value="5" />
+    <label for="5-stars" title="5 stars">&#9733;</label>
+    <input type="radio" id="4-stars" name="rating" value="4" />
+    <label for="4-stars" title="4 stars">&#9733;</label>
+     <input type="radio" id="3-stars" name="rating" value="3" />
+    <label for="3-stars" title="3 stars">&#9733;</label>
+      <input type="radio" id="2-stars" name="rating" value="2" />
+    <label for="2-stars" title="2 stars">&#9733;</label>
+    <input type="radio" id="1-star" name="rating" value="1" />
+    <label for="1-star" title="1 star">&#9733;</label>
+</div>
+
+</body>
+</html>
+
+
+</div>
+        </div>
+<br>
                     <!-- Submit Button -->
         <input type="submit" value="Submit">
         </form>
     </div>
 </div>
-
-<script src="scripts.js"></script>
 {% endblock %}

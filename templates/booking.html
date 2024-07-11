@@ -7,14 +7,30 @@
 {% endblock %}
 {% block content %}
     <div id="tables">
-        {% for i in range(num_tables) %}
-        <div class="table-container">
-            <div class="booking-table"></div>
-            <div data-angle=0deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=90deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=180deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=270deg class="booking-chair" style="transform: translateY(-50%)"></div>
-        </div>
+        {% for table in tables %}
+            <div class="table-container" data-id="{{ table.id }}">
+            {% if table.capacity == 6 %}
+                <div class="booking-table-6"></div>
+                <div data-angle=0deg class="booking-chair-6" style="transform: translateX(-175%)"></div>
+                <div data-angle=0deg class="booking-chair-6" style="transform: translateX(-50%)"></div>
+                <div data-angle=0deg class="booking-chair-6" style="transform: translateX(75%)"></div>
+                <div data-angle=180deg class="booking-chair-6" style="transform: translateX(-175%)"></div>
+                <div data-angle=180deg class="booking-chair-6" style="transform: translateX(-50%)"></div>
+                <div data-angle=180deg class="booking-chair-6" style="transform: translateX(75%)"></div>
+            {% elif table.capacity == 4 %}
+                <div class="booking-table-4"></div>
+                <div data-angle=0deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+                <div data-angle=90deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+                <div data-angle=180deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+                <div data-angle=270deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+            {% elif table.capacity == 2 %}
+                <div class="booking-table-2"></div>
+                <div data-angle=0deg class="booking-chair-2" style="transform: translateY(-50%)"></div>
+                <div data-angle=180deg class="booking-chair-2" style="transform: translateY(-50%)"></div>
+            {% else %}
+                Error displaying table
+            {% endif %}
+            </div>
         {% endfor %}
     </div>
 
@@ -22,6 +38,10 @@
         <h1 id="booking-title">Make a Booking</h1>
 
         <p id="booking-info">Select a table to begin booking</p>
+
+        {% if user %}
+        <p id="user-info">Booking for {{ user.first_name.title() }} {{ user.last_name.title() }} <span>({{ user.email }})</span></p>
+        {% endif %}
 
         <div id="date-group" hidden>
             <label for="date">Date:</label>
@@ -55,17 +75,25 @@
             </select>
         </div>
 
-        <div id="personal-info-group" hidden>
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" placeholder="Enter first name.." required><br>
+        {% if user %}
+            <div id="personal-info-group" hidden>
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" value="{{ user.phone_number if user.phone_number else '' }}" required><br>
+            </div>
+        {% else %}
+            <div id="personal-info-group" hidden>
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" placeholder="Enter first name.." required><br>
 
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" placeholder="Enter last name.." required><br>
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" placeholder="Enter last name.." required><br>
 
-            <label for="phone_number">Phone Number:</label>
-            <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.." required><br>
-        </div>
-        <input id="submit" type="submit" value="Submit Booking" hidden><br>
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.." required><br>
+            </div>
+            <input id="submit" type="submit" value="Submit Booking" hidden><br>
+        {% endif %}
+        <input id="submit" type="submit" value="Submit Booking" hidden>
         <input id="table-id" type="number" name="table_id" hidden>
     </form>
 {% endblock %}
