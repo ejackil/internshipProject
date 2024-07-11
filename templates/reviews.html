@@ -128,9 +128,33 @@
         <div class = "message1">
         <textarea id="message" name="message" placeholder="Your message..">
 </textarea>
-        </div>
-        </div>
 
+ <label for="star-rating">Star Rating:</label>
+<title>5 Star Review Rating Button</title>
+
+                  <div id="ratingbox" class="review">
+    <form action="/submitContact" method="POST">
+
+<div class="star-rating">
+    <input type="radio" id="5-stars" name="rating" value="5" />
+    <label for="5-stars" title="5 stars">&#9733;</label>
+    <input type="radio" id="4-stars" name="rating" value="4" />
+    <label for="4-stars" title="4 stars">&#9733;</label>
+     <input type="radio" id="3-stars" name="rating" value="3" />
+    <label for="3-stars" title="3 stars">&#9733;</label>
+      <input type="radio" id="2-stars" name="rating" value="2" />
+    <label for="2-stars" title="2 stars">&#9733;</label>
+    <input type="radio" id="1-star" name="rating" value="1" />
+    <label for="1-star" title="1 star">&#9733;</label>
+</div>
+
+</body>
+</html>
+
+
+</div>
+        </div>
+<br>
                     <!-- Submit Button -->
         <input type="submit" value="Submit">
         </form>

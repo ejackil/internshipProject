@@ -116,6 +116,10 @@ def menu():
 def reviews():
     return render_template("reviews.html")
 
+@app.route("/mybookings")
+def mybookings():
+    return render_template("mybookings.html")
+
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():

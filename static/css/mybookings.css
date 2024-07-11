@@ -1,0 +1,99 @@
+ body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    color: #333;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #3e6347;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+h1 {
+    text-align: center;
+    color: #FFF;
+    font-size: 2em;
+}
+.booking-section {
+    margin-bottom: 40px;
+}
+.booking-section h2 {
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 10px;
+    color: #FFF;
+    font-size: 1.5em;
+}
+.currentbooking {
+    border: 1px solid #e1e4e8;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fafbfc;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease;
+}
+.currentbooking:hover {
+    box-shadow: 0 4px 12px rgba(0, 69, 38, 1);
+}
+.currentbooking h3 {
+    margin-top: 0;
+    color: #34495e;
+    font-size: 1.2em;
+}
+.currentbooking p {
+    margin: 5px 0;
+    color: #7f8c8d;
+}
+.currentbooking p strong {
+    color: #34495e;
+}
+
+.previousbooking {
+    border: 1px solid #e1e4e8;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fafbfc;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease;
+}
+
+.previousbooking:hover {
+    box-shadow: 0 4px 12px rgba(0, 69, 38, 1);
+}
+.previousbooking h3 {
+    margin-top: 0;
+    color: #34495e;
+    font-size: 1.2em;
+}
+.previousbooking p {
+    margin: 5px 0;
+    color: #7f8c8d;
+}
+.previousbooking p strong {
+    color: #34495e;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+.top-link {
+    display: inline-block;
+    text-align: right;
+    margin-top: 20px;
+    float: right;
+}
+
+.top-link img {
+   width: 20px;
+   height: 20px;
+}
+
+.top-link-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
