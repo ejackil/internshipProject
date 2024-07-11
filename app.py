@@ -172,22 +172,22 @@ def booking():
         time = request.form.get("time")
         table_id = request.form.get("table_id")
 
-        if not all((first_name, last_name, phone_number, date, time, table_id)):
-            return render_template("booking.html")
+        if all((first_name, last_name, phone_number, date, time, table_id)):
+            # date format is "YYYY-MM-DD HH:MM"
+            start_time = datetime.strptime(f"{date} {time}",
+                                           "%Y-%m-%d %H:%M")
+            end_time = start_time + timedelta(hours=2)
 
-        # date format is "YYYY-MM-DD HH:MM"
-        start_time = datetime.strptime(f"{date} {time}",
-                                       "%Y-%m-%d %H:%M")
-        end_time = start_time + timedelta(hours=2)
+            user = User(first_name, last_name, phone_number=phone_number)
+            db.session.add(user)
+            db.session.flush()
 
-        user = User(first_name, last_name, phone_number=phone_number)
-        db.session.add(user)
-        db.session.flush()
+            reservation = Reservation(start_time, end_time, user.user_id, table_id)
+            db.session.add(reservation)
 
-        reservation = Reservation(start_time, end_time, user.user_id, table_id)
-        db.session.add(reservation)
-
-        db.session.commit()
+            db.session.commit()
+        else:
+            flash("You must fill out every field")
 
     statement = select(Table)
     rows = db.session.execute(statement)
