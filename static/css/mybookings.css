@@ -1,4 +1,4 @@
- body {
+ #content {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
@@ -28,52 +28,54 @@ h1 {
     color: #FFF;
     font-size: 1.5em;
 }
-.currentbooking {
+.current-booking {
     border: 1px solid #e1e4e8;
     padding: 20px;
     margin-bottom: 20px;
     background-color: #fafbfc;
     border-radius: 5px;
     transition: box-shadow 0.3s ease;
+    position: relative;
 }
-.currentbooking:hover {
+.current-booking:hover {
     box-shadow: 0 4px 12px rgba(0, 69, 38, 1);
 }
-.currentbooking h3 {
+.current-booking h3 {
     margin-top: 0;
     color: #34495e;
     font-size: 1.2em;
 }
-.currentbooking p {
+.current-booking p {
     margin: 5px 0;
     color: #7f8c8d;
 }
-.currentbooking p strong {
+.current-booking p strong {
     color: #34495e;
 }
 
-.previousbooking {
+.previous-booking {
     border: 1px solid #e1e4e8;
     padding: 20px;
     margin-bottom: 20px;
     background-color: #fafbfc;
     border-radius: 5px;
     transition: box-shadow 0.3s ease;
+    position: relative;
 }
 
-.previousbooking:hover {
+.previous-booking:hover {
     box-shadow: 0 4px 12px rgba(0, 69, 38, 1);
 }
-.previousbooking h3 {
+.previous-booking h3 {
     margin-top: 0;
     color: #34495e;
     font-size: 1.2em;
 }
-.previousbooking p {
+.previous-booking p {
     margin: 5px 0;
     color: #7f8c8d;
 }
-.previousbooking p strong {
+.previous-booking p strong {
     color: #34495e;
 }
 html {
@@ -90,10 +92,90 @@ html {
 .top-link img {
    width: 20px;
    height: 20px;
+   -webkit-filter: invert(1);
+   filter: invert(1);
 }
 
 .top-link-container {
     position: absolute;
     bottom: 20px;
     right: 20px;
+}
+
+.cancel {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.cancel img{
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.cancel img:hover {
+    box-shadow: 0 4px 12px rgba(128, 162, 147, 1);
+}
+
+.delete {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.delete img{
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.delete img:hover {
+    box-shadow: 0 4px 12px rgba(128, 162, 147, 1);
+}
+
+.cancelling {
+   position: absolute;
+    width: 100px;
+    top: 125%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: black;
+    font-size: 12px;
+}
+.delete:hover .cancelling {
+    opacity: 1;
+
+}
+.del-booking {
+    position: absolute;
+    width: 100px;
+    top: 125%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: black;
+    font-size: 12px;
+}
+.delete:hover .del-booking {
+    opacity: 1;
 }

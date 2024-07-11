@@ -24,7 +24,15 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-
+.section_title::after {
+    content: '';
+    width: 100px;
+    background: #f3961c;
+    height: 5px;
+    display: block;
+    margin: 7px auto 0;
+    border-radius: 8px;
+}
 .menu-item {
     border-bottom: 1px solid #305a4c; /* Darker green border bottom */
     padding: 15px 0;
@@ -33,8 +41,33 @@ h1 {
 .menu-item:last-child {
     border-bottom: none
 }
+.allergen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Adjust the space between text and icon as needed */
+}
+
+.allergen img {
+    height: 40px; /* Adjust the size of the icons as needed */
+    width: auto;
+}
+
+.container2 {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #1e4439;
+    padding: 10px;  /* Reduced padding */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    max-height: 400px;  /* Set a maximum height */
+    overflow: auto;  /* Add overflow auto to handle content overflow */
+}
 
 .small-svg {
+    width: 25px;  /* Adjust the width as needed */
+}
+.large-svg {
     width: 50px;  /* Adjust the width as needed */
-
 }

@@ -55,13 +55,14 @@ class Reservation(db.Model):
     end_time = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     table_id = db.Column(db.Integer, db.ForeignKey("tables.table_id"), nullable=False)
+    phone_number = db.Column(db.String(20))
 
-    def __init__(self, start_time, end_time, user_id, table_id):
+    def __init__(self, start_time, end_time, user_id, table_id, phone_number):
         self.start_time = start_time
         self.end_time = end_time
         self.user_id = user_id
         self.table_id = table_id
-
+        self.phone_number = phone_number
 
 class Complaint(db.Model):
     __tablename__ = 'contact_table'
@@ -80,6 +81,17 @@ class Complaint(db.Model):
 
 with app.app_context():
     db.create_all()
+
+
+def require_token(func):
+    @wraps(func)
+    def check_token(*args, **kwargs):
+        if not session.get("logged_in"):
+# TODO flash access denied
+            return redirect(url_for("login", next=request.full_path))
+        return func(*args, **kwargs)
+
+    return check_token
 
 
 @app.route("/")
@@ -117,8 +129,26 @@ def reviews():
     return render_template("reviews.html")
 
 @app.route("/mybookings")
+@require_token
 def mybookings():
-    return render_template("mybookings.html")
+    statement = (select(Reservation)
+                 .where(Reservation.user_id == session["user_id"])
+                 .where(Reservation.start_time <= datetime.now())
+                 )
+
+    rows = db.session.execute(statement)
+    past_bookings = [row[0] for row in rows]
+
+    statement = (select(Reservation)
+                 .where(Reservation.user_id == session["user_id"])
+                 .where(Reservation.start_time > datetime.now())
+                 )
+    rows = db.session.execute(statement)
+    upcoming_bookings = [row[0] for row in rows]
+
+    return render_template("mybookings.html",
+                          past_bookings=past_bookings,
+                          upcoming_bookings=upcoming_bookings)
 
 
 @app.route("/mailinglist", methods=["POST"])
@@ -164,47 +194,66 @@ def get_bookings(table_id):
 
 @app.route("/booking", methods=["GET", "POST"])
 def booking():
-    if request.method == "POST":
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        phone_number = request.form.get("phone_number")
-        date = request.form.get("date")
-        time = request.form.get("time")
-        table_id = request.form.get("table_id")
+    phone_number = request.form.get("phone_number")
+    date = request.form.get("date")
+    time = request.form.get("time")
+    table_id = request.form.get("table_id")
 
-        if not all((first_name, last_name, phone_number, date, time, table_id)):
-            return render_template("booking.html")
+
+    if request.method == "POST":
+        if session.get("logged_in"):
+            if not all((phone_number, date, time, table_id)):
+                flash("You must fill out every field")
+                return display_tables()
+
+            user_id = session["user_id"]
+
+        else:
+            first_name = request.form.get("first_name")
+            last_name = request.form.get("last_name")
+
+            if not all((first_name, last_name, phone_number, date, time, table_id)):
+                flash("You must fill out every field")
+                return display_tables()
+
+
+            user = User(first_name, last_name, phone_number=phone_number)
+            db.session.add(user)
+            db.session.flush()
+
+            user_id = user.user_id
 
         # date format is "YYYY-MM-DD HH:MM"
         start_time = datetime.strptime(f"{date} {time}",
                                        "%Y-%m-%d %H:%M")
         end_time = start_time + timedelta(hours=2)
 
-        user = User(first_name, last_name, phone_number=phone_number)
-        db.session.add(user)
-        db.session.flush()
-
-        reservation = Reservation(start_time, end_time, user.user_id, table_id)
+        reservation = Reservation(start_time, end_time, user_id, table_id, phone_number)
         db.session.add(reservation)
 
         db.session.commit()
 
+        if session.get("logged_in"):
+            return redirect(url_for("mybookings"))
+
+    return display_tables()
+
+
+def display_tables():
     statement = select(Table)
     rows = db.session.execute(statement)
     tables = [{"id": row[0].table_id, "capacity": row[0].capacity} for row in rows]
 
-    return render_template("booking.html", tables=tables)
+    user = None
 
+    if session.get("logged_in") == True:
+        statement = (select(User)
+                     .where(User.user_id == session["user_id"]))
+        row = next(db.session.execute(statement))
+        user = row[0]
 
-def require_token(func):
-    @wraps(func)
-    def check_token(*args, **kwargs):
-        if 'user_id' not in session:
-# TODO flash access denied
-            return redirect(url_for("login"))
-        return func(*args, **kwargs)
+    return render_template("booking.html", tables=tables, user=user)
 
-    return check_token
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -242,7 +291,7 @@ def signup():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template('login.html')
+        return render_template('login.html', next=request.args.get("next"))
 
     email = request.form.get("email")
     password = request.form.get("password")
@@ -260,6 +309,8 @@ def login():
     session["logged_in"] = True
     session['user_id'] = list(user_id)[0][0]
 
+    if redirect_page := request.args.get("next"):
+        return redirect(redirect_page)
     return redirect(url_for("index"))
 
 
@@ -269,4 +320,4 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
-    return redirect(url_for("index"))
+    return redirect(request.referrer)
