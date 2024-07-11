@@ -35,6 +35,8 @@ h1 {
 }
 
 .small-svg {
+    width: 25px;  /* Adjust the width as needed */
+}
+.large-svg {
     width: 50px;  /* Adjust the width as needed */
-
 }
