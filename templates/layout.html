@@ -21,7 +21,16 @@
             <div id="signup-tab" class="nav-element"><a href="{{ url_for('signup') }}">Sign Up</a></div>
             <div id="login-tab" class="nav-element"><a href="{{ url_for('login') }}">Log In</a></div>
         {% else %}
-            <div id="account-tab" class="nav-element"><a href="#">Account</a></div>
+            <div id="account-tab" class="nav-element">
+                <div>Account</div>
+                <div id="account-dropdown">
+                    <a href="#">Account Settings</a>
+                    <a href="/mybookings">My Bookings</a>
+                    <form action="/logout" method="POST">
+                        <input type="submit" id="logout-button" value="Log Out">
+                    </form>
+                </div>
+            </div>
         {% endif %}
     </nav>
     <div id="navbar-spacer"></div>

@@ -116,6 +116,10 @@ def menu():
 def reviews():
     return render_template("reviews.html")
 
+@app.route("/mybookings")
+def mybookings():
+    return render_template("mybookings.html")
+
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
@@ -168,25 +172,28 @@ def booking():
         time = request.form.get("time")
         table_id = request.form.get("table_id")
 
-        if not all((first_name, last_name, phone_number, date, time, table_id)):
-            return render_template("booking.html")
+        if all((first_name, last_name, phone_number, date, time, table_id)):
+            # date format is "YYYY-MM-DD HH:MM"
+            start_time = datetime.strptime(f"{date} {time}",
+                                           "%Y-%m-%d %H:%M")
+            end_time = start_time + timedelta(hours=2)
 
-        # date format is "YYYY-MM-DD HH:MM"
-        start_time = datetime.strptime(f"{date} {time}",
-                                       "%Y-%m-%d %H:%M")
-        end_time = start_time + timedelta(hours=2)
+            user = User(first_name, last_name, phone_number=phone_number)
+            db.session.add(user)
+            db.session.flush()
 
-        user = User(first_name, last_name, phone_number=phone_number)
-        db.session.add(user)
-        db.session.flush()
+            reservation = Reservation(start_time, end_time, user.user_id, table_id)
+            db.session.add(reservation)
 
-        reservation = Reservation(start_time, end_time, user.user_id, table_id)
-        db.session.add(reservation)
+            db.session.commit()
+        else:
+            flash("You must fill out every field")
 
-        db.session.commit()
+    statement = select(Table)
+    rows = db.session.execute(statement)
+    tables = [{"id": row[0].table_id, "capacity": row[0].capacity} for row in rows]
 
-    # numbers above 4 break the layout for now
-    return render_template("booking.html", num_tables=4)
+    return render_template("booking.html", tables=tables)
 
 
 def require_token(func):
@@ -212,7 +219,7 @@ def signup():
 
     if not all((first_name, last_name, email, password)):
         flash("All fields must be filled out")
-        return render_template("/signup")
+        return render_template("signup.html")
 
     statement = (select(User)
                  .where(User.email == email))
@@ -220,7 +227,7 @@ def signup():
 
     if list(users):
         flash("Email in use")
-        return render_template("/signup")
+        return render_template("signup.html")
 
 # TODO: hash password
     user = User(first_name, last_name, email=email, password=password)
@@ -262,4 +269,4 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
-    return "Logged out"
+    return redirect(url_for("index"))

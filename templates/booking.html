@@ -7,14 +7,30 @@
 {% endblock %}
 {% block content %}
     <div id="tables">
-        {% for i in range(num_tables) %}
-        <div class="table-container">
-            <div class="booking-table"></div>
-            <div data-angle=0deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=90deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=180deg class="booking-chair" style="transform: translateY(-50%)"></div>
-            <div data-angle=270deg class="booking-chair" style="transform: translateY(-50%)"></div>
-        </div>
+        {% for table in tables %}
+            <div class="table-container" data-id="{{ table.id }}">
+            {% if table.capacity == 6 %}
+                <div class="booking-table-6"></div>
+                <div data-angle=0deg class="booking-chair-6" style="transform: translateX(-175%)"></div>
+                <div data-angle=0deg class="booking-chair-6" style="transform: translateX(-50%)"></div>
+                <div data-angle=0deg class="booking-chair-6" style="transform: translateX(75%)"></div>
+                <div data-angle=180deg class="booking-chair-6" style="transform: translateX(-175%)"></div>
+                <div data-angle=180deg class="booking-chair-6" style="transform: translateX(-50%)"></div>
+                <div data-angle=180deg class="booking-chair-6" style="transform: translateX(75%)"></div>
+            {% elif table.capacity == 4 %}
+                <div class="booking-table-4"></div>
+                <div data-angle=0deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+                <div data-angle=90deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+                <div data-angle=180deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+                <div data-angle=270deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+            {% elif table.capacity == 2 %}
+                <div class="booking-table-2"></div>
+                <div data-angle=0deg class="booking-chair-2" style="transform: translateY(-50%)"></div>
+                <div data-angle=180deg class="booking-chair-2" style="transform: translateY(-50%)"></div>
+            {% else %}
+                Error displaying table
+            {% endif %}
+            </div>
         {% endfor %}
     </div>
 
