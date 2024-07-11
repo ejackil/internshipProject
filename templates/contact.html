@@ -5,15 +5,15 @@
   <link rel="stylesheet" href="../static/css/contact.css">
 {% endblock %}
 {% block content %}
-<h1 style="background-color:#004526">Contact Us</h1>
+<h1 style="background-color:#3E6347">Contact Us</h1>
 
  <form action="/contact" method="POST">
   <p><label for="fname">First name:</label><br></p>
   <input type="text" id="fname" name="fname"><br>
     <p><label for="lname">Last name:</label><br></p>
   <input type="text" id="lname" name="lname">
-  <p></p><label for="email">Email address:</label><br></p>
-  <input type="text" id="email" name="email">
+  <p></p><label for="contactemail">Email address:</label><br></p>
+  <input type="text" id="contactemail" name="email">
   <p><label for="reason">Why are you contacting us? :</label><br></p>
   <textarea id="reason" name="reason"></textarea><br>
   <input type="submit" value="Submit">
