@@ -291,7 +291,7 @@ def signup():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template('login.html')
+        return render_template('login.html', next=request.args.get("next"))
 
     email = request.form.get("email")
     password = request.form.get("password")
