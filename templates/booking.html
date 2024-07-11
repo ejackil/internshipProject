@@ -39,6 +39,10 @@
 
         <p id="booking-info">Select a table to begin booking</p>
 
+        {% if user %}
+        <p id="user-info">Booking for {{ user.first_name.title() }} {{ user.last_name.title() }} <span>({{ user.email }})</span></p>
+        {% endif %}
+
         <div id="date-group" hidden>
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" required><br>
@@ -71,17 +75,25 @@
             </select>
         </div>
 
-        <div id="personal-info-group" hidden>
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" placeholder="Enter first name.." required><br>
+        {% if user %}
+            <div id="personal-info-group" hidden>
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" value="{{ user.phone_number if user.phone_number else '' }}" required><br>
+            </div>
+        {% else %}
+            <div id="personal-info-group" hidden>
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" placeholder="Enter first name.." required><br>
 
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" placeholder="Enter last name.." required><br>
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" placeholder="Enter last name.." required><br>
 
-            <label for="phone_number">Phone Number:</label>
-            <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.." required><br>
-        </div>
-        <input id="submit" type="submit" value="Submit Booking" hidden><br>
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.." required><br>
+            </div>
+            <input id="submit" type="submit" value="Submit Booking" hidden><br>
+        {% endif %}
+        <input id="submit" type="submit" value="Submit Booking" hidden>
         <input id="table-id" type="number" name="table_id" hidden>
     </form>
 {% endblock %}

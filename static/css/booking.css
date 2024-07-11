@@ -52,6 +52,19 @@
     font-weight: bold;
 }
 
+#user-info {
+    color: #3e6347;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#user-info span {
+    color: darkgrey;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: italic;
+}
+
 #tables {
     height: 100%;
     width: 70%;

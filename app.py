@@ -55,13 +55,14 @@ class Reservation(db.Model):
     end_time = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     table_id = db.Column(db.Integer, db.ForeignKey("tables.table_id"), nullable=False)
+    phone_number = db.Column(db.String(20))
 
-    def __init__(self, start_time, end_time, user_id, table_id):
+    def __init__(self, start_time, end_time, user_id, table_id, phone_number):
         self.start_time = start_time
         self.end_time = end_time
         self.user_id = user_id
         self.table_id = table_id
-
+        self.phone_number = phone_number
 
 class Complaint(db.Model):
     __tablename__ = 'contact_table'
@@ -164,42 +165,70 @@ def get_bookings(table_id):
 
 @app.route("/booking", methods=["GET", "POST"])
 def booking():
-    if request.method == "POST":
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        phone_number = request.form.get("phone_number")
-        date = request.form.get("date")
-        time = request.form.get("time")
-        table_id = request.form.get("table_id")
+    phone_number = request.form.get("phone_number")
+    date = request.form.get("date")
+    time = request.form.get("time")
+    table_id = request.form.get("table_id")
 
-        if all((first_name, last_name, phone_number, date, time, table_id)):
-            # date format is "YYYY-MM-DD HH:MM"
-            start_time = datetime.strptime(f"{date} {time}",
-                                           "%Y-%m-%d %H:%M")
-            end_time = start_time + timedelta(hours=2)
+
+    if request.method == "POST":
+        if session.get("logged_in"):
+            if not all((phone_number, date, time, table_id)):
+                flash("You must fill out every field")
+                return display_tables()
+
+            user_id = session["user_id"]
+
+        else:
+            first_name = request.form.get("first_name")
+            last_name = request.form.get("last_name")
+
+            if not all((first_name, last_name, phone_number, date, time, table_id)):
+                flash("You must fill out every field")
+                return display_tables()
+
 
             user = User(first_name, last_name, phone_number=phone_number)
             db.session.add(user)
             db.session.flush()
 
-            reservation = Reservation(start_time, end_time, user.user_id, table_id)
-            db.session.add(reservation)
+            user_id = user.user_id
 
-            db.session.commit()
-        else:
-            flash("You must fill out every field")
+        # date format is "YYYY-MM-DD HH:MM"
+        start_time = datetime.strptime(f"{date} {time}",
+                                       "%Y-%m-%d %H:%M")
+        end_time = start_time + timedelta(hours=2)
 
+        reservation = Reservation(start_time, end_time, user_id, table_id, phone_number)
+        db.session.add(reservation)
+
+        db.session.commit()
+
+        if session.get("logged_in"):
+            return redirect(url_for("mybookings"))
+
+    return display_tables()
+
+
+def display_tables():
     statement = select(Table)
     rows = db.session.execute(statement)
     tables = [{"id": row[0].table_id, "capacity": row[0].capacity} for row in rows]
 
-    return render_template("booking.html", tables=tables)
+    user = None
 
+    if session.get("logged_in") == True:
+        statement = (select(User)
+                     .where(User.user_id == session["user_id"]))
+        row = next(db.session.execute(statement))
+        user = row[0]
+
+    return render_template("booking.html", tables=tables, user=user)
 
 def require_token(func):
     @wraps(func)
     def check_token(*args, **kwargs):
-        if 'user_id' not in session:
+        if not session.get("logged_in"):
 # TODO flash access denied
             return redirect(url_for("login"))
         return func(*args, **kwargs)
@@ -269,4 +298,4 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
-    return redirect(url_for("index"))
+    return redirect(request.origin)
