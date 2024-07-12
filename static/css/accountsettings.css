@@ -1,3 +1,17 @@
+:root {
+    --main-bg-color: #3E6347;
+    --main-bg-gradient: linear-gradient(180deg, #3E6347, #004526);
+    --hover-bg-color: rgba(0, 0, 0, 0.2);
+    --active-bg-color: rgba(255, 255, 255, 0.1);
+    --text-color: white;
+    --highlight-color: #04AA6D;
+    --highlight-hover-color: #028a57;
+    --error-color: #ff0000;
+    --section-bg-color: white;
+    --section-border-color: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
 #content {
     min-height: calc(100vh - 225px);
 }
@@ -6,11 +20,11 @@
     margin: 0;
     padding: 20px;
     width: 15%;
-    background: linear-gradient(180deg, #3E6347, #004526);
+    background: var(--main-bg-gradient);
     position: fixed;
     height: 100%;
     overflow: auto;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0 5px var(--shadow-color);
     border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
@@ -23,7 +37,7 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    color: white;
+    color: var(--text-color);
     margin-bottom: 20px;
 }
 
@@ -31,7 +45,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    color: white;
+    color: var(--text-color);
     padding: 15px 20px;
     text-decoration: none;
     font-size: 16px;
@@ -45,13 +59,11 @@
 }
 
 .sidebar a.active {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+    background-color: var(--active-bg-color);
 }
 
 .sidebar a:hover:not(.active) {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: white;
+    background-color: var(--hover-bg-color);
     padding-left: 30px;
 }
 
@@ -65,39 +77,13 @@
     background-color: #f9f9f9;
 }
 
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        box-shadow: none;
-        border-right: none;
-    }
-    .sidebar a {
-        float: left;
-        padding: 10px 20px;
-    }
-    #settings {
-        margin-left: 0;
-    }
-}
-
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-@media screen and (max-width: 400px) {
-    .sidebar a {
-        text-align: center;
-        float: none;
-    }
-}
-
 .section {
     margin-bottom: 50px;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px var(--shadow-color);
     padding: 24px;
-    background-color: white;
-    border: 1px solid #e0e0e0;
+    background-color: var(--section-bg-color);
+    border: 1px solid var(--section-border-color);
 }
 
 .section h2 {
@@ -137,14 +123,14 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus,
 textarea:focus {
-    border-color: #04AA6D;
+    border-color: var(--highlight-color);
     outline: none;
 }
 
 input[type="submit"] {
     padding: 12px 20px;
-    background-color: #04AA6D;
-    color: white;
+    background-color: var(--highlight-color);
+    color: var(--text-color);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -154,7 +140,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #028a57;
+    background-color: var(--highlight-hover-color);
     transform: translateY(-2px);
 }
 
@@ -164,12 +150,69 @@ input[type="checkbox"] {
 
 p {
     font-size: 14px;
-    color: #ff0000;
+    color: var(--error-color);
     margin-top: 5px;
 }
 
 html {
     scroll-behavior: smooth;
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        box-shadow: none;
+        border-right: none;
+    }
+
+    .sidebar a {
+        float: left;
+        padding: 10px 20px;
+    }
+
+    #settings {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
+
+#delete-account {
+    background-color: #d11a2a;
+}
+
+#privacy-form {
+    font-size: 16px;
+}
+
+#privacy-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+#privacy-form input[type="radio"],
+#privacy-form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#privacy-form input[type="submit"] {
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
 }
 
 
