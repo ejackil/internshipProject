@@ -1,3 +1,4 @@
+import werkzeug.routing.exceptions
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -88,7 +89,7 @@ def require_token(func):
     def check_token(*args, **kwargs):
         if not session.get("logged_in"):
 # TODO flash access denied
-            return redirect(url_for("login", next=request.full_path))
+            return redirect(url_for("login", next=request.endpoint))
         return func(*args, **kwargs)
 
     return check_token
@@ -309,8 +310,11 @@ def login():
     session["logged_in"] = True
     session['user_id'] = list(user_id)[0][0]
 
-    if redirect_page := request.args.get("next"):
-        return redirect(redirect_page)
+    if next := request.args.get("next"):
+        try:
+            return redirect(url_for(next))
+        except werkzeug.routing.exceptions.BuildError:
+            return redirect(url_for("index"))
     return redirect(url_for("index"))
 
 
