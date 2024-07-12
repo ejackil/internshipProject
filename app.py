@@ -2,7 +2,7 @@ import werkzeug.routing.exceptions
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from functools import wraps
 
 USERNAME = "root"
@@ -142,9 +142,25 @@ def menu():
     return render_template("menu.html")
 
 
-@app.route("/reviews")
+@app.route("/reviews", methods=["GET", "POST"])
 def reviews():
-    return render_template("reviews.html")
+    if request.method == "POST":
+        name = request.form.get("name")
+        title = request.form.get("heading")
+        body = request.form.get("message")
+        rating = int(request.form.get("rating"))
+
+        review = Review(name, title, body, rating, date.today())
+        db.session.add(review)
+        db.session.commit()
+
+        return redirect(url_for("reviews"))
+
+    statement = select(Review)
+    rows = db.session.execute(statement)
+    reviews = [row[0] for row in rows]
+
+    return render_template("reviews.html", reviews=reviews)
 
 @app.route("/mybookings")
 @require_token

@@ -95,12 +95,28 @@
                 <span class="star" data-rating="5">☆</span>
             </div>
             <p class="date">March 28 2022- Jack Killilea</p>
-            <p>0 stars. The food was cold, the wait staff was rude, and to add insult to injury, the company goose bit me on my way out.<p></p>
+            <p>0 stars. The food was cold, the wait staff was rude, and to add insult to injury, the company goose bit me on my way out.</p>
         </div>
+        {% for review in reviews %}
+            <div class="separator"></div>
+            <div class="review">
+             <h2>{{ review.title }}</h2>
+            <div class="stars">
+                {% for i in range(review.rating) %}
+                    <span class="star">★</span>
+                {% endfor %}
+                {% for i in range(5 - review.rating) %}
+                    <span class="star">☆</span>
+                {% endfor %}
+            </div>
+            <p class="date">{{ review.date.strftime("%B %d, %Y") }} - {{ review.name }}</p>
+            <p>{{ review.body }}</p>
+        </div>
+        {% endfor %}
     </div>
 
     <div id="submitbox" class="review">
-        <form action="/submitContact" method="POST">
+        <form action="{{ url_for('reviews') }}" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your name...">
 
