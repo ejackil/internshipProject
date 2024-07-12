@@ -6,13 +6,21 @@ section {
     scroll-margin-top: 110px;
 }
 
+body {
+        margin: 0;
+        padding: 0;
+        background-color:#152c24;
+
+}
+
+
 #content {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Bodoni',bodoni;
     line-height: 1.6;
     color: #444;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: #152c24;
     scroll-behavior: smooth;
 }
 
@@ -20,10 +28,11 @@ section {
     width: 85%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
+    padding: 100px;
+    border: 5px solid #f3961c;
+    background-color: #ffffff;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    border-radius: 60px;
     transition: box-shadow 0.3s ease-in-out;
 }
 
@@ -36,7 +45,7 @@ section {
     max-width: 1200px;
     margin: 15px auto 0px auto;
     padding: 20px;
-    background-color: #3E6347;
+    background-color: #f;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     transition: box-shadow 0.3s ease-in-out;
@@ -49,19 +58,25 @@ section {
 main {
     padding: 25px 0;
 }
+h1 {
+    color: #000000;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    padding-bottom: 10px;
+}
 
 h2 {
     color: #000000;
     margin-bottom: 20px;
-    font-size: 2.5rem;
-    border-bottom: 2px solid #E5E5E5;
+    font-size: 5.5rem;
+    border-bottom: 2px solid #96084c;
     padding-bottom: 10px;
 }
 
 p {
     margin: 15px 0;
     color: #555;
-    font-size: 1.1rem;
+    font-size: 1.75rem;
     line-height: 1.8;
 }
 
@@ -138,7 +153,6 @@ ul li b {
 .dropdown > button:first-child {
     width: 30px;
     height: 30px;
-    filter: invert();
     border-radius: 0px;
 
     background-repeat: no-repeat;
@@ -171,8 +185,6 @@ ul li b {
 }
 
 .dropdown button {
-    background-color: #3E6347;
-    color: white;
     padding: 16px;
     font-size: 16px;
     border: none;
@@ -182,7 +194,7 @@ ul li b {
 }
 
 .dropdown button:hover {
-    background-color: #45a049;
+
 }
 
 .container {
@@ -211,5 +223,13 @@ h1 {
     float: right;
     margin-right: 65px;
 }
+h1 {
+        font-family: 'Cambria',cambria ;
+        text-shadow: 2px 2px #f3961c;
+        text-align: center;
+        font-size: 5em;
+        margin: 1px;
+}
+
 
 

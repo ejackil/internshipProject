@@ -4,13 +4,14 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+<script src="https://kit.fontawesome.com/92e8678e24.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
 <body>
     <div class="container" id="bangboom">
         <div class="dropdown">
-            <button style="background: url('static/images/menu-9-svgrepo-com (1).svg')"></button>
+            <button><i class="fa-solid fa-bars"></i></button>
             <div class="dropdown-content">
                 <a href="#about-us">About Us</a>
                 <a href="#our-story">Our Story</a>
@@ -18,14 +19,14 @@
                 <a href="#why-choose-us">Why Choose Us?</a>
             </div>
         </div>
-        <h1 style="color:white">Ferret & Goose</h1>
+        <h1 style="color:black">Ferret & Goose</h1>
     </div>
 
     <main>
         <div class="container">
             <section id="about-us">
                 <h2>About Us</h2>
-                <p>Welcome to Ferret & Goose, where culinary excellence meets a delightful dining experience. Our restaurant is committed to offering the finest cuisine, crafted with the freshest ingredients, and served in a warm and inviting atmosphere.</p>
+                <p>Welcome to Ferret and Goose, where the future of dining comes to life. Nestled by the serene lakeside, our restaurant offers a unique blend of cutting-edge technology and culinary excellence.  Our smart tables provide interactive, multi-sensory experiences, while our menus cater to your unique tastes and dietary needs. At Ferret and Goose, we embrace sustainable practices with zero-waste kitchens and hyper-fresh, locally sourced ingredients. Join us for an unparalleled gastronomic adventure that redefines the boundaries of fine dining, offering an immersive, innovative, and eco-friendly experience.</p>
                 <a href="#" class="top-link"><img src="static/images/up-arrow.svg" alt="Return to Top"></a>
             </section>
 

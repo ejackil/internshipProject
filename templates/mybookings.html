@@ -6,42 +6,30 @@
 {% endblock %}
 {% block content %}
 
-<body>
-    <div class="container">
-        <h1>My Bookings</h1>
+<div class="container">
+    <h1>My Bookings</h1>
 
-        <div class="booking-section">
-            <h2>Current Bookings</h2>
+    <div class="booking-section">
+        <h2>Current Bookings</h2>
+        {% for upcoming_booking in upcoming_bookings %}
             <div class="current-booking">
-                <h3>Booking #12345</h3>
-                <p><strong>Date:</strong> July 20, 2024</p>
-                <p><strong>Time:</strong> 2:00 PM</p>
+                <h3>Reservation - {{ upcoming_booking.start_time.strftime("%d %B %Y") }}</h3>
+                <p><strong>Time:</strong> {{ upcoming_booking.start_time.strftime("%H:%M") }}</p>
+                <p><strong>Table:</strong> {{ upcoming_booking.table_id }}</p>
                 <button type="button" class="cancel" ><img src="static/images/cancel-button.svg" alt="Cancel"><span class="cancelling">Cancel Booking</span></button>
             </div>
-            <div class="current-booking">
-                <h3>Booking #12346</h3>
-                <p><strong>Date:</strong> July 22, 2024</p>
-                <p><strong>Time:</strong> 11:00 AM</p>
-                <button type="button" class="cancel" ><img src="static/images/cancel-button.svg" alt="Cancel"><span class="cancelling">Cancel Booking</span></button>
-        </div>
-        <a href="#" class="top-link"><img src="static/images/up-arrow.svg" alt="Return to Top"></a>
-        <div class="booking-section">
-            <h2>Previous Bookings</h2>
-            <div class="previous-booking">
-                <h3>Booking #12344</h3>
-                <p><strong>Date:</strong> June 15, 2024</p>
-                <p><strong>Time:</strong> 3:00 PM</p>
-                 <button type="button" class="delete" ><img src="static/images/delete.svg" alt="Delete"><span class="del-booking">Delete Booking</span></button>
-            </div>
-            <div class="previous-booking">
-                <h3>Booking #12343</h3>
-                <p><strong>Date:</strong> May 10, 2024</p>
-                <p><strong>Time:</strong> 10:00 AM</p>
-                <button type="button" class="delete" ><img src="static/images/delete.svg" alt="Delete"><span class="del-booking">Delete Booking</span></button>
-            </div>
-              <a href="#" class="top-link"><img src="static/images/up-arrow.svg" alt="Return to Top"></a>
-
-        </div>
+        {% endfor %}
     </div>
-</body>
+    <div class="booking-section">
+        <h2>Previous Bookings</h2>
+        {% for past_booking in past_bookings %}
+            <div class="previous-booking">
+                    <h3>Reservation - {{ past_booking.start_time.strftime("%d %B %Y") }}</h3>
+                    <p><strong>Time:</strong> {{ past_booking.start_time.strftime("%H:%M") }}</p>
+                    <p><strong>Table:</strong> {{ past_booking.table_id }}</p>
+                     <button type="button" class="delete" ><img src="static/images/delete.svg" alt="Delete"><span class="del-booking">Delete Booking</span></button>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -1,3 +1,4 @@
+import werkzeug.routing.exceptions
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -83,6 +84,17 @@ with app.app_context():
     db.create_all()
 
 
+def require_token(func):
+    @wraps(func)
+    def check_token(*args, **kwargs):
+        if not session.get("logged_in"):
+# TODO flash access denied
+            return redirect(url_for("login", next=request.endpoint))
+        return func(*args, **kwargs)
+
+    return check_token
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -118,8 +130,26 @@ def reviews():
     return render_template("reviews.html")
 
 @app.route("/mybookings")
+@require_token
 def mybookings():
-    return render_template("mybookings.html")
+    statement = (select(Reservation)
+                 .where(Reservation.user_id == session["user_id"])
+                 .where(Reservation.start_time <= datetime.now())
+                 )
+
+    rows = db.session.execute(statement)
+    past_bookings = [row[0] for row in rows]
+
+    statement = (select(Reservation)
+                 .where(Reservation.user_id == session["user_id"])
+                 .where(Reservation.start_time > datetime.now())
+                 )
+    rows = db.session.execute(statement)
+    upcoming_bookings = [row[0] for row in rows]
+
+    return render_template("mybookings.html",
+                          past_bookings=past_bookings,
+                          upcoming_bookings=upcoming_bookings)
 
 
 @app.route("/mailinglist", methods=["POST"])
@@ -225,15 +255,6 @@ def display_tables():
 
     return render_template("booking.html", tables=tables, user=user)
 
-def require_token(func):
-    @wraps(func)
-    def check_token(*args, **kwargs):
-        if not session.get("logged_in"):
-# TODO flash access denied
-            return redirect(url_for("login"))
-        return func(*args, **kwargs)
-
-    return check_token
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -271,7 +292,7 @@ def signup():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template('login.html')
+        return render_template('login.html', next=request.args.get("next"))
 
     email = request.form.get("email")
     password = request.form.get("password")
@@ -289,6 +310,11 @@ def login():
     session["logged_in"] = True
     session['user_id'] = list(user_id)[0][0]
 
+    if next := request.args.get("next"):
+        try:
+            return redirect(url_for(next))
+        except werkzeug.routing.exceptions.BuildError:
+            return redirect(url_for("index"))
     return redirect(url_for("index"))
 
 
@@ -298,4 +324,8 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
-    return redirect(request.origin)
+    return redirect(url_for("index"))
+
+@app.route("/accountsettings", methods=["POST", "GET"])
+def accountsettings():
+    return render_template("accountsettings.html")

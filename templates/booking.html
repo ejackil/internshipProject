@@ -42,12 +42,13 @@
         {% if user %}
         <p id="user-info">Booking for {{ user.first_name.title() }} {{ user.last_name.title() }} <span>({{ user.email }})</span></p>
         {% endif %}
-
+<div class="container">
         <div id="date-group" hidden>
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" required><br>
         </div>
-
+</div>
+        <div class="container">
         <div id="time-group" hidden>
             <label for="time">Time:</label>
             <select name="time" id="time" required>
@@ -73,6 +74,7 @@
                 <option value="21:30">21:30</option>
                 <option value="22:00">22:00</option>
             </select>
+        </div>
         </div>
 
         {% if user %}
