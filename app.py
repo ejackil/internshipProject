@@ -324,4 +324,8 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
-    return redirect(request.referrer)
+    return redirect(url_for("index"))
+
+@app.route("/accountsettings", methods=["POST", "GET"])
+def accountsettings():
+    return render_template("accountsettings.html")
