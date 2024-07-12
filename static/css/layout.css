@@ -7,12 +7,17 @@ body {
 
 
 .small-image{
-     height: 170px;
+     height: 165px;
+     width: 250px;
      padding-top: 10px;
+     background-color: #ffffff;
+     transition: all 100ms ease;
+     box-sizing: border-box;
 }
 
 .small-image:hover {
-    filter: brightness(200%);
+    filter: brightness(0%);
+    background-color: transparent;
 }
 
 #logo {
@@ -20,8 +25,17 @@ body {
     overflow: hidden;
 }
 
+#home-page-button {
+    height: 170px;
+    width: 250px;
+}
+
+#home-page-button:hover {
+    background-color: #f3961c;
+}
+
 nav {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     color: #000000;
     position: fixed;
     height: 90px;
@@ -52,8 +66,11 @@ nav {
 
 .nav-element {
     height: 100%;
-    color: black;
-    
+    color: #000000;
+    background-color: #ffffff;
+
+    border-right: 5px solid #3e6347;
+
     width: 10%;
     min-width: 40px;
     max-width: 400px;
@@ -66,8 +83,8 @@ nav {
 }
 
 .nav-element:has(a):hover {
-    background-color:  #3e6347;
-    color: #ffffff
+    background-color:  #f3961c;
+    color: #000000;
 }
 
 .nav-element > a, .nav-element > div, #account-dropdown > * {
@@ -104,18 +121,23 @@ nav * {
 }
 
 #login-tab {
-    background-color: #3e6347;
-    color: #ffffff;
+    background-color: #ffffff;   
+    color: #000000;
+    border-left: 5px solid #3e6347;
 }
 
 #signup-tab, #account-tab {
     margin-left: auto;
-    background-color: #3e6347;
-    color: #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+    position: relative;
+    border-right: 0;
+    border-left: 5px solid #3e6347;
 }
 
-#account-tab {
-    position: relative;
+#login-tab:hover, #signup-tab:hover {
+    background-color: #f3961c;
+    color: #000000;
 }
 
 #account-tab:hover #account-dropdown, #account-dropdown:hover {
