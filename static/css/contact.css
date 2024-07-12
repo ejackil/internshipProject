@@ -1,31 +1,38 @@
 body {
-background-color:#004526;
+background-color:#152c24;
 }
 
 h1 {
 p.solid {border-style: solid;}
 text-align: centre;
 color:white;
-font-family: "Tahoma", Times, serif;
+font-family: "Bookman Old Style", Times, serif;
 text-align: center;
-text-shadow: 2px 2px 4px #000000;
+
 }
 
 form {
-font-family: "Century Gothic";
+font-family: "Bookman Old Style";
 text-align: center;
 color:white
 }
 
 input[type=text] {
-width: 600px;
-height: 50px;
+ width: 600px;
+ height: 50px;
+ border: 4px solid orange;
+ border-radius: 4px;
+ background-color: white
 
 }
 
+
+
+
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: #3E6347;
-  border: none;
+  background-color: #1e4439;
+  border: 4px solid white;
+  border-radius: 4px;
   color: white;
   padding: 16px 32px;
   text-decoration: none;
@@ -33,8 +40,14 @@ input[type=button], input[type=submit], input[type=reset] {
   cursor: pointer;
 }
 
+
 #reason {
 width: 600px;
 height: 200px;
 padding-top: 0px;
+border: 4px solid orange;
+border-radius: 4px;
+background-color: white
 }
+
+
