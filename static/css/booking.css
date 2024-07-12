@@ -1,6 +1,6 @@
  body {
-            background-color: #004526;
-        }
+    background-color: #004526;
+ }
 #content {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
@@ -18,17 +18,10 @@
 }
 
 #create_form label {
-
-     height: 50px;
-    width: 100%; /* Use full width of the container */
-    background: #3e6347;
-    border: none;
-    outline: none; /* Changed from shadow to none */
-    border-radius: 4px;
-    color: #fff; /* Changed text color for better visibility */
-    font-size: 1rem;
-    padding: 0 20px;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: white;
 }
 
 #create_form input, #create_form select {
@@ -83,8 +76,10 @@
     box-sizing: border-box;
     padding: 20px;
 
+    background-color: #f0f0f0;
+    margin: 0 40px;
+
     display: grid;
-    gap: 20px;
     grid-template-columns: auto auto;
     justify-content: space-evenly;
     align-content: space-evenly;
@@ -98,7 +93,7 @@
     cursor: pointer;
     transition: transform 200ms ease;
 }
-/*  */
+
 .table-container div:nth-child(1) {
     transition: background-color 100ms ease;
 }
@@ -125,7 +120,7 @@
     height: 50%;
     width: 100%;
     top: 50%;
-   background: #429255;
+    background: #429255;
     left: 50%;
     transform: translate(-50%, -50%);
 }
