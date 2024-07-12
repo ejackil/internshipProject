@@ -330,18 +330,21 @@ def login():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    statement = (select(User.user_id)
+    statement = (select(User)
                  .where(User.email == email)
                  .where(User.password == password)
                  )
-    user_id = db.session.execute(statement)
-
-    if not user_id:
+    rows = list(db.session.execute(statement))
+    
+    if len(rows) == 0:
         flash("Invalid username or password")
-        return render_template("login.html")
+        return redirect(url_for("login"))
+    
+    row = rows[0]
+    user = row[0]
 
     session["logged_in"] = True
-    session['user_id'] = list(user_id)[0][0]
+    session['user_id'] = user.user_id
 
     if next := request.args.get("next"):
         try:
@@ -357,7 +360,7 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
-    return redirect(url_for(request.referrer))
+    return redirect(url_for("index"))
 
 @app.route("/accountsettings", methods=["POST", "GET"])
 def accountsettings():
