@@ -1,7 +1,8 @@
+import werkzeug.routing.exceptions
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from functools import wraps
 
 USERNAME = "root"
@@ -79,6 +80,23 @@ class Complaint(db.Model):
         self.complaint = complaint
 
 
+class Review(db.Model):
+    __tablename__ = "reviews"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    body = db.Column(db.String(1000), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.Date, nullable=False)
+
+    def __init__(self, name, title, body, rating, date):
+        self.name = name
+        self.title = title
+        self.body = body
+        self.rating = rating
+        self.date = date
+
+
 with app.app_context():
     db.create_all()
 
@@ -88,7 +106,7 @@ def require_token(func):
     def check_token(*args, **kwargs):
         if not session.get("logged_in"):
 # TODO flash access denied
-            return redirect(url_for("login", next=request.full_path))
+            return redirect(url_for("login", next=request.endpoint))
         return func(*args, **kwargs)
 
     return check_token
@@ -124,9 +142,25 @@ def menu():
     return render_template("menu.html")
 
 
-@app.route("/reviews")
+@app.route("/reviews", methods=["GET", "POST"])
 def reviews():
-    return render_template("reviews.html")
+    if request.method == "POST":
+        name = request.form.get("name")
+        title = request.form.get("heading")
+        body = request.form.get("message")
+        rating = int(request.form.get("rating"))
+
+        review = Review(name, title, body, rating, date.today())
+        db.session.add(review)
+        db.session.commit()
+
+        return redirect(url_for("reviews"))
+
+    statement = select(Review)
+    rows = db.session.execute(statement)
+    reviews = [row[0] for row in rows]
+
+    return render_template("reviews.html", reviews=reviews)
 
 @app.route("/mybookings")
 @require_token
@@ -309,8 +343,11 @@ def login():
     session["logged_in"] = True
     session['user_id'] = list(user_id)[0][0]
 
-    if redirect_page := request.args.get("next"):
-        return redirect(redirect_page)
+    if next := request.args.get("next"):
+        try:
+            return redirect(url_for(next))
+        except werkzeug.routing.exceptions.BuildError:
+            return redirect(url_for("index"))
     return redirect(url_for("index"))
 
 
@@ -320,4 +357,8 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
-    return redirect(request.referrer)
+    return redirect(url_for(request.referrer))
+
+@app.route("/accountsettings", methods=["POST", "GET"])
+def accountsettings():
+    return render_template("accountsettings.html")
