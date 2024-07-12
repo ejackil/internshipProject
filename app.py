@@ -80,6 +80,23 @@ class Complaint(db.Model):
         self.complaint = complaint
 
 
+class Review(db.Model):
+    __tablename__ = "reviews"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    body = db.Column(db.String(1000), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.Date, nullable=False)
+
+    def __init__(self, name, title, body, rating, date):
+        self.name = name
+        self.title = title
+        self.body = body
+        self.rating = rating
+        self.date = date
+
+
 with app.app_context():
     db.create_all()
 
