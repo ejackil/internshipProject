@@ -32,7 +32,7 @@
 }
 
 #create_form input[type="submit"] {
-    background-color: #white;
+    background-color: #ffffff;
     color: black;
     border: none;
     cursor: pointer;
@@ -40,7 +40,7 @@
 }
 
 #create_form input[type="submit"]:hover {
-    background-color: #white;
+    background-color: #ffffff;
 }
 
 #booking-title {
