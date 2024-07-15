@@ -30,7 +30,7 @@ class User(db.Model):
     last_name = db.Column(db.String(64), nullable=False)
     phone_number = db.Column(db.String(20))
     email = db.Column(db.String(64))
-    password = db.Column(db.String(20))
+    password = db.Column(db.String(64))
 
     def __init__(self, first_name, last_name, phone_number=None, email=None, password=None):
         self.first_name = first_name
@@ -101,7 +101,7 @@ with app.app_context():
     db.create_all()
 
 
-def require_token(func):
+def require_login(func):
     @wraps(func)
     def check_token(*args, **kwargs):
         if not session.get("logged_in"):
@@ -134,6 +134,8 @@ def contact():
         db.session.add(contact)
         db.session.commit()
 
+        flash("Contact form sent", "message")
+
     return render_template('contact.html')
 
 
@@ -154,6 +156,8 @@ def reviews():
         db.session.add(review)
         db.session.commit()
 
+        flash("Review submitted", "message")
+
         return redirect(url_for("reviews"))
 
     statement = select(Review)
@@ -163,7 +167,7 @@ def reviews():
     return render_template("reviews.html", reviews=reviews)
 
 @app.route("/mybookings")
-@require_token
+@require_login
 def mybookings():
     statement = (select(Reservation)
                  .where(Reservation.user_id == session["user_id"])
@@ -199,6 +203,11 @@ def add_email():
         email = Email(email)
         db.session.add(email)
         db.session.commit()
+
+        flash("Email added to mailing list", "message")
+    
+    else:
+        flash("Email already in mailing list", "error")
     
     return redirect(request.origin)
 
@@ -237,7 +246,7 @@ def booking():
     if request.method == "POST":
         if session.get("logged_in"):
             if not all((phone_number, date, time, table_id)):
-                flash("You must fill out every field")
+                flash("You must fill out every field", "error")
                 return display_tables()
 
             user_id = session["user_id"]
@@ -247,7 +256,7 @@ def booking():
             last_name = request.form.get("last_name")
 
             if not all((first_name, last_name, phone_number, date, time, table_id)):
-                flash("You must fill out every field")
+                flash("You must fill out every field", "error")
                 return display_tables()
 
 
@@ -266,6 +275,8 @@ def booking():
         db.session.add(reservation)
 
         db.session.commit()
+
+        flash("Reservation created", "message")
 
         if session.get("logged_in"):
             return redirect(url_for("mybookings"))
@@ -301,7 +312,7 @@ def signup():
     password = request.form.get("password")
 
     if not all((first_name, last_name, email, password)):
-        flash("All fields must be filled out")
+        flash("All fields must be filled out", "error")
         return render_template("signup.html")
 
     statement = (select(User)
@@ -309,7 +320,7 @@ def signup():
     users = db.session.execute(statement)
 
     if list(users):
-        flash("Email in use")
+        flash("Email in use", "error")
         return render_template("signup.html")
 
 # TODO: hash password
@@ -317,6 +328,8 @@ def signup():
 
     db.session.add(user)
     db.session.commit()
+
+    flash("Signup successful", "message")
 
     # code 307 preserves the http method of the request
     return redirect(url_for("login", email=email, password=password), code=307)
@@ -337,7 +350,7 @@ def login():
     rows = list(db.session.execute(statement))
     
     if len(rows) == 0:
-        flash("Invalid username or password")
+        flash("Invalid username or password", "error")
         return redirect(url_for("login"))
     
     row = rows[0]
@@ -345,6 +358,8 @@ def login():
 
     session["logged_in"] = True
     session['user_id'] = user.user_id
+
+    flash("Login successful", "message")
 
     if next := request.args.get("next"):
         try:
@@ -360,8 +375,11 @@ def logout():
         session["logged_in"] = False
         session["user_id"] = None
 
+        flash("Logout successful", "message")
+
     return redirect(url_for("index"))
 
 @app.route("/accountsettings", methods=["POST", "GET"])
+@require_login
 def accountsettings():
     return render_template("accountsettings.html")
