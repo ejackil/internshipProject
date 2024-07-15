@@ -11,6 +11,9 @@ text-align: center;
 
 }
 
+label {
+font-size: 20px;
+}
 form {
 font-family: "Bookman Old Style";
 text-align: center;
