@@ -11,6 +11,9 @@ text-align: center;
 
 }
 
+label {
+font-size: 20px;
+}
 form {
 font-family: "Bookman Old Style";
 text-align: center;
@@ -34,7 +37,7 @@ input[type=button], input[type=submit], input[type=reset] {
   border: 4px solid white;
   border-radius: 4px;
   color: white;
-  padding: 16px 280fpx;
+  padding: 16px 280px;
   text-decoration: none;
   margin: 4px 2px;
   cursor: pointer;
