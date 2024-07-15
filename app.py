@@ -4,6 +4,7 @@ from flask import Flask, render_template, url_for, request, redirect, session, f
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date
 from functools import wraps
+from flask_bcrypt import Bcrypt
 
 USERNAME = "root"
 PASSWORD = ""
@@ -15,6 +16,8 @@ app.config["SECRET_KEY"] = '0EHLMjwfynimjRhI6Nl3mOaZMmmTu7JE'
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}/{DB_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
+bcrypt = Bcrypt(app)
 
 
 class Table(db.Model):
@@ -30,7 +33,7 @@ class User(db.Model):
     last_name = db.Column(db.String(64), nullable=False)
     phone_number = db.Column(db.String(20))
     email = db.Column(db.String(64))
-    password = db.Column(db.String(64))
+    password = db.Column(db.BINARY(60))
 
     def __init__(self, first_name, last_name, phone_number=None, email=None, password=None):
         self.first_name = first_name
@@ -323,8 +326,8 @@ def signup():
         flash("Email in use", "error")
         return render_template("signup.html")
 
-# TODO: hash password
-    user = User(first_name, last_name, email=email, password=password)
+    hashed = bcrypt.generate_password_hash(password, 10)
+    user = User(first_name, last_name, email=email, password=hashed)
 
     db.session.add(user)
     db.session.commit()
@@ -344,9 +347,8 @@ def login():
     password = request.form.get("password")
 
     statement = (select(User)
-                 .where(User.email == email)
-                 .where(User.password == password)
-                 )
+                 .where(User.email == email))
+
     rows = list(db.session.execute(statement))
     
     if len(rows) == 0:
@@ -355,6 +357,10 @@ def login():
     
     row = rows[0]
     user = row[0]
+
+    if not bcrypt.check_password_hash(user.password, password):
+        flash("Invalid username or password", "error")
+        return redirect(url_for("login"))
 
     session["logged_in"] = True
     session['user_id'] = user.user_id
