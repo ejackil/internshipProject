@@ -132,3 +132,21 @@ form .remember-me input {
         margin: 25px 0 40px;
     }
 }
+
+.password-eye {
+    height: 25px;
+    width: 25px;
+    position: absolute;
+
+    right: 0px;
+    top: 0px;
+    transform: translate(-50%, 50%);
+
+    content:url("/static/images/eye_slash.png");
+    filter: invert();
+    cursor: pointer;
+}
+
+input[type="text"] ~ .password-eye {
+    content:url("/static/images/eye.png");
+}
