@@ -1,15 +1,13 @@
- body {
-    background-color: #004526;
- }
 #content {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     align-items: center;
     min-height: calc(100vh - 225px);
     overflow: visible;
+    background-color: #152c24;
 }
 #create_form {
-    background-color: #3e6347;
+    background-color: #1e4439;;
     align-self: start;
     padding: 20px;
     width: 30%;
@@ -34,7 +32,7 @@
 }
 
 #create_form input[type="submit"] {
-    background-color: #white;
+    background-color: #ffffff;
     color: black;
     border: none;
     cursor: pointer;
@@ -42,7 +40,7 @@
 }
 
 #create_form input[type="submit"]:hover {
-    background-color: #white;
+    background-color: #ffffff;
 }
 
 #booking-title {

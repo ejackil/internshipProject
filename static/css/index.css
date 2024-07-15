@@ -235,7 +235,7 @@ header {
 /* Gallery Section */
 .gallery {
     background: var(--white-color);
-    padding: 60px 20px 100px;
+    padding: 60px 20px 0px;
 }
 .gallery .gallery_container {
     max-width: 70%;

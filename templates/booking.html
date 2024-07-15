@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Bookings{% endblock %}
+{% block title %}Reservations{% endblock %}
 {% block head%}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/booking.css') }}">
@@ -35,12 +35,12 @@
     </div>
 
     <form id="create_form" action="{{ url_for('booking') }}" method="post">
-        <h1 id="booking-title">Make a Booking</h1>
+        <h1 id="booking-title">Make a Reservation</h1>
 
-        <p id="booking-info">Select a table to begin booking</p>
+        <p id="booking-info">Select a table to begin reservation</p>
 
         {% if user %}
-        <p id="user-info">Booking for {{ user.first_name.title() }} {{ user.last_name.title() }} <span>({{ user.email }})</span></p>
+        <p id="user-info">Reservation for {{ user.first_name.title() }} {{ user.last_name.title() }} <span>({{ user.email }})</span></p>
         {% endif %}
 <div class="container">
         <div id="date-group" hidden>
@@ -93,9 +93,9 @@
                 <label for="phone_number">Phone Number:</label>
                 <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.." required><br>
             </div>
-            <input id="submit" type="submit" value="Submit Booking" hidden><br>
+            <input id="submit" type="submit" value="Submit Reservation" hidden><br>
         {% endif %}
-        <input id="submit" type="submit" value="Submit Booking" hidden>
+        <input id="submit" type="submit" value="Submit Reservation" hidden>
         <input id="table-id" type="number" name="table_id" hidden>
     </form>
 {% endblock %}

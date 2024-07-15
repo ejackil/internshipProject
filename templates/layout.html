@@ -9,12 +9,12 @@
   <body>
     <nav>
         <div class="nav-element" id="logo">
-            <a href="{{ url_for('index') }}">
-                <img src="static/images/LPR.png" class="small-image">
+            <a href="{{ url_for('index') }}" id="home-page-button">
+                <img src="static\images\ferret&goose-logo-white.png" class="small-image">
             </a>
         </div>
         <div class="nav-element"><a href="{{ url_for('menu') }}">Menu</a></div>
-        <div class="nav-element"><a href="{{ url_for('booking') }}">Booking</a></div>
+        <div class="nav-element"><a href="{{ url_for('booking') }}">Reservations</a></div>
         <div class="nav-element"><a href="{{ url_for('about') }}">About</a></div>
         <div class="nav-element"><a href="{{ url_for('contact') }}">Contact</a></div>
         <div class="nav-element"><a href="{{ url_for('reviews') }}">Reviews</a></div>
@@ -28,7 +28,7 @@
                 <div id="account-dropdown">
                     <a href="/accountsettings">Account Settings</a>
                     <a href="/mybookings">My Bookings</a>
-                    <form action="/logout" method="POST">
+                    <form action="{{ url_for('logout') }}" method="POST">
                         <input type="submit" id="logout-button" value="Log Out">
                     </form>
                 </div>
