@@ -10,7 +10,7 @@ body {
      height: 165px;
      width: 250px;
      padding-top: 10px;
-     background-color: #ffffff;
+     background-color: #3e6347;
      transition: all 100ms ease;
      box-sizing: border-box;
 }
@@ -35,8 +35,7 @@ body {
 }
 
 nav {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #3e6347;
     position: fixed;
     height: 90px;
     width: 100%;
@@ -44,8 +43,6 @@ nav {
     left: 0px;
     z-index: 1000000;
     box-sizing: border-box;
-
-    border: 2px solid #004526;
 
     display: flex;
     flex-direction: row;
@@ -66,10 +63,10 @@ nav {
 
 .nav-element {
     height: 100%;
-    color: #000000;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #3e6347;
 
-    border-right: 5px solid #3e6347;
+    border-right: 2px solid #ffffff ;
 
     width: 10%;
     min-width: 40px;
@@ -121,18 +118,16 @@ nav * {
 }
 
 #login-tab {
-    background-color: #ffffff;   
-    color: #000000;
-    border-left: 5px solid #3e6347;
+    background-color: #3e6347;   
+    color: #ffffff;
 }
 
 #signup-tab, #account-tab {
     margin-left: auto;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #3e6347;
+    color: #ffffff;
     position: relative;
-    border-right: 0;
-    border-left: 5px solid #3e6347;
+    border-left: 2px solid #ffffff;
 }
 
 #login-tab:hover, #signup-tab:hover {
