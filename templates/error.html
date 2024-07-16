@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}{{ error.code }} {{ error.name }}{% endblock %}
+{% block head %}
+{{ super() }}
+<style>
+    #content {
+        padding: 20px 30px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ error.code }} {{ error.name }}</h1>
+    <p>{{ error.description }}</p>
+{% endblock %}

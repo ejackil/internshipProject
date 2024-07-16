@@ -104,6 +104,11 @@ with app.app_context():
     db.create_all()
 
 
+@app.errorhandler(HTTPException)
+def error(e):
+    return render_template("error.html", error=e)
+
+
 def require_login(func):
     @wraps(func)
     def check_token(*args, **kwargs):
