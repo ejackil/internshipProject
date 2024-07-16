@@ -1,0 +1,59 @@
+/* Body styles */
+body {
+    font-family: 'Merriweather', merriweather;
+    background-color: #152c24;
+    margin: 0;
+    padding: 20px;
+    color: #ffffff;
+}
+
+/* Heading styles */
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Table styles */
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #1e4439;
+    color: #ffffff;
+    border-radius: 12px;
+}
+
+th, td {
+    border: 1px solid #ffffff;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #1e4439;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #234135;
+}
+
+tr:hover {
+    background-color: #2b5c50;
+    transition: background-color 0.3s ease;
+}
+
+caption {
+    caption-side: bottom;
+    padding: 8px;
+    font-style: italic;
+    color: #ffffff;
+    text-align: center;
+    font-size: 0.9em;
+}
