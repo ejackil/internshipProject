@@ -150,3 +150,6 @@ form .remember-me input {
 input[type="text"] ~ .password-eye {
     content:url("/static/images/eye.png");
 }
+body{
+ background-color: #152c24;
+ }

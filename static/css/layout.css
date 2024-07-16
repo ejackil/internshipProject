@@ -36,7 +36,7 @@ body {
 }
 
 .flash-fadeout {
-    animation: fadeOut 200ms;
+    animation: fadeOut 2000ms;
     animation-fill-mode: forwards;
 }
 
@@ -50,6 +50,8 @@ body {
 
 .flash-info div {
     background-color: dodgerblue;
+    overflow-wrap: break-word;
+    padding-right: 55px;
 }
 
 .flash-info .x-button {
@@ -79,8 +81,8 @@ body {
 }
 
 @keyframes fadeOut {
-    from {opacity: 1; transform: none;}
-    to {opacity: 0; transform: translateY(-60px); height: 0; margin-bottom: 0; margin-top: 0;}
+    from {opacity: 1; transform: none; max-height: 60px;}
+    to {opacity: 0; transform: translateY(-60px); max-height: 0; margin-bottom: 0; margin-top: 0;}
 }
 
 
@@ -329,4 +331,15 @@ nav * {
     margin: 0;
     box-sizing: border-box;
     overflow: hidden;
+}
+
+#address {
+ font-size: 20px;
+ color: #ffffff;
+}
+
+#hours {
+font-size: 20px;
+ color: #ffffff;
+ padding-left: 35px;
 }

@@ -38,18 +38,19 @@
         </nav>
         <div id="navbar-spacer"></div>
     {% with messages = get_flashed_messages(with_categories=true) %}
-    
+
         <ul id=flashes>
         {% for category, message in messages %}
             <li class="flash-{{ category }} flash">
-                <div>{{ message }}</div>
-                {% if category == "info" %}
+                <div>{{ message }}
+                    {% if category == "info" %}
                     <div class="x-button">×</div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </li>
         {% endfor %}
         </ul>
-    
+
     {% endwith %}
         <div id="content">{% block content %}{% endblock %}</div>
         <div id="footer-spacer"></div>
@@ -60,19 +61,28 @@
                 <a href="https://www.instagram.com/"><img class="social-media-icon" id="Instagram" src="{{ url_for('static', filename='images/instagram-icon.png') }}"></a>
                 <a href="https://www.facebook.com/profile.php?id=61562048469025"><img class="social-media-icon" id="Facebook" src="{{ url_for('static', filename='images/facebook-icon.png') }}"></a>
             </div>
+            <div id="address">Address:<br>
+                <p>Chittagong 1023,</p>
+                <p>Chittagong,</p>
+                <p>Bangladesh</p>
+            </div>
             <div id="mailing-list">
             Join our mailing list for coupons
             <br>
             <form id="email-input" method="POST" action="/mailinglist">
                 <input type="email" id="email" name="email" placeholder="Enter email address..">
 
-            </form>
-            </div>
-            <div id="copyright">
-                <p>&copy; 2024 Ferret & Goose Ltd.</p>
-            </div>
+          </form>
         </div>
-    </body>
+        <div id="hours">Opening Hours:<br>
+            <p>Mon-Thur: 12:00pm-9:00pm</p>
+            <p>Fri-Sun:12:00pm-10:30pm</p>
+        </div>
+        <div id="copyright">
+            <p>&copy; 2024 Ferret & Goose Ltd.</p>
+        </div>
+    </div>
+</body>
     <script>
         const flashes = Array.from(document.getElementsByClassName("flash"));
         const x_buttons = document.getElementsByClassName("x-button");
@@ -96,16 +106,16 @@
                     num_infos++;
                     continue;
                 }
-                
+
                 setTimeout(() => {
                     delete_flash_message(flashes[i])
                 }, flash_delete_time + flash_delete_stagger * (i - num_infos));
-            }  
-        }); 
+            }
+        });
 
         for (const x_button of x_buttons) {
             x_button.addEventListener("click", () => {
-                delete_flash_message(x_button.parentElement);
+                delete_flash_message(x_button.parentElement.parentElement);
             });
         }
     </script>

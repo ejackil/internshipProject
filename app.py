@@ -35,13 +35,15 @@ class User(db.Model):
     phone_number = db.Column(db.String(20))
     email = db.Column(db.String(64))
     password = db.Column(db.BINARY(60))
+    user_type = db.Column(db.Enum("customer", "employee", "admin"), nullable=False)
 
-    def __init__(self, first_name, last_name, phone_number=None, email=None, password=None):
+    def __init__(self, first_name, last_name, phone_number=None, email=None, password=None, user_type="customer"):
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
         self.email = email
         self.password = password
+        self.user_type = user_type
 
 
 class Email(db.Model):
@@ -110,15 +112,25 @@ def error(e):
     return render_template("error.html", error=e)
 
 
-def require_login(func):
-    @wraps(func)
-    def check_token(*args, **kwargs):
-        if not session.get("logged_in"):
-            flash("Access denied", "error")
-            return redirect(url_for("login", next=request.endpoint))
-        return func(*args, **kwargs)
+def require_login(user_type="customer"):
+    def check_token_wrapper(func):
+        @wraps(func)
+        def check_token(*args, **kwargs):
+            if not session.get("logged_in"):
+                flash("You must be logged in to view this page", "error")
+                return redirect(url_for("login", next=request.endpoint))
 
-    return check_token
+            if session.get("user_type") == "admin":
+                return func(*args, **kwargs)
+
+            if user_type:
+                if user_type != "customer" and session.get("user_type") != user_type:
+                    flash(f"You must be an {'employee' if session.get('user_type') == 'customer' else 'admin'} to access this page", "error")
+                    return redirect(url_for("login", next=request.endpoint))
+
+            return func(*args, **kwargs)
+        return check_token
+    return check_token_wrapper
 
 
 @app.route("/")
@@ -176,7 +188,7 @@ def reviews():
     return render_template("reviews.html", reviews=reviews)
 
 @app.route("/mybookings")
-@require_login
+@require_login()
 def mybookings():
     statement = (select(Reservation)
                  .where(Reservation.user_id == session["user_id"])
@@ -370,6 +382,7 @@ def login():
 
     session["logged_in"] = True
     session['user_id'] = user.user_id
+    session['user_type'] = user.user_type
 
     print(request.referrer)
     if not request.referrer == "http://127.0.0.1:5000/signup":
@@ -388,12 +401,13 @@ def logout():
     if session["logged_in"]:
         session["logged_in"] = False
         session["user_id"] = None
+        session['user_type'] = None
 
         flash("Logout successful", "message")
 
     return redirect(url_for("index"))
 
 @app.route("/accountsettings", methods=["POST", "GET"])
-@require_login
+@require_login()
 def accountsettings():
     return render_template("accountsettings.html")
