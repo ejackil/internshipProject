@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="sidebar">
-    <a href="#account-details" class="active"><i class="fas fa-user icon"></i> Account Details</a>
+    <a href="#account-details"><i class="fas fa-user icon"></i> Account Details</a>
     <a href="#preferences"><i class="fas fa-cog icon"></i> Preferences</a>
     <a href="#privacy"><i class="fas fa-lock icon"></i> Privacy Settings</a>
     <a href="#support"><i class="fas fa-headset icon"></i> Support and Feedback</a>
@@ -77,30 +77,46 @@
         </form>
     </div>
 
-   <div id="privacy" class="section">
+  <div id="privacy" class="section">
     <h2>Privacy Settings</h2>
-    <form id="privacy-form" action="/accountsettings" method="POST">
-        <label for="profile-visibility"><b>Profile Visibility:</b></label>
-        <br>
-        <input type="radio" id="public-profile" name="profile-visibility" value="public">
-        <label for="public-profile">Public</label>
-        <br>
-        <input type="radio" id="private-profile" name="profile-visibility" value="private">
-        <label for="private-profile">Private</label>
-        <br><br>
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <label for="profile-visibility-switch"><b>Profile Visibility</b></label>
+                <div class="switch">
+                    <input type="checkbox" id="profile-visibility-switch" class="switch-input">
+                    <label for="profile-visibility-switch" class="switch-label" data-on="Public" data-off="Private"></label>
+                </div>
+            </div>
+            <div class="accordion-content">
+                <p>Control who can see your profile. Public makes your profile visible to everyone, while Private restricts it to only your contacts.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <label for="email-visibility-switch"><b>Email Visibility</b></label>
+                <div class="switch">
+                    <input type="checkbox" id="email-visibility-switch" class="switch-input">
+                    <label for="email-visibility-switch" class="switch-label" data-on="Public" data-off="Private"></label>
+                </div>
+            </div>
+            <div class="accordion-content">
+                <p>Control who can see your email address. Public makes your email visible to everyone, while Private restricts it to only your contacts.</p>
+            </div>
+        </div>
+    </div>
+    <input type="submit" value="Save Settings" id="save-privacy-settings">
 
-        <label for="email-visibility"><b>Email Visibility:</b></label>
-        <br>
-        <input type="radio" id="public-email" name="email-visibility" value="public">
-        <label for="public-email">Public</label>
-        <br>
-        <input type="radio" id="private-email" name="email-visibility" value="private">
-        <label for="private-email">Private</label>
-        <br><br>
-
-        <input type="submit" value="Save Settings">
-    </form>
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>Are you sure you want to save these settings?</p>
+            <button id="confirm-save">Yes</button>
+            <button id="cancel-save">No</button>
+        </div>
+    </div>
 </div>
+
 
 
     <div id="support" class="section">

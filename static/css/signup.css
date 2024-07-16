@@ -139,3 +139,6 @@ input[type="submit"]:hover {
 input[type="text"] ~ .password-eye {
     content:url("/static/images/eye.png");
 }
+body{
+ background-color: #152c24;
+ }
