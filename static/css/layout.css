@@ -10,7 +10,6 @@ body {
     right: 0;
     top: 90px;
     display: block;
-    width: 425px;
     list-style: none;
     font-family: Arial, Helvetica, sans-serif;
     padding: 25px;
@@ -19,12 +18,14 @@ body {
 
 .flash {
     margin: 10px;
+    margin-left: auto;
     animation: fadeIn 200ms;
     animation-fill-mode: forwards;
     overflow: visible;
     box-sizing: border-box;
     height: 60px;
-    width: 100%;
+    min-width: 300px;
+    width: fit-content;
 }
 
 .flash div {
@@ -134,11 +135,6 @@ nav {
 
 #navbar-spacer {
     height: 90px;
-}
-
-#footer-spacer {
-    height: 135px;
-    width: 100%;
 }
 
 .nav-element {
@@ -258,14 +254,8 @@ nav * {
     box-sizing: border-box;
 }
 
-#title {
-    color: #ffffff;
-    font-size: 30px;
-}
-
 #footer {
     background-color: #3e6347;
-    position: absolute;
     bottom: 0;
     width: 100%; 
     display: flex;

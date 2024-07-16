@@ -1,5 +1,6 @@
-body {
-background-color:#152c24;
+#content {
+  background-color:#152c24;
+  min-height: calc(100vh - 291px);
 }
 
 h1 {
