@@ -1,4 +1,5 @@
 import werkzeug.routing.exceptions
+from werkzeug.exceptions import HTTPException
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
