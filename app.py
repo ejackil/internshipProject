@@ -1,4 +1,5 @@
 import werkzeug.routing.exceptions
+from werkzeug.exceptions import HTTPException
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -104,11 +105,16 @@ with app.app_context():
     db.create_all()
 
 
+@app.errorhandler(HTTPException)
+def error(e):
+    return render_template("error.html", error=e)
+
+
 def require_login(func):
     @wraps(func)
     def check_token(*args, **kwargs):
         if not session.get("logged_in"):
-# TODO flash access denied
+            flash("Access denied", "error")
             return redirect(url_for("login", next=request.endpoint))
         return func(*args, **kwargs)
 
@@ -365,7 +371,9 @@ def login():
     session["logged_in"] = True
     session['user_id'] = user.user_id
 
-    flash("Login successful", "message")
+    print(request.referrer)
+    if not request.referrer == "http://127.0.0.1:5000/signup":
+        flash("Login successful", "message")
 
     if next := request.args.get("next"):
         try:
