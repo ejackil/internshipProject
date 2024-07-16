@@ -112,17 +112,25 @@ def error(e):
     return render_template("error.html", error=e)
 
 
-def require_login(func, user_type=None):
-    @wraps(func)
-    def check_token(*args, **kwargs):
-        if not session.get("logged_in") or (
-            user_type and not session.get("user_type") == user_type
-        ):
-            flash("Access denied", "error")
-            return redirect(url_for("login", next=request.endpoint))
-        return func(*args, **kwargs)
+def require_login(user_type="customer"):
+    def check_token_wrapper(func):
+        @wraps(func)
+        def check_token(*args, **kwargs):
+            if not session.get("logged_in"):
+                flash("You must be logged in to view this page", "error")
+                return redirect(url_for("login", next=request.endpoint))
 
-    return check_token
+            if session.get("user_type") == "admin":
+                return func(*args, **kwargs)
+
+            if user_type:
+                if user_type != "customer" and session.get("user_type") != user_type:
+                    flash(f"You must be an {'employee' if session.get('user_type') == 'customer' else 'admin'} to access this page", "error")
+                    return redirect(url_for("login", next=request.endpoint))
+
+            return func(*args, **kwargs)
+        return check_token
+    return check_token_wrapper
 
 
 @app.route("/")
@@ -180,7 +188,7 @@ def reviews():
     return render_template("reviews.html", reviews=reviews)
 
 @app.route("/mybookings")
-@require_login
+@require_login()
 def mybookings():
     statement = (select(Reservation)
                  .where(Reservation.user_id == session["user_id"])
@@ -400,6 +408,6 @@ def logout():
     return redirect(url_for("index"))
 
 @app.route("/accountsettings", methods=["POST", "GET"])
-@require_login
+@require_login()
 def accountsettings():
     return render_template("accountsettings.html")
