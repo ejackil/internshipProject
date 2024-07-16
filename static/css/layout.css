@@ -330,3 +330,14 @@ nav * {
     box-sizing: border-box;
     overflow: hidden;
 }
+
+#address {
+ font-size: 20px;
+ color: #ffffff;
+}
+
+#hours {
+font-size: 20px;
+ color: #ffffff;
+ padding-left: 35px;
+}
