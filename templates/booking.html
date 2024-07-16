@@ -91,7 +91,12 @@
                 <input type="text" id="last_name" name="last_name" placeholder="Enter last name.." required><br>
 
                 <label for="phone_number">Phone Number:</label>
-                <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.." required><br>
+                <input type="text" id="phone_number_1" name="phone_number" placeholder="Enter your phone number.." required><br>
+
+                <input type="radio" id="robotserver" name="waiter" value="robotserver">
+                <label for="robotserver">Robot Server</label><br>
+                <input type="radio" id="humanserver" name="waiter" value="humanserver">
+                <label for="humanserver">Human Server</label><br>
             </div>
             <input id="submit" type="submit" value="Submit Reservation" hidden><br>
         {% endif %}
