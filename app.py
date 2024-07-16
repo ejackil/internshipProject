@@ -376,7 +376,9 @@ def login():
     session['user_id'] = user.user_id
     session['user_type'] = user.user_type
 
-    flash("Login successful", "message")
+    print(request.referrer)
+    if not request.referrer == "http://127.0.0.1:5000/signup":
+        flash("Login successful", "message")
 
     if next := request.args.get("next"):
         try:
