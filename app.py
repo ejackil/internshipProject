@@ -108,7 +108,7 @@ def require_login(func):
     @wraps(func)
     def check_token(*args, **kwargs):
         if not session.get("logged_in"):
-# TODO flash access denied
+            flash("Access denied", "error")
             return redirect(url_for("login", next=request.endpoint))
         return func(*args, **kwargs)
 
