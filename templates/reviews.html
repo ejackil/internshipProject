@@ -100,26 +100,28 @@
         {% for review in reviews %}
             <div class="separator"></div>
             <div class="review">
-             <h2>{{ review.title }}</h2>
-            <div class="stars">
-                {% for i in range(review.rating) %}
-                    <span class="star">★</span>
-                {% endfor %}
-                {% for i in range(5 - review.rating) %}
-                    <span class="star">☆</span>
-                {% endfor %}
+                <h2>{{ review["review"].title }}</h2>
+                <div class="stars">
+                    {% for i in range(review["review"].rating) %}
+                        <span class="star">★</span>
+                    {% endfor %}
+                    {% for i in range(5 - review["review"].rating) %}
+                        <span class="star">☆</span>
+                    {% endfor %}
+                </div>
+                <p class="date">{{ review["review"].date.strftime("%B %d, %Y") }} -
+                    {{ "You" if review["user"].user_id == session.get("user_id") else review["user"].first_name + " " + review["user"].last_name }}</p>
+                <p>{{ review["review"].body }}</p>
+                {% if review["user"].user_id == session.get("user_id") %}
+                    <a class="delete-button" href="/api/delete_review/{{ review['review'].id }}">delete</a>
+                {% endif %}
             </div>
-            <p class="date">{{ review.date.strftime("%B %d, %Y") }} - {{ review.name }}</p>
-            <p>{{ review.body }}</p>
-        </div>
         {% endfor %}
     </div>
 
     <div id="submitbox" class="review">
+        {% if session["logged_in"] %}
         <form action="{{ url_for('reviews') }}" method="POST">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Your name...">
-
             <label for="heading">Heading:</label>
             <textarea id="heading" name="heading" placeholder="Your title..."></textarea>
 
@@ -144,6 +146,10 @@
 
             <input type="submit" value="Submit">
         </form>
+        {% else %}
+            <h2>Want to share your thoughts?</h2>
+            <p><a href="{{ url_for('signup') }}">Make an account</a> or <a href="{{ url_for('login') }}">login</a> to post a review</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
