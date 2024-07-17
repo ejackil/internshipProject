@@ -1,32 +1,46 @@
-
 /* General styling */
-#content {
+body {
     font-family: Arial, sans-serif;
     font-size: 20px;
-    padding-top: 35px;
-    padding-bottom: 35px;
+    padding: 75px 0;
+    margin: 0;
+    background-color: #152c24; /* Dark green background */
+    color: #ffffff; /* White text color */
+}
+
+#content {
     width: 100%;
     min-height: calc(100vh - (225px + 35px + 35px));
     overflow: visible;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.section_title::after {
+    content: '';
+    width: 100px;
+    background: #f3961c;
+    height: 5px;
+    display: block;
+    margin: 7px auto 0;
+    border-radius: 8px;
 }
 
 #create_form {
     padding: 40px;
-    padding-top: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 400px;
-    height: 50%;
-    top: 15%;
-    background: #004526;;
+    background: #1e4439;
     color: #ffffff;
 }
 
 #create_form > h2 {
     text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
 }
 
 label {
@@ -35,35 +49,39 @@ label {
     font-weight: bold;
 }
 
-input[type="text"], input[type="submit"], #signup-email, input[type="password"] {
-    width: 100%; 
+input[type="text"],
+input[type="submit"],
+#signup-email,
+input[type="password"] {
+    width: 100%;
     padding: 15px;
     margin-bottom: 15px;
     box-sizing: border-box;
     font-size: 15px;
-    color: #e5e5e5;
-    background: #3e6347;
+    color: #000000;
+    background: #ffffff;
     border: none;
     border-radius: 4px;
 }
 
 input[type="submit"] {
-    background-color: #3e6347;
+    background-color: #f3961c;
     color: white;
-    border: none;
+    border: 2px solid #ffffff;
     cursor: pointer;
     margin-top: 10px;
     font-weight: bold;
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
-    transition: 100ms;
+    background-color: #96084C;
+    transition: background-color 0.2s ease;
 }
 
 #password-error {
     font-size: 15px;
     color: red;
+    margin-top: 5px;
 }
 
 #password-container {
@@ -71,7 +89,7 @@ input[type="submit"]:hover {
 }
 
 #signup-password:not(:placeholder-shown) ~ #password-popup,
-#signup-password:focus ~ #password-popup{
+#signup-password:focus ~ #password-popup {
     opacity: 1;
     transform: none;
 }
@@ -97,7 +115,7 @@ input[type="submit"]:hover {
 
 #requirements {
     list-style: none;
-    padding-left: 25px
+    padding-left: 25px;
 }
 
 .req {
@@ -108,18 +126,21 @@ input[type="submit"]:hover {
     color: forestgreen;
 }
 
-.req::before, .req-satisfied::before {
-    position: relative;
-    right: 15px;
+.req::before,
+.req-satisfied::before {
     font-weight: bold;
 }
 
 .req::before {
-    content: "X";
+    content: "✕"; /* Improved check and cross symbols */
+    margin-right: 5px;
+    color: red;
 }
 
 .req-satisfied::before {
-    content: "✓";
+    content: "✔"; /* Improved check and cross symbols */
+    margin-right: 5px;
+    color: forestgreen;
 }
 
 .password-eye {
@@ -132,12 +153,13 @@ input[type="submit"]:hover {
     transform: translate(-50%, 50%);
 
     content:url("/static/images/eye_slash.png");
-    filter: invert();
+    filter: invert(0%);
     cursor: pointer;
 }
 
 input[type="text"] ~ .password-eye {
     content:url("/static/images/eye.png");
+    filter: invert(0%);
 }
 body{
  background-color: #152c24;
