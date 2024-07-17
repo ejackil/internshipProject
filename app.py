@@ -454,3 +454,7 @@ def logout():
 @require_login()
 def accountsettings():
     return render_template("accountsettings.html")
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return render_template("giftcard.html")
