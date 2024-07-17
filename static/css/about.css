@@ -117,12 +117,14 @@ h2 {
     text-align: center;
 }
 
-p {
+#about-us, #our-story, #our-mission, #why-choose-us {
     margin: 15px 0;
     color: #000000;
     font-size: 1.75rem;
     line-height: 1.8;
 }
+
+
 
 section {
     margin-bottom: 60px;
