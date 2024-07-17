@@ -2,12 +2,15 @@
 {% block title %}Sign Up{% endblock %}
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="static\css\signup.css">
-  <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+
+    <meta name="viewport" content="width = device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static\css\signup.css">
+    <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+
   {% endblock %}
 {% block content %}
 <form id="create_form" action="{{ url_for('signup') }}" method="POST">
-    <h2>Sign Up</h2>
+    <h2 class="section_title">Sign Up</h2>
     <label for="signup-first_name">First Name:</label>
     <input type="text" id="signup-first_name" name="first_name" placeholder="Enter first name.." required>
 
