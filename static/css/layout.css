@@ -340,7 +340,7 @@ nav * {
     line-height: normal;
     text-align: left;
 
-    color: black;
+    color: orange;
 
     box-sizing: border-box;
     padding-left: 35px;
@@ -348,6 +348,6 @@ nav * {
 }
 
 #footer > #address {
-color: black;
+color: orange;
 
 }
