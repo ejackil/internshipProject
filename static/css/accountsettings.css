@@ -373,6 +373,31 @@ html {
 .modal button#cancel-save:hover {
     background-color: #bbb;
 }
-
+.extension {
+    display: none;
+    margin-top: 10px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    position: relative;
+    width: 50%;
+    text-align: center;
+}
+.extension input[type="password"] {
+    display: block;
+    margin: 10px auto;
+}
+.extension label {
+    color: #000000;
+    display: block;
+    margin-bottom: 10px;
+}
+.extension button {
+    display: block;
+    margin: 10px auto;
+}
+#cda {
+    background-color: #d11a2a
+}
 
 
