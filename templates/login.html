@@ -2,11 +2,12 @@
 {% block title %}Login{% endblock %}
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="static\css\login.css">
+    <meta name="viewport" content="width = device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static\css\login.css">
 {% endblock %}
 {% block content %}
 <div class="form-wrapper">
-    <h2>Log In</h2>
+     <h2 class="section_title">Log In</h2>
     <form action="{{ url_for('login', next=next) }}" method="POST">
         <div class="form-control">
             <input type="text" name="email" id="login-email" required>

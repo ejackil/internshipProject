@@ -10,16 +10,24 @@
     margin-bottom: 35px;
 }
 
-
+.section_title::after {
+    content: '';
+    width: 100px;
+    background: #f3961c;
+    height: 5px;
+    display: block;
+    margin: 7px auto 0;
+    border-radius: 8px;
+}
 
 .form-wrapper {
     left: 50%;
     top: 50%;
     border-radius: 4px;
-    padding: 70px;
+    padding: 75px;
     padding-top: 20px;
     width: 400px;
-    background-color: #004526;
+    background-color: #1e4439;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #e5e5e5;
     height: 50%;
@@ -31,7 +39,7 @@
 }
 
 .form-wrapper form {
-    margin: 20px 0 45px;
+    margin: 60px 0 45px;
 }
 
 .form-control {
@@ -41,16 +49,15 @@
 }
 
 .form-control input {
-    height: 50px;
-    width: 100%; /* Use full width of the container */
-    background: #3e6347;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #0000000;
+    background: #ffffff;
     border: none;
-    outline: none; /* Changed from shadow to none */
     border-radius: 4px;
-    color: #fff; /* Changed text color for better visibility */
-    font-size: 1rem;
-    padding: 0 20px;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
 .form-control label {
@@ -60,7 +67,7 @@
     transform: translateY(-50%);
     font-size: 1rem;
     pointer-events: none;
-    color: #fff;
+    color: #000000;
     transition: all 0.1s ease;
 }
 
@@ -73,19 +80,19 @@ form button {
     width: 100%;
     padding: 16px 0;
     font-size: 1rem;
-    background: #3e6347;
+    background: #f3961c;
     color: #fff;
     font-weight: 500;
     border-radius: 4px;
-    border: none;
-    outline: none; 
+    border: 2px solid #ffffff;
+    outline: none;
     margin: 25px 0 10px;
     cursor: pointer;
     transition: 0.1s ease;
 }
 
 form button:hover {
-    background: #45a049;
+    background: #96084C;
     transition: 100ms;
 }
 
@@ -143,10 +150,14 @@ form .remember-me input {
     transform: translate(-50%, 50%);
 
     content:url("/static/images/eye_slash.png");
-    filter: invert();
+    filter: invert(0%);
     cursor: pointer;
 }
 
 input[type="text"] ~ .password-eye {
     content:url("/static/images/eye.png");
+    filter: invert(0%);
 }
+body{
+ background-color: #152c24;
+ }

@@ -42,17 +42,17 @@
         <ul id=flashes>
         {% for category, message in messages %}
             <li class="flash-{{ category }} flash">
-                <div>{{ message }}</div>
-                {% if category == "info" %}
+                <div>{{ message }}
+                    {% if category == "info" %}
                     <div class="x-button">×</div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </li>
         {% endfor %}
         </ul>
 
     {% endwith %}
         <div id="content">{% block content %}{% endblock %}</div>
-        <div id="footer-spacer"></div>
         <div id="footer">
             <div id="social-media">Follow us on all social media @ferretandgoose
             <br>
@@ -114,7 +114,7 @@
 
         for (const x_button of x_buttons) {
             x_button.addEventListener("click", () => {
-                delete_flash_message(x_button.parentElement);
+                delete_flash_message(x_button.parentElement.parentElement);
             });
         }
     </script>
