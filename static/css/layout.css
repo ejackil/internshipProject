@@ -37,7 +37,7 @@ body {
 }
 
 .flash-fadeout {
-    animation: fadeOut 2000ms;
+    animation: fadeOut 200ms;
     animation-fill-mode: forwards;
 }
 
