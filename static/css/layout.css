@@ -323,13 +323,23 @@ nav * {
     overflow: hidden;
 }
 
-#address {
- font-size: 20px;
- color: #ffffff;
+#footer > #address p, #address, #hours p {
+    font-size: 20px;
+    line-height: normal;
+
+    color: #ffffff;
+ 
+    box-sizing: border-box;
+    margin: 0;
 }
 
-#hours {
-font-size: 20px;
- color: #ffffff;
- padding-left: 35px;
+#footer > #hours {
+    font-size: 20px;
+    line-height: normal;
+
+    color: #ffffff;
+    
+    box-sizing: border-box;
+    padding-left: 35px;
+    margin: 0;
 }

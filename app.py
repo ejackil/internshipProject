@@ -89,14 +89,14 @@ class Complaint(db.Model):
 class Review(db.Model):
     __tablename__ = "reviews"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(1000), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     date = db.Column(db.Date, nullable=False)
 
-    def __init__(self, name, title, body, rating, date):
-        self.name = name
+    def __init__(self, user_id, title, body, rating, date):
+        self.user_id = user_id
         self.title = title
         self.body = body
         self.rating = rating
@@ -168,12 +168,14 @@ def menu():
 @app.route("/reviews", methods=["GET", "POST"])
 def reviews():
     if request.method == "POST":
-        name = request.form.get("name")
+        if not session.get("logged_in"):
+            return redirect(url_for("reviews"))
+
         title = request.form.get("heading")
         body = request.form.get("message")
         rating = int(request.form.get("rating"))
 
-        review = Review(name, title, body, rating, date.today())
+        review = Review(session.get("user_id"), title, body, rating, date.today())
         db.session.add(review)
         db.session.commit()
 
@@ -181,11 +183,38 @@ def reviews():
 
         return redirect(url_for("reviews"))
 
-    statement = select(Review)
+    statement = select(Review, User).select_from(Review).join(User, Review.user_id == User.user_id)
     rows = db.session.execute(statement)
-    reviews = [row[0] for row in rows]
+    reviews = [{
+        "review": row[0],
+        "user": row[1]
+    } for row in rows]
 
     return render_template("reviews.html", reviews=reviews)
+
+@app.route("/api/delete_review/<review_id>")
+def delete_review(review_id):
+    if not session.get("logged_in"):
+        flash("You must be logged in to delete a review", "error")
+        return redirect(url_for("reviews"))
+
+    statement = select(Review).where(Review.id == review_id)
+    rows = [row[0] for row in db.session.execute(statement)]
+
+    if len(rows) == 0:
+        flash("No review with that ID", "error")
+        return redirect(url_for("reviews"))
+
+    review = rows[0]
+    if review.user_id != session.get("user_id"):
+        flash("You may only delete your own reviews", "error")
+        return redirect(url_for("reviews"))
+
+    db.session.delete(review)
+    db.session.commit()
+
+    flash("Review deleted", "message")
+    return redirect(url_for("reviews"))
 
 @app.route("/mybookings")
 @require_login()
