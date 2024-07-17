@@ -117,7 +117,7 @@ h2 {
     text-align: center;
 }
 
-#about-us, #our-story, #our-mission, #why-choose-us {
+p {
     margin: 15px 0;
     color: #000000;
     font-size: 1.75rem;
@@ -219,7 +219,6 @@ ul li b {
     transition: transform 0.3s ease-in-out;
 }
 
-}
 
 .timeline-event::before {
     content: '';
