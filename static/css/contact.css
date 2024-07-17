@@ -1,5 +1,6 @@
-body {
-background-color:#152c24;
+#content {
+  background-color:#152c24;
+  min-height: calc(100vh - 291px);
 }
 
 h1 {
@@ -11,6 +12,9 @@ text-align: center;
 
 }
 
+label {
+font-size: 20px;
+}
 form {
 font-family: "Bookman Old Style";
 text-align: center;

@@ -1,9 +1,11 @@
 import werkzeug.routing.exceptions
+from werkzeug.exceptions import HTTPException
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date
 from functools import wraps
+from flask_bcrypt import Bcrypt
 
 USERNAME = "root"
 PASSWORD = ""
@@ -15,6 +17,8 @@ app.config["SECRET_KEY"] = '0EHLMjwfynimjRhI6Nl3mOaZMmmTu7JE'
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}/{DB_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
+bcrypt = Bcrypt(app)
 
 
 class Table(db.Model):
@@ -30,14 +34,16 @@ class User(db.Model):
     last_name = db.Column(db.String(64), nullable=False)
     phone_number = db.Column(db.String(20))
     email = db.Column(db.String(64))
-    password = db.Column(db.String(20))
+    password = db.Column(db.BINARY(60))
+    user_type = db.Column(db.Enum("customer", "employee", "admin"), nullable=False)
 
-    def __init__(self, first_name, last_name, phone_number=None, email=None, password=None):
+    def __init__(self, first_name, last_name, phone_number=None, email=None, password=None, user_type="customer"):
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
         self.email = email
         self.password = password
+        self.user_type = user_type
 
 
 class Email(db.Model):
@@ -101,15 +107,30 @@ with app.app_context():
     db.create_all()
 
 
-def require_token(func):
-    @wraps(func)
-    def check_token(*args, **kwargs):
-        if not session.get("logged_in"):
-# TODO flash access denied
-            return redirect(url_for("login", next=request.endpoint))
-        return func(*args, **kwargs)
+@app.errorhandler(HTTPException)
+def error(e):
+    return render_template("error.html", error=e)
 
-    return check_token
+
+def require_login(user_type="customer"):
+    def check_token_wrapper(func):
+        @wraps(func)
+        def check_token(*args, **kwargs):
+            if not session.get("logged_in"):
+                flash("You must be logged in to view this page", "error")
+                return redirect(url_for("login", next=request.endpoint))
+
+            if session.get("user_type") == "admin":
+                return func(*args, **kwargs)
+
+            if user_type:
+                if user_type != "customer" and session.get("user_type") != user_type:
+                    flash(f"You must be an {'employee' if session.get('user_type') == 'customer' else 'admin'} to access this page", "error")
+                    return redirect(url_for("login", next=request.endpoint))
+
+            return func(*args, **kwargs)
+        return check_token
+    return check_token_wrapper
 
 
 @app.route("/")
@@ -134,6 +155,8 @@ def contact():
         db.session.add(contact)
         db.session.commit()
 
+        flash("Contact form sent", "message")
+
     return render_template('contact.html')
 
 
@@ -154,6 +177,8 @@ def reviews():
         db.session.add(review)
         db.session.commit()
 
+        flash("Review submitted", "message")
+
         return redirect(url_for("reviews"))
 
     statement = select(Review)
@@ -163,7 +188,7 @@ def reviews():
     return render_template("reviews.html", reviews=reviews)
 
 @app.route("/mybookings")
-@require_token
+@require_login()
 def mybookings():
     statement = (select(Reservation)
                  .where(Reservation.user_id == session["user_id"])
@@ -199,6 +224,11 @@ def add_email():
         email = Email(email)
         db.session.add(email)
         db.session.commit()
+
+        flash("Email added to mailing list", "message")
+    
+    else:
+        flash("Email already in mailing list", "error")
     
     return redirect(request.origin)
 
@@ -237,7 +267,7 @@ def booking():
     if request.method == "POST":
         if session.get("logged_in"):
             if not all((phone_number, date, time, table_id)):
-                flash("You must fill out every field")
+                flash("You must fill out every field", "error")
                 return display_tables()
 
             user_id = session["user_id"]
@@ -247,7 +277,7 @@ def booking():
             last_name = request.form.get("last_name")
 
             if not all((first_name, last_name, phone_number, date, time, table_id)):
-                flash("You must fill out every field")
+                flash("You must fill out every field", "error")
                 return display_tables()
 
 
@@ -266,6 +296,8 @@ def booking():
         db.session.add(reservation)
 
         db.session.commit()
+
+        flash("Reservation created", "message")
 
         if session.get("logged_in"):
             return redirect(url_for("mybookings"))
@@ -301,7 +333,7 @@ def signup():
     password = request.form.get("password")
 
     if not all((first_name, last_name, email, password)):
-        flash("All fields must be filled out")
+        flash("All fields must be filled out", "error")
         return render_template("signup.html")
 
     statement = (select(User)
@@ -309,14 +341,16 @@ def signup():
     users = db.session.execute(statement)
 
     if list(users):
-        flash("Email in use")
+        flash("Email in use", "error")
         return render_template("signup.html")
 
-# TODO: hash password
-    user = User(first_name, last_name, email=email, password=password)
+    hashed = bcrypt.generate_password_hash(password, 10)
+    user = User(first_name, last_name, email=email, password=hashed)
 
     db.session.add(user)
     db.session.commit()
+
+    flash("Signup successful", "message")
 
     # code 307 preserves the http method of the request
     return redirect(url_for("login", email=email, password=password), code=307)
@@ -331,20 +365,28 @@ def login():
     password = request.form.get("password")
 
     statement = (select(User)
-                 .where(User.email == email)
-                 .where(User.password == password)
-                 )
+                 .where(User.email == email))
+
     rows = list(db.session.execute(statement))
     
     if len(rows) == 0:
-        flash("Invalid username or password")
+        flash("Invalid username or password", "error")
         return redirect(url_for("login"))
     
     row = rows[0]
     user = row[0]
 
+    if not bcrypt.check_password_hash(user.password, password):
+        flash("Invalid username or password", "error")
+        return redirect(url_for("login"))
+
     session["logged_in"] = True
     session['user_id'] = user.user_id
+    session['user_type'] = user.user_type
+
+    print(request.referrer)
+    if not request.referrer == "http://127.0.0.1:5000/signup":
+        flash("Login successful", "message")
 
     if next := request.args.get("next"):
         try:
@@ -359,9 +401,13 @@ def logout():
     if session["logged_in"]:
         session["logged_in"] = False
         session["user_id"] = None
+        session['user_type'] = None
+
+        flash("Logout successful", "message")
 
     return redirect(url_for("index"))
 
 @app.route("/accountsettings", methods=["POST", "GET"])
+@require_login()
 def accountsettings():
     return render_template("accountsettings.html")

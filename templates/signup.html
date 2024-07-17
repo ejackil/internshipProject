@@ -3,44 +3,42 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="static\css\signup.css">
+  <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
   {% endblock %}
 {% block content %}
 <form id="create_form" action="{{ url_for('signup') }}" method="POST">
     <h2>Sign Up</h2>
     <label for="signup-first_name">First Name:</label>
-    <input type="text" id="signup-first_name" name="first_name" placeholder="Enter first name.." required><br>
+    <input type="text" id="signup-first_name" name="first_name" placeholder="Enter first name.." required>
 
     <label for="signup-last_name">Last Name:</label>
-    <input type="text" id="signup-last_name" name="last_name" placeholder="Enter last name.." required><br>
-
-    <!-- <label for="phone-number">Phone Number:</label>
-    <input type="text" id="signup-phone-number" name="last_name" placeholder="Enter phone number.."><br> -->
+    <input type="text" id="signup-last_name" name="last_name" placeholder="Enter last name.." required>
 
     <label for="signup-email">Email:</label>
-    <input type="email" id="signup-email" name="email" placeholder="Enter email.." required><br>
+    <input type="email" id="signup-email" name="email" placeholder="Enter email.." required>
 
-    <label for="signup-password">Create Password:</label>
-    <input type="password" id="signup-password" name="password" placeholder="Enter password.." required><br>
+    <div id="password-container">
+        <label for="signup-password">Create Password:</label>
+        <input type="password" id="signup-password" name="password" placeholder="Enter password.." pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&€£#^-_])[A-Za-z\d@$!%*?&€£#^-_]{8,64}" required>
+        <img class="password-eye" src="">
+        <div id="password-popup">
+            <p>Password must contain:</p>
+            <ul id="requirements">
+                <li id="length-req" class="req">At least 8 characters</li>
+                <li id="lowercase-req" class="req">At least 1 lowercase letter</li>
+                <li id="uppercase-req" class="req">At least 1 uppercase letter</li>
+                <li id="special-req" class="req">At least 1 special character</li>
+            </ul>
+        </div>
+    </div>
 
-    <label for="signup-confirm-password">Confirm Password:</label>
-    <input type="password" id="signup-confirm-password" name="" placeholder="Enter password.." required><br>
-        
+    <div style="position: relative;">
+        <label for="signup-confirm-password">Confirm Password:</label>
+        <input type="password" id="signup-confirm-password" name="" placeholder="Enter password.." required>
+        <img class="password-eye" src="">
+    </div>
+
     <p id="password-error" hidden>*Your passwords don't match</p>
     <input type="submit" value="Submit">
-       
-    <script>
-         const input_password = document.getElementById("signup-password");
-         const check_password = document.getElementById("signup-confirm-password");
-         const password_submit = document.getElementById("create_form");
-         const error_message = document.getElementById("password-error");
-
-        password_submit.addEventListener("submit", (e) => {
-            if (input_password.value !== check_password.value) {
-                    e.preventDefault();
-                    error_message.hidden = false;
-                }
-        });
-
-    </script>
 </form>
 {% endblock %}

@@ -5,12 +5,93 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#flashes {
+    position: fixed;
+    right: 0;
+    top: 90px;
+    display: block;
+    list-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 25px;
+    font-size: 20px;
+}
+
+.flash {
+    margin: 10px;
+    margin-left: auto;
+    animation: fadeIn 200ms;
+    animation-fill-mode: forwards;
+    overflow: visible;
+    box-sizing: border-box;
+    height: 60px;
+    min-width: 300px;
+    width: fit-content;
+}
+
+.flash div {
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 17.5px;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+.flash-fadeout {
+    animation: fadeOut 2000ms;
+    animation-fill-mode: forwards;
+}
+
+.flash-message div {
+    background-color: #429255;
+}
+
+.flash-error div {
+    background-color: red;
+}
+
+.flash-info div {
+    background-color: dodgerblue;
+    overflow-wrap: break-word;
+    padding-right: 55px;
+}
+
+.flash-info .x-button {
+    background-color: transparent;
+    box-sizing: border-box;
+    position: absolute;
+    padding: 0;
+    
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    font-size: 30px;
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 1px;
+    
+    cursor: pointer;
+    user-select: none;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: none;}
+}
+
+@keyframes fadeOut {
+    from {opacity: 1; transform: none; max-height: 60px;}
+    to {opacity: 0; transform: translateY(-60px); max-height: 0; margin-bottom: 0; margin-top: 0;}
+}
+
 
 .small-image{
      height: 165px;
      width: 250px;
      padding-top: 10px;
-     background-color: #ffffff;
+     background-color: #3e6347;
      transition: all 100ms ease;
      box-sizing: border-box;
 }
@@ -35,8 +116,7 @@ body {
 }
 
 nav {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #3e6347;
     position: fixed;
     height: 90px;
     width: 100%;
@@ -44,8 +124,6 @@ nav {
     left: 0px;
     z-index: 1000000;
     box-sizing: border-box;
-
-    border: 2px solid #004526;
 
     display: flex;
     flex-direction: row;
@@ -59,17 +137,12 @@ nav {
     height: 90px;
 }
 
-#footer-spacer {
-    height: 135px;
-    width: 100%;
-}
-
 .nav-element {
     height: 100%;
-    color: #000000;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #3e6347;
 
-    border-right: 5px solid #3e6347;
+    border-right: 2px solid #ffffff ;
 
     width: 10%;
     min-width: 40px;
@@ -121,18 +194,16 @@ nav * {
 }
 
 #login-tab {
-    background-color: #ffffff;   
-    color: #000000;
-    border-left: 5px solid #3e6347;
+    background-color: #3e6347;   
+    color: #ffffff;
 }
 
 #signup-tab, #account-tab {
     margin-left: auto;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #3e6347;
+    color: #ffffff;
     position: relative;
-    border-right: 0;
-    border-left: 5px solid #3e6347;
+    border-left: 2px solid #ffffff;
 }
 
 #login-tab:hover, #signup-tab:hover {
@@ -183,14 +254,8 @@ nav * {
     box-sizing: border-box;
 }
 
-#title {
-    color: #ffffff;
-    font-size: 30px;
-}
-
 #footer {
     background-color: #3e6347;
-    position: absolute;
     bottom: 0;
     width: 100%; 
     display: flex;
@@ -256,4 +321,15 @@ nav * {
     margin: 0;
     box-sizing: border-box;
     overflow: hidden;
+}
+
+#address {
+ font-size: 20px;
+ color: #ffffff;
+}
+
+#hours {
+font-size: 20px;
+ color: #ffffff;
+ padding-left: 35px;
 }
