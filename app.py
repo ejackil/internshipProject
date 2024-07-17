@@ -3,9 +3,10 @@ from werkzeug.exceptions import HTTPException
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta, date, time
 from functools import wraps
 from flask_bcrypt import Bcrypt
+from random import randint, seed
 
 USERNAME = "root"
 PASSWORD = ""
@@ -238,6 +239,21 @@ def mybookings():
                           past_bookings=past_bookings,
                           upcoming_bookings=upcoming_bookings)
 
+@app.route("/view_bookings")
+@require_login("employee")
+def view_bookings():
+    time_list = [(datetime.combine(date.today(), time(hour=12)) + timedelta(minutes=30 * x)).time().strftime("%H:%M") for x in range(25)]
+
+    statement = select(Table)
+    num_tables = len(list(db.session.execute(statement)))
+
+    table_bookings = [get_bookings(table_id, date.today()) for table_id in range(1, num_tables + 1)]
+    for table in table_bookings:
+        for booking in table:
+            seed(booking["booking_id"])
+            booking["color"] = randint(1, 255)
+
+    return render_template("bookingview.html", time_list=time_list, table_bookings=table_bookings)
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
@@ -262,25 +278,23 @@ def add_email():
     return redirect(request.origin)
 
 
-@app.route("/api/bookings/<table_id>")
-def get_bookings(table_id):
-    date = request.args.get("date")
-
-    statement = (select(Reservation.start_time, Reservation.end_time)
+@app.route("/api/bookings/<table_id>/<date>")
+def get_bookings(table_id, date):
+    statement = (select(Reservation.start_time, Reservation.end_time, Reservation.reservation_id)
                  .where(Reservation.table_id == table_id)
                  .where(func.datediff(Reservation.start_time, date) == 0)
                  )
 
     reservations = []
     for row in db.session.execute(statement):
-        start_time, end_time = row
+        start_time, end_time, booking_id = row
         start_time, end_time = start_time.time(), end_time.time()
 
         time_format = "%H:%M"
         start_time_str = start_time.strftime(time_format)
         end_time_str = end_time.strftime(time_format)
 
-        reservations.append({"start_time": start_time_str, "end_time": end_time_str})
+        reservations.append({"start_time": start_time_str, "end_time": end_time_str, "booking_id": booking_id})
 
     return reservations
 
@@ -319,7 +333,7 @@ def booking():
         # date format is "YYYY-MM-DD HH:MM"
         start_time = datetime.strptime(f"{date} {time}",
                                        "%Y-%m-%d %H:%M")
-        end_time = start_time + timedelta(hours=2)
+        end_time = start_time + timedelta(hours=1)
 
         reservation = Reservation(start_time, end_time, user_id, table_id, phone_number)
         db.session.add(reservation)
@@ -440,3 +454,7 @@ def logout():
 @require_login()
 def accountsettings():
     return render_template("accountsettings.html")
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    return render_template("giftcard.html")
