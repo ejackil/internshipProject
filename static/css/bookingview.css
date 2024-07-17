@@ -1,5 +1,5 @@
 /* Body styles */
-body {
+#content {
     font-family: 'Merriweather', merriweather;
     background-color: #152c24;
     margin: 0;
@@ -18,7 +18,7 @@ h1 {
 
 /* Table styles */
 table {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     border-collapse: collapse;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
