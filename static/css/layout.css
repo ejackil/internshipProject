@@ -257,6 +257,7 @@ nav * {
 #footer {
     background-color: #3e6347;
     bottom: 0;
+    font-size; 10px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -278,7 +279,7 @@ nav * {
     padding: 5px;
     background-color: transparent;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .social-media-icon {
@@ -292,15 +293,16 @@ nav * {
     padding-left: 20px;
     padding-top: 25px;
     /* transform: translateX(50%); */
-    font-size: 20px;
+    font-size: 15px;
 }
 
 #email {
     padding: 15px;
-    width: 350px;
+    width: 400px;
     height: 40px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 10px;
+
 }
 
 #copyright {
@@ -314,7 +316,6 @@ nav * {
     padding-right: 10px;
     padding-top: 80px;
     margin: 0px;
-    font-size: 20px;
     color: #ffffff;
 }
 
@@ -325,7 +326,6 @@ nav * {
 }
 
 #footer > #address p, #address, #hours p {
-    font-size: 20px;
     line-height: normal;
     text-align: left;
 
@@ -336,18 +336,21 @@ nav * {
 }
 
 #footer > #hours {
-    font-size: 20px;
     line-height: normal;
     text-align: left;
 
     color: orange;
 
     box-sizing: border-box;
-    padding-left: 35px;
+    padding-left: 110px;
     margin: 0;
 }
 
 #footer > #address {
 color: orange;
 
+}
+
+#accountuser {
+color: orange;
 }
