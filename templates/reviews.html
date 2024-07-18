@@ -113,7 +113,7 @@
                     {% if review["user"] %}
                         {{ "You" if review["user"].user_id == session.get("user_id") else review["user"].first_name + " " + review["user"].last_name }}</p>
                     {% else %}
-                        &lt;User Deleted&gt;
+                        &lt;Deleted User&gt;
                     {% endif %}
                 <p>{{ review["review"].body }}</p>
                 {% if review["user"] and review["user"].user_id == session.get("user_id") %}
