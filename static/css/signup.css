@@ -2,7 +2,6 @@
 body {
     font-family: Arial, sans-serif;
     font-size: 20px;
-    padding: 75px 0;
     margin: 0;
     background-color: #152c24; /* Dark green background */
     color: #ffffff; /* White text color */
@@ -10,8 +9,7 @@ body {
 
 #content {
     width: 100%;
-    min-height: calc(100vh - (225px + 35px + 35px));
-    overflow: visible;
+    min-height: calc(100vh - (90px + 135px));
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -29,8 +27,8 @@ body {
 }
 
 #create_form {
-    padding: 40px;
-    border-radius: 8px;
+    padding: 60px;
+    border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 400px;
     background: #1e4439;

@@ -2,12 +2,10 @@
 
 #content {
     text-align: center;
-    min-height: calc(100vh - (225px + 35px + 35px));
     display: flex;
     justify-content: space-around;
     align-items: space-around;
-    margin-top: 35px;
-    margin-bottom: 35px;
+    position: relative;
 }
 
 .section_title::after {
@@ -23,14 +21,16 @@
 .form-wrapper {
     left: 50%;
     top: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 4px;
     padding: 75px;
-    padding-top: 20px;
     width: 400px;
     background-color: #1e4439;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #e5e5e5;
-    height: 50%;
+    min-height: 400px;
+    position: absolute;
+    overflow: visible;
 }
 
 .form-wrapper h2 {
@@ -51,10 +51,9 @@
 .form-control input {
     width: 100%;
     padding: 15px;
-    margin-bottom: 15px;
     box-sizing: border-box;
     font-size: 15px;
-    color: #0000000;
+    color: #000000;
     background: #ffffff;
     border: none;
     border-radius: 4px;
@@ -69,6 +68,7 @@
     pointer-events: none;
     color: #000000;
     transition: all 0.1s ease;
+    padding: 1px;
 }
 
 .form-control input:is(:focus, :valid) ~ label {
@@ -113,31 +113,6 @@ form .remember-me {
 form .remember-me input {
     margin-right: 5px;
     accent-color: #3e6347;
-}
-
-
-
-@media (max-width: 740px) {
-    body::before {
-        display: none;
-    }
-
-    nav, .form-wrapper {
-        padding: 20px;
-    }
-
-    nav a img {
-        width: 140px;
-    }
-
-    .form-wrapper {
-        width: 100%;
-        top: 43%;
-    }
-
-    .form-wrapper form {
-        margin: 25px 0 40px;
-    }
 }
 
 .password-eye {
