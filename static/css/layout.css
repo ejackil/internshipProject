@@ -297,8 +297,9 @@ nav * {
 }
 
 #email {
+    padding-left: 50px;
     padding: 15px;
-    width: 400px;
+    width: 350px;
     height: 40px;
     box-sizing: border-box;
     font-size: 10px;
@@ -316,7 +317,7 @@ nav * {
     padding-right: 10px;
     padding-top: 80px;
     margin: 0px;
-    color: #ffffff;
+    color: orange;
 }
 
 #content {
@@ -342,7 +343,7 @@ nav * {
     color: orange;
 
     box-sizing: border-box;
-    padding-left: 110px;
+    padding-left: 90px;
     margin: 0;
 }
 
