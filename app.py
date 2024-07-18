@@ -505,8 +505,6 @@ def delete_account():
         flash("Incorrect password", "error")
         return redirect(url_for("accountsettings", _anchor="del-account"))
 
-    # Null out every user_id associated with the user
-
 
     db.session.delete(user)
     db.session.commit()
@@ -517,16 +515,3 @@ def delete_account():
     session['user_type'] = None
 
     return redirect(url_for('index'))
-
-
-
-    # if passmatch == correct_password:
-    #     db.session.query(User).delete()
-    #     db.session.commit()
-    #
-    #     flash("All account information has been deleted", "message")
-    #     return redirect(url_for("index"))
-    #
-    # else:
-    #     flash("Incorrect password. Please try again.", "error")
-    #     return redirect(url_for("accountsettings"))
