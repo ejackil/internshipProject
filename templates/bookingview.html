@@ -3,9 +3,10 @@
 {% block head%}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bookingview.css') }}">
+    <script src="{{ url_for('static', filename='js/booking_view.js') }}"></script>
 {% endblock %}
 {% block content %}
-<h1>Reservations</h1>
+    <h1>Reservations</h1>
     <table>
         <thead>
             <tr>
@@ -21,7 +22,7 @@
                     <td>{{ time_list[i] }} - {{ time_list[i + 1] }}</td>
                     {% for table in table_bookings %}
                         {% for booking in table if booking["start_time"] <= time_list[i] < booking["end_time"] %}
-                            <td class="booked" style="background-color: hsl({{ booking['color'] }}, 70%, 55%);" data-booking-id="{{ booking['booking_id'] }}"></td>
+                            <td class="booked" style="background-color: hsl({{ booking['color'] }}, 70%, 55%);" data-id="{{ booking['booking_id'] }}"></td>
                         {% else %}
                             <td></td>
                         {% endfor %}
@@ -30,4 +31,11 @@
             {% endfor %}
         </tbody>
     </table>
+    <div id="popup" hidden>
+        <div id="popup-close-button">×</div>
+        <h3>Reservation <span id="popup-reservation-id">X</span></h3>
+        <p>Time: <span id="popup-time">XX:XX - XX:XX</span></p>
+        <p>Name: <span id="popup-name">John Doe</span></p>
+        <p>Phone Number: <span id="popup-phone-number">1111111111</span></p>
+    </div>
 {% endblock %}}

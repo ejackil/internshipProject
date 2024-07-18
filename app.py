@@ -299,6 +299,28 @@ def get_bookings(table_id, date):
     return reservations
 
 
+@app.route("/api/booking/<booking_id>", methods=["GET"])
+@require_login("employee")
+def get_booking(booking_id):
+    statement = (select(Reservation, User).select_from(Reservation).join(User, Reservation.user_id == User.user_id)
+                 .where(Reservation.reservation_id == booking_id))
+    rows = list(db.session.execute(statement))
+
+    if not rows:
+        return {}
+
+    reservation, user = rows[0]
+
+    reservation_info = {
+        "start_time": reservation.start_time.strftime("%H:%M"),
+        "end_time": reservation.end_time.strftime("%H:%M"),
+        "name": f"{user.first_name} {user.last_name}",
+        "phone_number": reservation.phone_number,
+    }
+
+    return reservation_info
+
+
 @app.route("/booking", methods=["GET", "POST"])
 def booking():
     phone_number = request.form.get("phone_number")
