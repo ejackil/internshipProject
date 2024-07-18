@@ -72,6 +72,7 @@ class Reservation(db.Model):
         self.table_id = table_id
         self.phone_number = phone_number
 
+
 class Complaint(db.Model):
     __tablename__ = 'contact_table'
     id = db.Column(db.Integer, primary_key=True)
@@ -102,6 +103,27 @@ class Review(db.Model):
         self.body = body
         self.rating = rating
         self.date = date
+
+
+class Giftcard(db.Model):
+    __tablename__ = "giftcard"
+    giftcard_id = db.Column(db.Integer, primary_key=True)
+    giftcard_value = db.Column(db.String(255), nullable=False)
+    giftcard_firstname = db.Column(db.String(255), nullable=False)
+    giftcard_lastname = db.Column(db.String(255), nullable=False)
+    giftcard_email = db.Column(db.String(255), nullable=False)
+    giftcard_recipient = db.Column(db.String(255), nullable=False)
+    giftcard_gifter = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, giftcard_id, giftcard_value, giftcard_firstname, giftcard_lastname,
+                 giftcard_email, giftcard_recipient, giftcard_gifter):
+        self.giftcard_id = giftcard_id
+        self.giftcard_value = giftcard_value
+        self.giftcard_firstname = giftcard_firstname
+        self.giftcard_lastname = giftcard_lastname
+        self.giftcard_email = giftcard_email
+        self.giftcard_recipient = giftcard_recipient
+        self.giftcard_gifter = giftcard_gifter
 
 
 with app.app_context():
@@ -203,6 +225,7 @@ def reviews():
 
     return render_template("reviews.html", reviews=reviews)
 
+
 @app.route("/api/delete_review/<review_id>")
 def delete_review(review_id):
     if not session.get("logged_in"):
@@ -227,6 +250,7 @@ def delete_review(review_id):
     flash("Review deleted", "message")
     return redirect(url_for("reviews"))
 
+
 @app.route("/mybookings")
 @require_login()
 def mybookings():
@@ -245,9 +269,8 @@ def mybookings():
     rows = db.session.execute(statement)
     upcoming_bookings = [row[0] for row in rows]
 
-    return render_template("mybookings.html",
-                          past_bookings=past_bookings,
-                          upcoming_bookings=upcoming_bookings)
+    return render_template("mybookings.html", past_bookings=past_bookings, upcoming_bookings=upcoming_bookings)
+
 
 @app.route("/view_bookings")
 @require_login("employee")
@@ -264,6 +287,7 @@ def view_bookings():
             booking["color"] = randint(1, 255)
 
     return render_template("bookingview.html", time_list=time_list, table_bookings=table_bookings)
+
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
@@ -341,7 +365,6 @@ def booking():
     time = request.form.get("time")
     table_id = request.form.get("table_id")
 
-
     if request.method == "POST":
         if session.get("logged_in"):
             if not all((phone_number, date, time, table_id)):
@@ -357,7 +380,6 @@ def booking():
             if not all((first_name, last_name, phone_number, date, time, table_id)):
                 flash("You must fill out every field", "error")
                 return display_tables()
-
 
             user = User(first_name, last_name, phone_number=phone_number)
             db.session.add(user)
@@ -397,7 +419,6 @@ def display_tables():
         user = row[0]
 
     return render_template("booking.html", tables=tables, user=user)
-
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -489,13 +510,14 @@ def logout():
 # def giftcard():
 #     return render_template("giftcard.html")
 
+
 @app.route("/accountsettings", methods=["POST", "GET"])
 @require_login()
 def accountsettings():
     return render_template("accountsettings.html")
 
-@app.route("/api/accountsettings/deleteaccount", methods=["POST"])
-@require_login()
+
+@app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
 def delete_account():
     entered_password = request.form.get("password")
 
@@ -505,13 +527,32 @@ def delete_account():
         flash("Incorrect password", "error")
         return redirect(url_for("accountsettings", _anchor="del-account"))
 
-
-    db.session.delete(user)
-    db.session.commit()
-    flash("Account deleted successfully")
-
-    session["logged_in"] = False
-    session["user_id"] = None
-    session['user_type'] = None
+        if not bcrypt.check_password_hash(user.password, password):
+            flash("Invalid username or password", "error")
+            return redirect(url_for("login"))
 
     return redirect(url_for('index'))
+
+
+@app.route('/giftcard', methods=["POST", "GET"])
+def giftcard():
+    if request.method == 'POST':
+        giftcard_value = request.form.get('giftcard_value')
+        giftcard_firstname = request.form.get('giftcard_firstname')
+        giftcard_lastname = request.form.get('giftcard_lastname')
+        giftcard_email = request.form.get('giftcard_email')
+        giftcard_recipient = request.form.get('giftcard_recipient')
+        giftcard_gifter = request.form.get('giftcard_gifter')
+
+
+
+        if not (giftcard_firstname and giftcard_lastname and giftcard_email and giftcard_recipient and giftcard_gifter):
+            flash("All fields are required!", "error")
+        else:
+            giftcard = Giftcard(giftcard_value, giftcard_firstname, giftcard_lastname, giftcard_email,
+                                giftcard_recipient, giftcard_gifter)
+            db.session.add(giftcard)
+            db.session.commit()
+            flash("Gift Card Purchased", "message")
+
+    return render_template("giftcard.html")

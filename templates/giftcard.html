@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Restaurant Menu{% endblock %}
+{% block title %}Giftcard{% endblock %}
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="../static/css/giftcard.css">
@@ -53,32 +53,27 @@
     </select>
 
       <!-- All the green text boxes for the form -->
-<label for="giftcard_firstname">Enter your First Name</label>
-<input type="text" id="giftcard_firstname" name="giftcard_firstname" placeholder="Enter your first name here">
+      <label for="giftcard_firstname">Enter your First Name</label>
+      <input type="text" id="giftcard_firstname" name="giftcard_firstname" placeholder="Enter your first name here">
 
-<label for="giftcard_lastname">Enter your Last Name</label>
-<input type="text" id="giftcard_lastname" name="giftcard_lastname" placeholder="Enter your last name here">
+      <label for="giftcard_lastname">Enter your Last Name</label>
+      <input type="text" id="giftcard_lastname" name="giftcard_lastname" placeholder="Enter your last name here">
 
-<label for="giftcard_email">Enter your Email</label>
-<input type="text" id="giftcard_email" name="giftcard_email" placeholder="Enter your email here">
+      <label for="giftcard_email">Enter your Email</label>
+      <input type="text" id="giftcard_email" name="giftcard_email" placeholder="Enter your email here">
 
-<div id="inputSection1">
-  <label for="giftcard_recipient">Enter the name of the Recipient</label>
-  <input type="text" id="giftcard_recipient" name="giftcard_recipient" placeholder="Enter the name of the Recipient here">
-</div>
+      <label for="giftcard_recipient">Enter the name of the Recipient</label>
+      <input type="text" id="giftcard_recipient" name="giftcard_recipient" placeholder="Enter the name of the Recipient here">
 
-<div id="inputSection2">
-  <label for="giftcard_gifter">Enter the name of the Gifter:</label>
-  <input type="text" id="giftcard_gifter" name="giftcard_gifter" placeholder="Enter the gifters name here">
-</div>
+      <label for="giftcard_gifter">Enter the name of the Gifter:</label>
+      <input type="text" id="giftcard_gifter" name="giftcard_gifter" placeholder="Enter the gifters name here">
 
-<input type="submit" value="Submit">
+    <input type="submit" value="Submit">
 
 </form>
 </div>
-</div>
 
-<!-- Java script so that the white boxes on the left update based on what is being filled in on the right -->
+<!-- Javascript so that the white boxes on the left update based on what is being filled in on the right -->
 <script>
   document.getElementById('giftcard_email').addEventListener('input', function() {
     var inputText = this.value;
