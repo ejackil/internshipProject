@@ -1,15 +1,9 @@
-#content {
-  background-color:#152c24;
-  min-height: calc(100vh - 291px);
-}
-
 h1 {
-p.solid {border-style: solid;}
-text-align: centre;
-color:white;
-font-family: "Bookman Old Style", Times, serif;
-text-align: center;
-
+  p.solid {border-style: solid;}
+  text-align: centre;
+  color:white;
+  font-family: "Bookman Old Style", Times, serif;
+  text-align: center;
 }
 
 label {

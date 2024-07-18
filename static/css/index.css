@@ -92,8 +92,12 @@ header {
     right: 50%;
 }
 
+.hero_container .text_section {
+    max-width: 45%;
+}
+
 .hero_container .text_section h2 {
-    font-size: 40px;
+    font-size: 45px;
     color: #f3961c;
     font-family: 'Merriweather', merriweather;
 }
@@ -105,11 +109,11 @@ header {
     font-family: 'Merriweather', merriweather;
 }
 .hero_container .text_section p {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 400;
     color: var(--white-color);
     margin: 24px 0 40px;
-    max-width: 70%;
+    max-width: 80%;
     font-family: 'Merriweather', merriweather;
 }
 .hero_container .hero_section_button {
@@ -146,8 +150,8 @@ header {
     border-color: var(--secondary-color);
 }
 .hero_container .image_section {
-    max-width: 45%;
-    margin-right: 2.5%;
+    max-width: 55%;
+    opacity: .9;
 }
 .hero_container .image_section img {
     width: 100%;
