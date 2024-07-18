@@ -51,7 +51,7 @@ class Email(db.Model):
     __tablename__ = "mailing_list"
     email_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), nullable=False)
-   
+
     def __init__(self, email):
         self.email = email
 
@@ -258,11 +258,11 @@ def view_bookings():
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
     email = request.form.get("email")
-    
+
     statement = (select(Email)
                  .where(Email.email == email)
                  )
-    
+
     emails = db.session.execute(statement)
 
     if len(list(emails)) == 0:
@@ -271,10 +271,10 @@ def add_email():
         db.session.commit()
 
         flash("Email added to mailing list", "message")
-    
+
     else:
         flash("Email already in mailing list", "error")
-    
+
     return redirect(request.origin)
 
 
@@ -297,6 +297,28 @@ def get_bookings(table_id, date):
         reservations.append({"start_time": start_time_str, "end_time": end_time_str, "booking_id": booking_id})
 
     return reservations
+
+
+@app.route("/api/booking/<booking_id>", methods=["GET"])
+@require_login("employee")
+def get_booking(booking_id):
+    statement = (select(Reservation, User).select_from(Reservation).join(User, Reservation.user_id == User.user_id)
+                 .where(Reservation.reservation_id == booking_id))
+    rows = list(db.session.execute(statement))
+
+    if not rows:
+        return {}
+
+    reservation, user = rows[0]
+
+    reservation_info = {
+        "start_time": reservation.start_time.strftime("%H:%M"),
+        "end_time": reservation.end_time.strftime("%H:%M"),
+        "name": f"{user.first_name} {user.last_name}",
+        "phone_number": reservation.phone_number,
+    }
+
+    return reservation_info
 
 
 @app.route("/booking", methods=["GET", "POST"])
@@ -411,11 +433,11 @@ def login():
                  .where(User.email == email))
 
     rows = list(db.session.execute(statement))
-    
+
     if len(rows) == 0:
         flash("Invalid username or password", "error")
         return redirect(url_for("login"))
-    
+
     row = rows[0]
     user = row[0]
 
@@ -450,11 +472,37 @@ def logout():
 
     return redirect(url_for("index"))
 
+# @app.route('/giftcard', methods=['GET', 'POST'])
+# def giftcard():
+#     return render_template("giftcard.html")
+
 @app.route("/accountsettings", methods=["POST", "GET"])
 @require_login()
 def accountsettings():
     return render_template("accountsettings.html")
 
-# @app.route('/giftcard', methods=['GET', 'POST'])
-# def giftcard():
-#     return render_template("giftcard.html")
+@app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
+def delete_account():
+    if request.method == "POST":
+        user_id = session.get('user_id')
+
+        password = db.session.execute(select(User.password).where(User.user_id == user_id)).first()
+
+        if not bcrypt.check_password_hash(user.password, password):
+            flash("Invalid username or password", "error")
+            return redirect(url_for("login"))
+
+        return redirect(url_for('index'))
+
+
+
+    # if passmatch == correct_password:
+    #     db.session.query(User).delete()
+    #     db.session.commit()
+    #
+    #     flash("All account information has been deleted", "message")
+    #     return redirect(url_for("index"))
+    #
+    # else:
+    #     flash("Incorrect password. Please try again.", "error")
+    #     return redirect(url_for("accountsettings"))
