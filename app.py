@@ -61,7 +61,7 @@ class Reservation(db.Model):
     reservation_id = db.Column(db.Integer, primary_key=True)
     start_time = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id", ondelete="SET NULL"))
     table_id = db.Column(db.Integer, db.ForeignKey("tables.table_id"), nullable=False)
     phone_number = db.Column(db.String(20))
 
@@ -90,7 +90,7 @@ class Complaint(db.Model):
 class Review(db.Model):
     __tablename__ = "reviews"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id", ondelete="SET NULL"))
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(1000), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
@@ -184,12 +184,22 @@ def reviews():
 
         return redirect(url_for("reviews"))
 
-    statement = select(Review, User).select_from(Review).join(User, Review.user_id == User.user_id)
-    rows = db.session.execute(statement)
+    statement = select(Review)
+    reviews = [row[0] for row in db.session.execute(statement)]
+    users = []
+
+    for review in reviews:
+        if review.user_id:
+            statement = select(User).where(review.user_id == User.user_id)
+            user = db.session.execute(statement).first()[0]
+            users.append(user)
+        else:
+            users.append(None)
+
     reviews = [{
-        "review": row[0],
-        "user": row[1]
-    } for row in rows]
+        "review": pair[0],
+        "user": pair[1]
+    } for pair in zip(reviews, users)]
 
     return render_template("reviews.html", reviews=reviews)
 
@@ -302,19 +312,22 @@ def get_bookings(table_id, date):
 @app.route("/api/booking/<booking_id>", methods=["GET"])
 @require_login("employee")
 def get_booking(booking_id):
-    statement = (select(Reservation, User).select_from(Reservation).join(User, Reservation.user_id == User.user_id)
-                 .where(Reservation.reservation_id == booking_id))
-    rows = list(db.session.execute(statement))
+    statement = select(Reservation).where(Reservation.reservation_id == booking_id)
+    reservation = db.session.execute(statement).first()[0]
 
-    if not rows:
+    if not reservation:
         return {}
 
-    reservation, user = rows[0]
+    if reservation.user_id:
+        statement = select(User).where(User.user_id == reservation.user_id)
+        user = db.session.execute(statement).first()[0]
+
+        first_name, last_name = user.first_name, user.last_name
 
     reservation_info = {
         "start_time": reservation.start_time.strftime("%H:%M"),
         "end_time": reservation.end_time.strftime("%H:%M"),
-        "name": f"{user.first_name} {user.last_name}",
+        "name": f"{first_name} {last_name}" if reservation.user_id else None,
         "phone_number": reservation.phone_number,
     }
 
@@ -481,18 +494,29 @@ def logout():
 def accountsettings():
     return render_template("accountsettings.html")
 
-@app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
+@app.route("/api/accountsettings/deleteaccount", methods=["POST"])
+@require_login()
 def delete_account():
-    if request.method == "POST":
-        user_id = session.get('user_id')
+    entered_password = request.form.get("password")
 
-        password = db.session.execute(select(User.password).where(User.user_id == user_id)).first()
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
 
-        if not bcrypt.check_password_hash(user.password, password):
-            flash("Invalid username or password", "error")
-            return redirect(url_for("login"))
+    if not bcrypt.check_password_hash(user.password, entered_password):
+        flash("Incorrect password", "error")
+        return redirect(url_for("accountsettings", _anchor="del-account"))
 
-        return redirect(url_for('index'))
+    # Null out every user_id associated with the user
+
+
+    db.session.delete(user)
+    db.session.commit()
+    flash("Account deleted successfully")
+
+    session["logged_in"] = False
+    session["user_id"] = None
+    session['user_type'] = None
+
+    return redirect(url_for('index'))
 
 
 

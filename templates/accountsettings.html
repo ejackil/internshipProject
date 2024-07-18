@@ -147,27 +147,12 @@
 
     <script>
     document.getElementById("delete-account").addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent the form from submitting immediately
+        event.preventDefault();
 
-        // Hide the original delete button
         event.target.style.display = "none";
 
-        // Show the password extension
         var extension = document.getElementById("password-extension");
         extension.style.display = "block";
-    });
-
-    document.getElementById("cda").addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent the form from submitting immediately
-
-        var enteredPassword = document.getElementById("password").value;
-        var correctPassword = "your_correct_password"; // Replace with the actual password or logic to retrieve it
-
-        if (enteredPassword === correctPassword) {
-            document.getElementById("delete-account-form").submit(); // Submit the form if the password is correct
-        } else {
-            alert("Incorrect password. Please try again.");
-        }
     });
 </script>
 
