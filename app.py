@@ -115,9 +115,8 @@ class Giftcard(db.Model):
     giftcard_recipient = db.Column(db.String(255), nullable=False)
     giftcard_gifter = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, giftcard_id, giftcard_value, giftcard_firstname, giftcard_lastname,
+    def __init__(self, giftcard_value, giftcard_firstname, giftcard_lastname,
                  giftcard_email, giftcard_recipient, giftcard_gifter):
-        self.giftcard_id = giftcard_id
         self.giftcard_value = giftcard_value
         self.giftcard_firstname = giftcard_firstname
         self.giftcard_lastname = giftcard_lastname
