@@ -554,12 +554,12 @@ def forgotpassword():
 
             msg = EmailMessage()
             msg.set_content(content, subtype="plain", charset='us-ascii')
-            msg['Subject'] = 'Reset Password - Ferret & Goose'
-            msg['From'] = 'Ferret.and.Goose.com@gmail.com'
+            msg['Subject'] = 'Reset Password - Finch & Goose'
+            msg['From'] = 'finch.and.goose.com@gmail.com'
             msg['To'] = recipient_email
 
             with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
-                s.login("ferret.and.goose.com@gmail.com", "qxvr otlf joex exbo")
+                s.login("finchandgoose@gmail.com", "hhfw jzkl gpec ojlv")
                 s.send_message(msg)
                 s.quit()
 
