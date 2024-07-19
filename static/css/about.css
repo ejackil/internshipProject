@@ -89,8 +89,8 @@ h1 {
 }
 
 .container {
-    width: 85%;
-    max-width: 50%;
+    width: 100%;
+    max-width: 80%;
     margin: auto;
     margin-top: 5px;
     padding: 20px 100px 100px 100px;
