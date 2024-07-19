@@ -7,11 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch(`/api/booking/${booking_id}`);
         const reservation_info = await res.json();
 
-        console.log(reservation_info)
-        
         document.getElementById("popup-reservation-id").innerHTML = booking_id;
         document.getElementById("popup-time").innerHTML = reservation_info["start_time"] + " - " + reservation_info["end_time"];
-        document.getElementById("popup-name").innerHTML = reservation_info["name"];
+        document.getElementById("popup-name").innerHTML = reservation_info["name"] ? reservation_info["name"] : "&lt;Deleted User&gt;";
         document.getElementById("popup-phone-number").innerHTML = reservation_info["phone_number"];
 
         booking_popup.hidden = false;
