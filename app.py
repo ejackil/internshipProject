@@ -279,13 +279,18 @@ def view_bookings():
     statement = select(Table)
     num_tables = len(list(db.session.execute(statement)))
 
-    table_bookings = [get_bookings(table_id, date.today()) for table_id in range(1, num_tables + 1)]
+    booking_date = None
+    if request.args.get("date"):
+        booking_date = datetime.strptime(request.args.get("date"),
+                                 "%Y-%m-%d").date()
+
+    table_bookings = [get_bookings(table_id, booking_date or date.today()) for table_id in range(1, num_tables + 1)]
     for table in table_bookings:
         for booking in table:
             seed(booking["booking_id"])
             booking["color"] = randint(1, 255)
 
-    return render_template("bookingview.html", time_list=time_list, table_bookings=table_bookings)
+    return render_template("bookingview.html", time_list=time_list, table_bookings=table_bookings, date=booking_date or date.today())
 
 
 @app.route("/mailinglist", methods=["POST"])

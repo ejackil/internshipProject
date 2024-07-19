@@ -35,4 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
             show_popup(e, booking_square.dataset.id)
         });
     });
+
+    const form = document.getElementById("date-form")
+    document.getElementById("date-input").addEventListener("input", () => {
+        form.submit();
+    });
 });

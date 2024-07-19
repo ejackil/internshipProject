@@ -6,7 +6,12 @@
     <script src="{{ url_for('static', filename='js/booking_view.js') }}"></script>
 {% endblock %}
 {% block content %}
-    <h1>Reservations</h1>
+    <div id="header">
+        <h1>Reservations {{ date.strftime("%Y-%m-%d") }}</h1>
+        <form id="date-form" action="{{ url_for('view_bookings') }}" method="GET">
+            <input id="date-input" type="date" name="date" value="{{ date }}">
+        </form>
+    </div>
     <table>
         <thead>
             <tr>
@@ -38,4 +43,4 @@
         <p>Name: <span id="popup-name">John Doe</span></p>
         <p>Phone Number: <span id="popup-phone-number">1111111111</span></p>
     </div>
-{% endblock %}}
+{% endblock %}
