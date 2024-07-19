@@ -526,10 +526,14 @@ def delete_account():
         flash("Incorrect password", "error")
         return redirect(url_for("accountsettings", _anchor="del-account"))
 
-        if not bcrypt.check_password_hash(user.password, password):
-            flash("Invalid username or password", "error")
-            return redirect(url_for("login"))
+    session["logged_in"] = False
+    session["user_id"] = None
+    session['user_type'] = None
 
+    db.session.delete(user)
+    db.session.commit()
+
+    flash("Account Deleted", "message")
     return redirect(url_for('index'))
 
 

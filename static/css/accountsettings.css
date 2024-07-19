@@ -399,5 +399,7 @@ html {
 #passmatch {
     background-color: #d11a2a
 }
-
+#navbar-spacer {
+    margin-bottom: 0;
+}
 
