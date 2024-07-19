@@ -533,6 +533,7 @@ def delete_account():
     db.session.delete(user)
     db.session.commit()
 
+    flash("Account Deleted", "message")
     return redirect(url_for('index'))
 
 
