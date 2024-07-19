@@ -1,9 +1,8 @@
-{% extends "about.html" %}
+{% extends "layout.html" %}
+{% block title%}And What Else?{% endblock %}
 {% block head %}
     {{ super() }}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/andwhatelse.css">
-    <link href="http://localhost:63342/internshipProject/templates/andwhatelse.html?_ijt=9bdl0aae26gr8tido86l0pviau&_ij_reload=RELOAD_ON_SAVE" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/andwhatelse.css')}}">
 {% endblock %}
     {% block content %}
     <section id="about" class="about-section">
