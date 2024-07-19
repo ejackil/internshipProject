@@ -21,7 +21,11 @@ html {
     scroll-behavior: smooth;
 }
 body {
-    background-color: #ffffff;
+    background-color: #151517;
+}
+
+#footer {
+    margin-top: 0;
 }
 
 a {

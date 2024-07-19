@@ -75,3 +75,28 @@ tr:hover {
     cursor: pointer;
     float: right;
 }
+
+#header {
+    position: relative;
+    margin: 0 5%;
+}
+
+#date-input {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    padding: 10px;
+    width: 15%;
+    max-width: 175px;
+
+    background-color: #1e4439;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+
+.booked {
+    border: none;
+}
