@@ -1,4 +1,5 @@
 import werkzeug.routing.exceptions
+import smtplib
 from werkzeug.exceptions import HTTPException
 from sqlalchemy import select, func
 from flask import Flask, render_template, url_for, request, redirect, session, flash
@@ -7,6 +8,7 @@ from datetime import datetime, timedelta, date, time
 from functools import wraps
 from flask_bcrypt import Bcrypt
 from random import randint, seed
+from email.message import EmailMessage
 
 USERNAME = "root"
 PASSWORD = ""
@@ -163,6 +165,10 @@ def index():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/about/andwhatelse")
+def andwhatelse():
+    return render_template("andwhatelse.html")
 
 
 @app.route("/contact", methods=["POST", "GET"])
@@ -510,10 +516,6 @@ def logout():
 
     return redirect(url_for("index"))
 
-# @app.route('/giftcard', methods=['GET', 'POST'])
-# def giftcard():
-#     return render_template("giftcard.html")
-
 
 @app.route("/accountsettings", methods=["POST", "GET"])
 @require_login()
@@ -541,6 +543,36 @@ def delete_account():
     flash("Account Deleted", "message")
     return redirect(url_for('index'))
 
+
+@app.route('/forgotpassword', methods=['GET', 'POST'])
+def forgotpassword():
+    message = ''  
+    if request.method == 'POST':
+        recipient_email = request.form['email']
+        try:
+            content = 'Click here to reset your password: http://127.0.0.1:5000/resetpassword'
+
+            msg = EmailMessage()
+            msg.set_content(content, subtype="plain", charset='us-ascii')
+            msg['Subject'] = 'Reset Password - Ferret & Goose'
+            msg['From'] = 'Ferret.and.Goose.com@gmail.com'
+            msg['To'] = recipient_email
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
+                s.login("ferret.and.goose.com@gmail.com", "qxvr otlf joex exbo")
+                s.send_message(msg)
+                s.quit()
+
+            message = 'Email sent successfully!'
+        except Exception as e:
+            message = f'Failed to send email: {e}'
+
+    return render_template('forgotpassword.html', message=message)
+
+
+@app.route('/resetpassword')
+def resetpassword():
+    return render_template('resetpassword.html')
 
 @app.route('/giftcard', methods=["POST", "GET"])
 def giftcard():
