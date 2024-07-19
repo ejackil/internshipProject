@@ -223,7 +223,7 @@ nav * {
     top: 100%;
     right: 0px;
     min-width: 100%;
-    background-color: #3e6347;
+    background-color: #004526;
     color: white;
 
     display: flex;
@@ -237,10 +237,30 @@ nav * {
     padding: 0;
 }
 
-#account-dropdown * {
+#account-dropdown a, #account-dropdown form {
     padding: 10px;
     border-top: 2px solid #004526;
     box-sizing: border-box;
+}
+
+#account-dropdown input {
+    margin: 0;
+}
+
+.account-dropdown-spacer, .account-dropdown-top {
+    width: 80%;
+    box-sizing: border-box;
+    padding: 2px;
+    border-radius: 2px;
+    align-self: center;
+}
+
+.account-dropdown-top {
+    background-color: #f3961c;
+}
+
+.account-dropdown-spacer {
+    background-color: #152c24;
 }
 
 #logout-button {
@@ -352,10 +372,9 @@ nav * {
 }
 
 #footer > #address {
-color: orange;
-
+    color: orange;
 }
 
 #accountuser {
-color: orange;
+    color: orange;
 }
