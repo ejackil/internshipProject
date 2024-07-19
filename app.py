@@ -61,7 +61,7 @@ class Reservation(db.Model):
     reservation_id = db.Column(db.Integer, primary_key=True)
     start_time = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id", ondelete="SET NULL"))
     table_id = db.Column(db.Integer, db.ForeignKey("tables.table_id"), nullable=False)
     phone_number = db.Column(db.String(20))
 
@@ -71,6 +71,7 @@ class Reservation(db.Model):
         self.user_id = user_id
         self.table_id = table_id
         self.phone_number = phone_number
+
 
 class Complaint(db.Model):
     __tablename__ = 'contact_table'
@@ -90,7 +91,7 @@ class Complaint(db.Model):
 class Review(db.Model):
     __tablename__ = "reviews"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id", ondelete="SET NULL"))
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.String(1000), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
@@ -102,6 +103,26 @@ class Review(db.Model):
         self.body = body
         self.rating = rating
         self.date = date
+
+
+class Giftcard(db.Model):
+    __tablename__ = "giftcard"
+    giftcard_id = db.Column(db.Integer, primary_key=True)
+    giftcard_value = db.Column(db.String(255), nullable=False)
+    giftcard_firstname = db.Column(db.String(255), nullable=False)
+    giftcard_lastname = db.Column(db.String(255), nullable=False)
+    giftcard_email = db.Column(db.String(255), nullable=False)
+    giftcard_recipient = db.Column(db.String(255), nullable=False)
+    giftcard_gifter = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, giftcard_value, giftcard_firstname, giftcard_lastname,
+                 giftcard_email, giftcard_recipient, giftcard_gifter):
+        self.giftcard_value = giftcard_value
+        self.giftcard_firstname = giftcard_firstname
+        self.giftcard_lastname = giftcard_lastname
+        self.giftcard_email = giftcard_email
+        self.giftcard_recipient = giftcard_recipient
+        self.giftcard_gifter = giftcard_gifter
 
 
 with app.app_context():
@@ -184,14 +205,25 @@ def reviews():
 
         return redirect(url_for("reviews"))
 
-    statement = select(Review, User).select_from(Review).join(User, Review.user_id == User.user_id)
-    rows = db.session.execute(statement)
+    statement = select(Review)
+    reviews = [row[0] for row in db.session.execute(statement)]
+    users = []
+
+    for review in reviews:
+        if review.user_id:
+            statement = select(User).where(review.user_id == User.user_id)
+            user = db.session.execute(statement).first()[0]
+            users.append(user)
+        else:
+            users.append(None)
+
     reviews = [{
-        "review": row[0],
-        "user": row[1]
-    } for row in rows]
+        "review": pair[0],
+        "user": pair[1]
+    } for pair in zip(reviews, users)]
 
     return render_template("reviews.html", reviews=reviews)
+
 
 @app.route("/api/delete_review/<review_id>")
 def delete_review(review_id):
@@ -217,6 +249,7 @@ def delete_review(review_id):
     flash("Review deleted", "message")
     return redirect(url_for("reviews"))
 
+
 @app.route("/mybookings")
 @require_login()
 def mybookings():
@@ -235,9 +268,8 @@ def mybookings():
     rows = db.session.execute(statement)
     upcoming_bookings = [row[0] for row in rows]
 
-    return render_template("mybookings.html",
-                          past_bookings=past_bookings,
-                          upcoming_bookings=upcoming_bookings)
+    return render_template("mybookings.html", past_bookings=past_bookings, upcoming_bookings=upcoming_bookings)
+
 
 @app.route("/view_bookings")
 @require_login("employee")
@@ -254,6 +286,7 @@ def view_bookings():
             booking["color"] = randint(1, 255)
 
     return render_template("bookingview.html", time_list=time_list, table_bookings=table_bookings)
+
 
 @app.route("/mailinglist", methods=["POST"])
 def add_email():
@@ -302,19 +335,22 @@ def get_bookings(table_id, date):
 @app.route("/api/booking/<booking_id>", methods=["GET"])
 @require_login("employee")
 def get_booking(booking_id):
-    statement = (select(Reservation, User).select_from(Reservation).join(User, Reservation.user_id == User.user_id)
-                 .where(Reservation.reservation_id == booking_id))
-    rows = list(db.session.execute(statement))
+    statement = select(Reservation).where(Reservation.reservation_id == booking_id)
+    reservation = db.session.execute(statement).first()[0]
 
-    if not rows:
+    if not reservation:
         return {}
 
-    reservation, user = rows[0]
+    if reservation.user_id:
+        statement = select(User).where(User.user_id == reservation.user_id)
+        user = db.session.execute(statement).first()[0]
+
+        first_name, last_name = user.first_name, user.last_name
 
     reservation_info = {
         "start_time": reservation.start_time.strftime("%H:%M"),
         "end_time": reservation.end_time.strftime("%H:%M"),
-        "name": f"{user.first_name} {user.last_name}",
+        "name": f"{first_name} {last_name}" if reservation.user_id else None,
         "phone_number": reservation.phone_number,
     }
 
@@ -327,7 +363,6 @@ def booking():
     date = request.form.get("date")
     time = request.form.get("time")
     table_id = request.form.get("table_id")
-
 
     if request.method == "POST":
         if session.get("logged_in"):
@@ -344,7 +379,6 @@ def booking():
             if not all((first_name, last_name, phone_number, date, time, table_id)):
                 flash("You must fill out every field", "error")
                 return display_tables()
-
 
             user = User(first_name, last_name, phone_number=phone_number)
             db.session.add(user)
@@ -384,7 +418,6 @@ def display_tables():
         user = row[0]
 
     return render_template("booking.html", tables=tables, user=user)
-
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -476,33 +509,49 @@ def logout():
 # def giftcard():
 #     return render_template("giftcard.html")
 
+
 @app.route("/accountsettings", methods=["POST", "GET"])
 @require_login()
 def accountsettings():
     return render_template("accountsettings.html")
 
+
 @app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
 def delete_account():
-    if request.method == "POST":
-        user_id = session.get('user_id')
+    entered_password = request.form.get("password")
 
-        password = db.session.execute(select(User.password).where(User.user_id == user_id)).first()
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+
+    if not bcrypt.check_password_hash(user.password, entered_password):
+        flash("Incorrect password", "error")
+        return redirect(url_for("accountsettings", _anchor="del-account"))
 
         if not bcrypt.check_password_hash(user.password, password):
             flash("Invalid username or password", "error")
             return redirect(url_for("login"))
 
-        return redirect(url_for('index'))
+    return redirect(url_for('index'))
+
+
+@app.route('/giftcard', methods=["POST", "GET"])
+def giftcard():
+    if request.method == 'POST':
+        giftcard_value = request.form.get('giftcard_value')
+        giftcard_firstname = request.form.get('giftcard_firstname')
+        giftcard_lastname = request.form.get('giftcard_lastname')
+        giftcard_email = request.form.get('giftcard_email')
+        giftcard_recipient = request.form.get('giftcard_recipient')
+        giftcard_gifter = request.form.get('giftcard_gifter')
 
 
 
-    # if passmatch == correct_password:
-    #     db.session.query(User).delete()
-    #     db.session.commit()
-    #
-    #     flash("All account information has been deleted", "message")
-    #     return redirect(url_for("index"))
-    #
-    # else:
-    #     flash("Incorrect password. Please try again.", "error")
-    #     return redirect(url_for("accountsettings"))
+        if not (giftcard_firstname and giftcard_lastname and giftcard_email and giftcard_recipient and giftcard_gifter):
+            flash("All fields are required!", "error")
+        else:
+            giftcard = Giftcard(giftcard_value, giftcard_firstname, giftcard_lastname, giftcard_email,
+                                giftcard_recipient, giftcard_gifter)
+            db.session.add(giftcard)
+            db.session.commit()
+            flash("Gift Card Purchased", "message")
+
+    return render_template("giftcard.html")
