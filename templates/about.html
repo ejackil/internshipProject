@@ -1,4 +1,3 @@
-[16:13] Isabelle Madden
 {% extends "layout.html" %}
 {% block title %}About{% endblock %}
 
@@ -6,14 +5,14 @@
 {{ super() }}
 <meta name="viewport" content="width = device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
-<script src="https://kit.fontawesome.com/92e8678e24.js" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/about.js') }}"></script>
 {% endblock %}
 {% block content %}
 <body>
     <div class="container2" id="bangboom">
-        <div class="dropdown">
-            <button><i class="fa-solid fa-bars" style="color: #ffffff;"></i></button>
-            <div class="dropdown-content">
+        <div class="dropdown" style="float:left">
+            <button><i class="fa-solid fa-bars">▼</i></button>
+            <div class="dropdown-content" >
                 <a href="#about-us">About Us</a>
                 <a href="#our-story">Our Story</a>
                 <a href="#our-mission">Our Mission</a>
@@ -24,9 +23,6 @@
         </div>
         <h1 style="color:white">Ferret & Goose</h1>
     </div>
-        <div class="spacer"></div>
-        <h1>Ferret & Goose</h1>
-        <div class="spacer"></div>
     <main>
         <div class="container">
             <section id="about-us">
@@ -44,28 +40,28 @@
         <div class="timeline-event">
             <div class="timeline-content">
                 <h2>The Beginning</h2>
-                <p>John Ferret and Steve Goose, childhood friends always shared the dream of someday becomming owners of the best restaurant in the world. As they were only little kids at the time they had crazy creative ideas such as goose themed restaurants which seemed incredibly far fetched at the time. Four years ago on a cold winters evening they decided to make this dream become a reality ... </p>
+                <p>John Ferret and Steve Goose, childhood friends, always dreamed of owning the best restaurant ever. As kids, they had crazy, creative ideas, like goose-themed restaurants, which seemed far-fetched. Four years ago, on a winter's evening, they decided to make this dream a reality.</p>
             </div>
             <div class="timeline-date">December, 2020</div>
         </div>
         <div class="timeline-event">
             <div class="timeline-content">
                 <h2>The Dream Continues</h2>
-                <p>Just over a year after the two friends reconnected they had almost lost hope of finding a suitable location for their restaurant until one day when they were out for their daily morning stroll when they stumbled upon a run-down rustic boat house situated on the most beautiful lakeside.  They instantly knew this was where the story of Ferret And Goose would come to life.</p>
+                <p>Just over a year after reconnecting, John and Steve nearly lost hope of finding a suitable location. Then, on a morning stroll, they discovered a rundown boat house by a stunning lakeside. They immediately knew this was the perfect spot for Ferret And Goose.</p>
             </div>
             <div class="timeline-date">January , 2022</div>
         </div>
         <div class="timeline-event">
             <div class="timeline-content">
                 <h2> The Game Plan</h2>
-                <p>After countless hours of blood sweat and tears, the finish line was finally after all, in their reach. Having poured their hearts into renovating the boathouse, they were able to preserve it's charm while adding modern touches to enhance the experience. Curating a unique menu, a spectacular web page and hiring top chefs from across the globe, the time had caught up on them and they were ready to take over. </p>
+                <p>After countless hours of hard work, the finish line was finally within reach. They poured their hearts into renovating the boathouse, preserving its charm while adding modern touches. With a unique menu, a stunning website, and top chefs from around the world, they were ready to take over.</p>
             </div>
             <div class="timeline-date">October, 2022</div>
         </div>
         <div class="timeline-event">
             <div class="timeline-content">
                 <h2>The Current Status</h2>
-                <p>As of July 2024, business is booming! Our unique menu entices a wide range of customers from all four corners of the globe. Our restored rustic site is the perfect setting for any occasion. Our many themed events we host throughout the year alongside the futuristic elements such as our robotic waitors are just some of many the reason our restaurant is as successful as it is. </p>
+                <p>As of now, business is thriving! Our menu attracts customers from around the world, and our restored rustic site sets the perfect backdrop for all. With events through the year and futuristic elements like robotic waiters, our restaurant's success continues.</p>
             </div>
              <div class="timeline-date">July, 2024</div>
         </div>
@@ -139,40 +135,52 @@
             <div class="aspect-item">
                 <div class="aspect-content">
                     <h2>Self-Cleaning Surfaces</h2>
-                    <p>Self-cleaning surfaces in our restaurant represent a technological advancement aimed at enhancing hygiene, reducing maintenance costs, and improving the overall dining experience. Nano-technology integrated into tables, countertops, and dining areas that repel stains, sanitize surfaces, and self-clean between uses. This reduces the need for harsh chemicals and manual cleaning efforts. Surfaces such as tables, countertops, and even floors are coated with nanomaterials that have self-cleaning properties. These coatings can repel liquids, oils, and dirt, preventing them from adhering to the surface.  Incorporating antimicrobial agents into the surface material itself, which actively inhibit the growth of bacteria, viruses, and fungi. This helps maintain a more sanitary environment for diners and staff. </p>
-                    <img src="static/images/smart_tables.png" alt="tables" style=" width:400px; height:375px; border-radius: 15px; display: block; margin: 0 auto;" >
-                    <p>Installing sensors that detect spills or contamination on surfaces and automatically trigger cleaning mechanisms. This could involve spraying a cleaning solution or activating a self-cleaning cycle.  By minimizing the need for harsh cleaning chemicals and detergents, self-cleaning surfaces contribute to a more environmentally friendly restaurant operation. Self-cleaning surfaces are designed to be durable and long-lasting, reducing the frequency of replacements and the environmental impact of waste materials. Implementing self-cleaning surfaces in a restaurant not only enhances hygiene and efficiency but also aligns with sustainable practices by reducing water and chemical usage. It creates a more pleasant dining environment for guests and supports operational cost savings over time.</p>
+                    <p> Enhancing Hygiene and Sustainability with Cutting-Edge Nano-Technology</p>
+                    <img src="static/images/smart_tables.png" alt="tables" style=" width:400px; height:375px; border-radius: 15px; display: block; margin: 0 auto;">
+                    <p>
+                        Self-cleaning surfaces in our restaurant, enabled by cutting-edge nano-technology, represent a significant advancement in maintaining cleanliness and hygiene. These surfaces repel stains and sanitize tables, countertops, and floors between uses.
+                        <span id="dots">...</span>
+                        <span id="more">Sensors embedded within these surfaces detect spills and trigger automated cleaning processes, efficiently managing cleanliness without the need for harsh chemicals. This not only enhances the hygiene of our establishment but also aligns with our commitment to environmental sustainability. The automated cleaning mechanisms conserve water and materials, making the cleaning process both eco-friendly and efficient.
+
+Moreover, this self-cleaning technology contributes to long-term cost savings by reducing the frequency of manual cleaning and the need for chemical cleaning agents. This ensures that our restaurant remains spotless and sanitary at all times, providing a consistently pristine dining experience for our patrons. The reduction in the use of harsh chemicals also means a healthier environment for both our staff and customers, minimizing exposure to potentially harmful substances.
+
+</span>
+                    </p>
+                    <button onclick="myFunction()" id="myBtn">Read more</button>
+
                 </div>
             </div>
             <div class="aspect-item">
                 <div class="aspect-content">
                     <h2>Holographic Menus</h2>
-                    <p>Implementing holographic menus not only enhances the dining experience by blending technology with gastronomy but also positions the restaurant as innovative and forward-thinking in the competitive hospitality industry. It offers a unique opportunity to engage guests on a visual and interactive level while providing practical benefits in menu management and customer service. They provide interactive, 3D visuals of our dishes, allowing guests to explore ingredients, preparation methods, and dietary information in an engaging, immersive way.  Guests interact with the holographic menu through touch-sensitive controls or gesture recognition. They can browse through dishes, view detailed descriptions, and see visually appealing representations of each item.Ensure the holographic projection system is maintained regularly to provide a reliable and consistent experience for guests. </p>
+                    <p> Dining with Interactive 3D Visuals and Real-Time Translation</p>
                     <img src="static/images/holomenu.png" alt="menu" style=" width:400px; height:375px; border-radius: 15px; display: block; margin: 0 auto;" >
-                    <p>Offer menus in multiple languages through real-time translation capabilities, ensuring international guests can easily navigate and understand menu options.  Holographic menus can showcase high-definition images and videos of dishes, providing a more immersive and enticing visual experience compared to traditional printed menus.  Provide additional information such as nutritional facts, allergen warnings, sourcing details (e.g., organic, locally sourced), and chef's specials in a visually engaging manner. Over time, holographic menus can reduce printing costs associated with traditional menus, minimize paper waste, and align with sustainable practices in hospitality. During wait times, the holographic menus could switch to display ambient visuals, restaurant information, or even entertainment content to engage guests.</p>
+                    <p>
+                        Implementing holographic menus here, at Ferret And Goose, enhances the dining experience by offering interactive, 3D visuals of dishes, allowing guests to explore ingredients, preparation methods, and dietary information in an immersive and engaging manner.
+                        <span id="dots">...</span>
+                        <span id="more">One of the standout features of holographic menus is their ability to offer real-time translation for international guests, breaking down language barriers and ensuring that all patrons can fully understand the menu offerings. Additionally, these menus display comprehensive nutritional facts, allergen warnings, and sourcing details, helping guests make informed choices that align with their dietary needs and preferences.
+
+This innovative approach not only enhances the dining experience but also contributes to sustainability. By eliminating the need for printed menus, it significantly reduces printing costs and minimizes paper waste, supporting our commitment to environmentally friendly practices. The digital nature of holographic menus also allows for easy updates and modifications, ensuring that the menu always reflects the latest offerings without the need for reprinting.
+
+Furthermore, holographic menus provide additional ambient content during wait times, keeping guests entertained and engaged. This can include chef’s specials, upcoming events, or even behind-the-scenes videos of the kitchen, adding an extra layer of interest and excitement to the dining experience.</span>
+                    </p>
+                    <button onclick="myFunction()" id="myBtn">Read more</button>
+
+
                 </div>
             </div>
             <div class="aspect-item">
                 <div class="aspect-content">
                     <h2>And What Else?</h2>
-                    <p>Along with these aspects, we have many more futuristic elements on offer here at Ferret And Goose.</p>
+                    <p>Of course, these arn't our only futuristic elements we have here at Ferret And Goose. Click below to find out more.</p>
                     <br><br>
-                    <ul>
-                    <li><b>AI-Powered Culinary Assistants:</b> Advanced AI systems can assist chefs in the kitchen by optimizing recipes, suggesting ingredient combinations, and even controlling cooking techniques to ensure consistent quality.</li>
-                    <li><b>Drone-Delivered Orders:</b>  For large or multi-level restaurants, drones can be used to deliver food and beverages directly to tables, adding a high-tech touch and improving service efficiency.</li>
-                    <li><b>Wearable Technology For Staff:</b>  Equip staff with wearable devices like smartwatches or AR glasses to streamline communication, track orders, and enhance customer service by providing real-time information and updates.</li>
-                    <li><b>Personalised Soundscapes:</b>  Individualized sound zones created through directional speakers that allow each table to have its own unique soundtrack or audio experience without disturbing other diners.</li>
-                    <li><b>Self-Adjusting Furniture:</b>  Smart tables and chairs that adjust their height, temperature, and seating comfort based on the preferences of the diners, ensuring an optimal dining experience.</li>
-                    <li><b>Biometric Payment:</b> Biometric payments use unique physical traits like fingerprints or facial recognition for secure, quick transactions, enhancing convenience and reducing contact in restaurants.</li>
-                    <li><b>Immersive Scenery:</b> Immersive scenery in a restaurant uses advanced projection and VR/AR technology to transform the dining environment into various thematic settings, enhancing the overall dining experience with visually engaging and dynamic backgrounds.</li>
-                    <li><b>Robotic Waiters:</b> Robotic waiters in a restaurant autonomously deliver food and drinks to tables using advanced navigation systems. They enhance efficiency, reduce labor costs, and provide a unique, high-tech dining experience.</li>
-                    </ul>
+                    <div class="cta1">
+                            <p><a href="{{ url_for('about/andwhatelse') }}">Shaping the Future</a></p>
+        </div>
                 </div>
             </div>
         </div>
-        <div class="cta">
-            <a href="https://blog.grubtech.com/post/the-future-of-dining-how-technology-is-shaping-the-restaurant-industry" class="cta-button">Discover More</a>
-        </div>
+
                 <a href="#" class="top-link"><img src="static/images/up-arrow.svg" alt="Return to Top"></a>
             </section>
 
@@ -314,6 +322,7 @@
                         </ul>
                     </div>
                 <a href="#" class="top-link"><img src="static/images/up-arrow.svg" alt="Return to Top" height ='20px'></a>
+            </section>
             </section>
 
         </div>
