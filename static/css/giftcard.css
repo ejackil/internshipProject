@@ -1,0 +1,152 @@
+ /* CSS CODE */
+
+/* the big green box on the left */
+.container1 {
+  width: 50%;
+  max-width: auto;
+  margin: 100px auto;
+  background-color: #3e6347;
+  padding: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+  Position: relative;
+  Float: left;
+  margin-left: 50px;
+
+}
+
+/* Gift card live preview */
+/* Gift card live preview (giftcard) */
+#giftcard_value, #displaySection1 {
+  margin-bottom: 20px;
+}
+
+#displaySection1 {
+  border: 10px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Gift card live preview (recipient) */
+#inputSection1, #displaySection2 {
+  margin-bottom: 20px;
+}
+
+#displaySection2 {
+  border: 10px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Gift card live preview (Gifter) */
+#inputSection2, #displaySection3 {
+  margin-bottom: 20px;
+}
+
+#displaySection3 {
+  border: 10px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+
+
+
+
+/* the big green box on the right */
+.container2 {
+  width: 30%;
+  max-width: auto;
+  margin: 100px auto;
+  background-color: #3e6347;
+  padding: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+  Position: relative;
+  Float: right;
+  margin-right: 50px;
+}
+
+/* Ferret and goose vouchers title */
+h1 {
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+#inputSection,
+#displaySection {
+  margin-bottom: 20px;
+}
+
+/* title of the boxes colour */
+label {
+  color: white;
+  font-weight: bold;
+}
+
+/* darker green boxes css code (choose amount) */
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+/* darker green boxes css code (enter text boxes) */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+/* darker green boxes css code (idk) */
+input[type="submit"] {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+/* text enter areas color */
+select,
+input[type="text"] {
+  background-color: #004526;
+
+}
+
+/* submit button */
+input[type="submit"] {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+/* hovering over the submit */
+input[type="submit"]:hover {
+  background-color: #white;
+  color: black;
+  scale: 1.05;
+
+}
+
+
+

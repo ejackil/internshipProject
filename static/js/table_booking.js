@@ -1,3 +1,15 @@
+const sub_time = (time, diff_minutes) => {
+    time = time.split(":");
+    let hour = parseInt(time[0]);
+    let minutes = parseInt(time[1]);
+
+    let tmp = minutes
+    minutes = (minutes - diff_minutes + 60) % 60
+    hour += Math.floor((tmp - diff_minutes) / 60)
+
+    return String(hour).padStart(2, "0") + ":" + String(minutes).padStart(2, "0")
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const date_input = document.getElementById("date");
     const time_input = document.getElementById("time");
@@ -28,7 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            table_display.innerHTML = `Booking for table ${table.dataset.id}`;
+            const display_text = table.dataset.interactive ? `Booking for table ${table.dataset.id} (Interactive: +€15.00)` : `Booking for table ${table.dataset.id}`
+            table_display.innerHTML = display_text;
             table_id_input.value = table.dataset.id;
 
             for (other_table of tables) {
@@ -69,8 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         personal_info_group.hidden = true;
 
          const res = await fetch(
-             `/api/bookings/${table_id_input.value}?`
-             + new URLSearchParams({date: date_input.value})
+             `/api/bookings/${table_id_input.value}/${date_input.value}`
          );
 
          const bookings = await res.json();
@@ -80,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             time.innerHTML = time.value;
 
             for (const booking of bookings) {
-                if (time.value >= booking.start_time && time.value <= booking.end_time) {
+                if (time.value >= sub_time(booking.start_time, 30) && time.value < booking.end_time) {
                     time.disabled = true;
                     time.innerHTML = `${time.value} (Reserved)`;
                 }

@@ -1,15 +1,9 @@
-#content {
-  background-color:#152c24;
-  min-height: calc(100vh - 291px);
-}
-
 h1 {
-p.solid {border-style: solid;}
-text-align: centre;
-color:white;
-font-family: "Bookman Old Style", Times, serif;
-text-align: center;
-
+  p.solid {border-style: solid;}
+  text-align: centre;
+  color:white;
+  font-family: "Bookman Old Style", Times, serif;
+  text-align: center;
 }
 
 label {
@@ -35,6 +29,7 @@ input[type=text] {
 
 input[type=button], input[type=submit], input[type=reset] {
   background-color: #1e4439;
+  font-size: 20px;
   border: 4px solid white;
   border-radius: 4px;
   color: white;
@@ -43,6 +38,7 @@ input[type=button], input[type=submit], input[type=reset] {
   margin: 4px 2px;
   cursor: pointer;
 }
+
 
 
 #reason {

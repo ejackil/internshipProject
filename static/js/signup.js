@@ -15,10 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const lowercase_regex = /[a-z]/;
     const uppercase_regex = /[A-Z]/;
     const special_character_regex = /[@$!%*?&€£#^-_]/;
+    const number_regex = /\d/;
 
     const length_req = document.getElementById("length-req")
     const lowercase_req = document.getElementById("lowercase-req")
     const uppercase_req = document.getElementById("uppercase-req")
+    const number_req = document.getElementById("number-req")
     const special_req = document.getElementById("special-req")
 
     input_password.addEventListener("input", () => {
@@ -34,6 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
             lowercase_req.classList.add("req-satisfied")
         } else {
             lowercase_req.classList.remove("req-satisfied")
+        }
+
+        if (number_regex.test(password)) {
+            number_req.classList.add("req-satisfied")
+        } else {
+            number_req.classList.remove("req-satisfied")
         }
 
         if (uppercase_regex.test(password)) {

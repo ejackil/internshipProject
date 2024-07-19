@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block title %}Giftcard{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="../static/css/giftcard.css">
+{% endblock %}
+{% block content %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Container 1 is the green box on the left -->
+<div class="container1">
+  <div class="giftcard2">
+
+    <h1>Ferret & Goose Gift Card</h1>
+
+      <!-- White boxes on the left -->
+ <div id="displaySection1">
+      <h3>Value of the Giftcard</h3>
+      <p id="displayText1">The value of the Giftcard will appear here...</p>
+    </div>
+     <div id="displaySection2">
+      <h3>Recipient of the Gift Card</h3>
+      <p id="displayText2">The name of the Recipient will appear here...</p>
+    </div>
+    <div id="displaySection3">
+      <h3>Gifter of the Card</h3>
+      <p id="displayText3">The name of the Gifter will appear here...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Green box on the right -->
+<div class="container2">
+  <h1>Ferret & Goose Gift Cards</h1>
+  <form action="{{ url_for('giftcard') }}" method="POST" id="Giftcardform">
+
+      <!-- Select/choose amount option on the right side-->
+    <label for="giftcard_value">Choose an amount:</label>
+    <select id="giftcard_value" name="giftcard_value" form="Giftcardform" >
+      <option value="Select a Value below ↓ " disabled selected> Select the preferred Value of the Giftcard below ↓ </option>
+      <option value="€25">€25</option>
+      <option value="€50">€50</option>
+      <option value="€75">€75</option>
+      <option value="€100">€100</option>
+      <option value="€125">€125</option>
+      <option value="€150">€150</option>
+      <option value="€200">€200</option>
+      <option value="€250">€250</option>
+      <option value="€300">€300</option>
+      <option value="€400">€400</option>
+      <option value="€500">€500</option>
+    </select>
+
+      <!-- All the green text boxes for the form -->
+      <label for="giftcard_firstname">Enter your First Name</label>
+      <input type="text" id="giftcard_firstname" name="giftcard_firstname" placeholder="Enter your first name here">
+
+      <label for="giftcard_lastname">Enter your Last Name</label>
+      <input type="text" id="giftcard_lastname" name="giftcard_lastname" placeholder="Enter your last name here">
+
+      <label for="giftcard_email">Enter your Email</label>
+      <input type="text" id="giftcard_email" name="giftcard_email" placeholder="Enter your email here">
+
+      <label for="giftcard_recipient">Enter the name of the Recipient</label>
+      <input type="text" id="giftcard_recipient" name="giftcard_recipient" placeholder="Enter the name of the Recipient here">
+
+      <label for="giftcard_gifter">Enter the name of the Gifter:</label>
+      <input type="text" id="giftcard_gifter" name="giftcard_gifter" placeholder="Enter the gifters name here">
+
+    <input type="submit" value="Submit">
+
+</form>
+</div>
+
+<!-- Javascript so that the white boxes on the left update based on what is being filled in on the right -->
+<script>
+  document.getElementById('giftcard_value').addEventListener('input', function() {
+    var inputText = this.value;
+    document.getElementById('displayText1').textContent = inputText;
+  });
+
+  document.getElementById('giftcard_recipient').addEventListener('input', function() {
+    var inputText = this.value;
+    document.getElementById('displayText2').textContent = inputText;
+  });
+  document.getElementById('giftcard_gifter').addEventListener('input', function() {
+    var inputText = this.value;
+    document.getElementById('displayText3').textContent = inputText;
+  });
+</script>
+
+{% endblock %}

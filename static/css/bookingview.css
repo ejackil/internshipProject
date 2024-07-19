@@ -1,5 +1,5 @@
 /* Body styles */
-body {
+#content {
     font-family: 'Merriweather', merriweather;
     background-color: #152c24;
     margin: 0;
@@ -18,7 +18,7 @@ h1 {
 
 /* Table styles */
 table {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     border-collapse: collapse;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -49,11 +49,54 @@ tr:hover {
     transition: background-color 0.3s ease;
 }
 
-caption {
-    caption-side: bottom;
-    padding: 8px;
-    font-style: italic;
-    color: #ffffff;
-    text-align: center;
-    font-size: 0.9em;
+#popup {
+    position: absolute;
+    width: 275px;
+    padding: 20px;
+
+    background-color: white;
+    border: 2px solid lightgrey;
+    border-radius: 4px;
+
+    color: black;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#popup > h3 {
+    margin-top: 0;
+}
+
+#popup > p {
+    margin-bottom: 0;
+}
+
+#popup-close-button {
+    cursor: pointer;
+    float: right;
+}
+
+#header {
+    position: relative;
+    margin: 0 5%;
+}
+
+#date-input {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    padding: 10px;
+    width: 15%;
+    max-width: 175px;
+
+    background-color: #1e4439;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+}
+
+.booked {
+    border: none;
 }

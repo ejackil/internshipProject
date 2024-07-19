@@ -3,6 +3,7 @@ body {
     position: relative;
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: #152c24;
 }
 
 #flashes {
@@ -14,6 +15,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     padding: 25px;
     font-size: 20px;
+    z-index: 10000000;
 }
 
 .flash {
@@ -37,7 +39,7 @@ body {
 }
 
 .flash-fadeout {
-    animation: fadeOut 2000ms;
+    animation: fadeOut 200ms;
     animation-fill-mode: forwards;
 }
 
@@ -60,18 +62,18 @@ body {
     box-sizing: border-box;
     position: absolute;
     padding: 0;
-    
+
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    
+
     font-size: 30px;
     color: #ffffff;
     width: 30px;
     height: 30px;
     text-align: center;
     padding: 1px;
-    
+
     cursor: pointer;
     user-select: none;
 }
@@ -91,7 +93,7 @@ body {
      height: 165px;
      width: 250px;
      padding-top: 10px;
-     background-color: #3e6347;
+     background-color: #004526;
      transition: all 100ms ease;
      box-sizing: border-box;
 }
@@ -102,7 +104,8 @@ body {
 }
 
 #logo {
-    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
     overflow: hidden;
 }
 
@@ -135,6 +138,7 @@ nav {
 
 #navbar-spacer {
     height: 90px;
+    margin-bottom: 2%;
 }
 
 .nav-element {
@@ -142,12 +146,9 @@ nav {
     color: #ffffff;
     background-color: #3e6347;
 
-    border-right: 2px solid #ffffff ;
+    /* border-right: 2px solid #ffffff ; */
 
-    width: 10%;
-    min-width: 40px;
-    max-width: 400px;
-
+    width: 11%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -186,7 +187,7 @@ nav * {
     margin: 10px;
 }
 
-.nav-element:has(h1) {    
+.nav-element:has(h1) {
     width: 250px;
     max-width: none;
     flex-direction: row;
@@ -194,16 +195,16 @@ nav * {
 }
 
 #login-tab {
-    background-color: #3e6347;   
+    background-color: #004526;
     color: #ffffff;
 }
 
 #signup-tab, #account-tab {
     margin-left: auto;
-    background-color: #3e6347;
+    background-color: #004526;
     color: #ffffff;
     position: relative;
-    border-left: 2px solid #ffffff;
+    /* border-left: 2px solid #ffffff; */
 }
 
 #login-tab:hover, #signup-tab:hover {
@@ -223,7 +224,7 @@ nav * {
     top: 100%;
     right: 0px;
     min-width: 100%;
-    background-color: #3e6347;
+    background-color: #004526;
     color: white;
 
     display: flex;
@@ -237,10 +238,30 @@ nav * {
     padding: 0;
 }
 
-#account-dropdown * {
+#account-dropdown a, #account-dropdown form {
     padding: 10px;
     border-top: 2px solid #004526;
     box-sizing: border-box;
+}
+
+#account-dropdown input {
+    margin: 0;
+}
+
+.account-dropdown-spacer, .account-dropdown-top {
+    width: 80%;
+    box-sizing: border-box;
+    padding: 2px;
+    border-radius: 2px;
+    align-self: center;
+}
+
+.account-dropdown-top {
+    background-color: #f3961c;
+}
+
+.account-dropdown-spacer {
+    background-color: #152c24;
 }
 
 #logout-button {
@@ -255,15 +276,22 @@ nav * {
 }
 
 #footer {
-    background-color: #3e6347;
+    background-color: #004526;
     bottom: 0;
-    width: 100%; 
+    font-size: 18px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 15px;
+    margin-top: 2%;
     box-sizing: border-box;
     min-height: 135px;
+    line-height: normal;
+}
+
+#footer div {
+    margin: auto 0;
 }
 
 #footer * {
@@ -277,7 +305,7 @@ nav * {
     padding: 5px;
     background-color: transparent;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .social-media-icon {
@@ -289,17 +317,19 @@ nav * {
 #mailing-list {
     color: #ffffff;
     padding-left: 20px;
-    padding-top: 25px;
+    /* padding-top: 25px; */
     /* transform: translateX(50%); */
-    font-size: 20px;
+    font-size: 18px;
 }
 
 #email {
+    padding-left: 50px;
     padding: 15px;
     width: 350px;
     height: 40px;
     box-sizing: border-box;
     font-size: 15px;
+
 }
 
 #copyright {
@@ -313,33 +343,39 @@ nav * {
     padding-right: 10px;
     padding-top: 80px;
     margin: 0px;
-    font-size: 20px;
-    color: #ffffff;
+    color: white;
 }
 
 #content {
     margin: 0;
     box-sizing: border-box;
     overflow: hidden;
+    min-height: calc(100vh - (135px + 90px));
 }
 
 #footer > #address p, #address, #hours p {
-    font-size: 20px;
     line-height: normal;
+    text-align: left;
 
     color: #ffffff;
- 
-    box-sizing: border-box;
     margin: 0;
 }
 
 #footer > #hours {
-    font-size: 20px;
     line-height: normal;
+    text-align: left;
 
-    color: #ffffff;
-    
+    color: orange;
+
     box-sizing: border-box;
-    padding-left: 35px;
+    padding-left: 90px;
     margin: 0;
+}
+
+#footer > #address {
+    color: orange;
+}
+
+#accountuser {
+    color: orange;
 }

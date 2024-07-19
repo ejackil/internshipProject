@@ -85,7 +85,7 @@
                 <label for="profile-visibility-switch"><b>Profile Visibility</b></label>
                 <div class="switch">
                     <input type="checkbox" id="profile-visibility-switch" class="switch-input">
-                    <label for="profile-visibility-switch" class="switch-label" data-on="Public" data-off="Private"></label>
+                    <label for="profile-visibility-switch" class="switch-label" ></label>
                 </div>
             </div>
             <div class="accordion-content">
@@ -97,7 +97,7 @@
                 <label for="email-visibility-switch"><b>Email Visibility</b></label>
                 <div class="switch">
                     <input type="checkbox" id="email-visibility-switch" class="switch-input">
-                    <label for="email-visibility-switch" class="switch-label" data-on="Public" data-off="Private"></label>
+                    <label for="email-visibility-switch" class="switch-label"></label>
                 </div>
             </div>
             <div class="accordion-content">
@@ -135,39 +135,24 @@
 
   <div id="del-account" class="section">
     <h2>Delete Account</h2>
-    <form id="delete-account-form" action="/accountsettings" method="POST">
+    <form id="delete-account-form" action="/api/accountsettings/deleteaccount" method="POST">
         <input type="submit" id="delete-account" name="delete-account" value="Delete Account">
         <div id="password-extension" class="extension">
             <label for="password">Enter Account Password:</label>
             <input type="password" id="password" name="password" required>
-            <input type="submit" id="cda" value="Confirm Delete Account"</input>
+            <input id="passmatch" type="submit"  value="Confirm Delete Account" >
         </div>
     </form>
 </div>
 
     <script>
     document.getElementById("delete-account").addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent the form from submitting immediately
+        event.preventDefault();
 
-        // Hide the original delete button
         event.target.style.display = "none";
 
-        // Show the password extension
         var extension = document.getElementById("password-extension");
         extension.style.display = "block";
-    });
-
-    document.getElementById("cda").addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent the form from submitting immediately
-
-        var enteredPassword = document.getElementById("password").value;
-        var correctPassword = "your_correct_password"; // Replace with the actual password or logic to retrieve it
-
-        if (enteredPassword === correctPassword) {
-            document.getElementById("delete-account-form").submit(); // Submit the form if the password is correct
-        } else {
-            alert("Incorrect password. Please try again.");
-        }
     });
 </script>
 
