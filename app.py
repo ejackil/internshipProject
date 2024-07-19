@@ -9,6 +9,7 @@ from functools import wraps
 from flask_bcrypt import Bcrypt
 from random import randint, seed
 from email.message import EmailMessage
+from itsdangerous import TimestampSigner, SignatureExpired
 
 USERNAME = "root"
 PASSWORD = ""
@@ -22,6 +23,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
+timestamp_signer = TimestampSigner(app.config["SECRET_KEY"])
 
 
 class Table(db.Model):
@@ -39,6 +41,7 @@ class User(db.Model):
     email = db.Column(db.String(64))
     password = db.Column(db.BINARY(60))
     user_type = db.Column(db.Enum("customer", "employee", "admin"), nullable=False)
+    reset_password_token = db.Column(db.BINARY)
 
     def __init__(self, first_name, last_name, phone_number=None, email=None, password=None, user_type="customer"):
         self.first_name = first_name
@@ -453,7 +456,7 @@ def signup():
         flash("Email in use", "error")
         return render_template("signup.html")
 
-    hashed = bcrypt.generate_password_hash(password, 10)
+    hashed = bcrypt.generate_password_hash(password)
     user = User(first_name, last_name, email=email, password=hashed)
 
     db.session.add(user)
@@ -546,33 +549,75 @@ def delete_account():
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
 def forgotpassword():
-    message = ''  
+    message = ""
+
     if request.method == 'POST':
-        recipient_email = request.form['email']
-        try:
-            content = 'Click here to reset your password: http://127.0.0.1:5000/resetpassword'
+        recipient_email = request.form.get("email")
+        if not recipient_email:
+            flash("You must enter an email", "error")
+            return redirect(url_for("forgotpassword"))
 
-            msg = EmailMessage()
-            msg.set_content(content, subtype="plain", charset='us-ascii')
-            msg['Subject'] = 'Reset Password - Finch & Goose'
-            msg['From'] = 'finch.and.goose.com@gmail.com'
-            msg['To'] = recipient_email
+        row = db.session.execute(select(User).where(User.email == recipient_email)).first()
+        if not row:
+            message = f"An email has been sent to {recipient_email} if a user with that email exists in our system"
+        else:
+            user = row[0]
+            token = timestamp_signer.sign(int.to_bytes(user.user_id))
 
-            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
-                s.login("finchandgoose@gmail.com", "hhfw jzkl gpec ojlv")
-                s.send_message(msg)
-                s.quit()
+            user.reset_password_token = token
 
-            message = 'Email sent successfully!'
-        except Exception as e:
-            message = f'Failed to send email: {e}'
+            content = f"""Click here to reset your password: {url_for("resetpassword", token=token.hex())}.
+    This link will expire in 20 minutes."""
+            subject = "Reset Password - Finch & Goose"
+
+            if send_email(recipient_email, content, subject):
+                message = f"An email has been sent to {recipient_email} if a user with that email exists in our system"
+            else:
+                message = "Something went wrong"
 
     return render_template('forgotpassword.html', message=message)
 
 
-@app.route('/resetpassword')
-def resetpassword():
-    return render_template('resetpassword.html')
+def send_email(recipient, content, subject):
+    try:
+        msg = EmailMessage()
+        msg.set_content(content, subtype="plain", charset="us-ascii")
+        msg['Subject'] = subject
+        msg['From'] = "finchandgoose@gmail.com"
+        msg['To'] = recipient
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
+            s.login("finchandgoose@gmail.com", "hhfw jzkl gpec ojlv")
+            s.send_message(msg)
+            s.quit()
+
+        return True
+    except:
+        return False
+
+@app.route('/resetpassword/<token>', methods=["GET", "POST"])
+def resetpassword(token):
+    if request.method == "GET":
+        return render_template('resetpassword.html')
+
+    try:
+        user_id = int.from_bytes(timestamp_signer.unsign(bytes.fromhex(token), max_age=20 * 60))
+    except SignatureExpired:
+        flash("Invalid token. You may need to create a new token if you last requested one more than 20 minutes ago.","error")
+        return redirect(url_for("forgotpassword"))
+
+    row = db.session.execute(select(User).where(User.user_id == user_id)).first()
+    if not row:
+        flash("Invalid token. You may need to create a new token if you last requested one more than 20 minutes ago.", "error")
+        return redirect(url_for("forgotpassword"))
+
+    user = row[0]
+    user.reset_password_token = None
+    user.password = bcrypt.generate_password_hash(request.form.get("new_password"))
+
+    db.session.commit()
+    flash("Password reset successfully")
+    return redirect(url_for("login"))
 
 @app.route('/giftcard', methods=["POST", "GET"])
 def giftcard():
