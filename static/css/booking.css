@@ -43,6 +43,11 @@
     background-color: #ffffff;
 }
 
+#create_form input[type="checkbox"] {
+    display: inline-block;
+    width: 15px;
+}
+
 #booking-title {
     text-align: center;
     Color: white;
