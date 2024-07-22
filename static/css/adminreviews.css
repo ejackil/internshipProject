@@ -1,0 +1,106 @@
+#content {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e4439;
+    color: #333;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #3e6347;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+h1 {
+    text-align: center;
+    color: #FFF;
+    font-size: 2em;
+}
+.customer-reviews {
+    margin-bottom: 40px;
+}
+.customer-reviews h2 {
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 10px;
+    color: #FFF;
+    font-size: 1.5em;
+}
+.current-booking {
+    border: 1px solid #e1e4e8;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fafbfc;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+.top-link {
+    display: inline-block;
+    text-align: right;
+    margin-top: 20px;
+    float: right;
+}
+
+.top-link img {
+   width: 20px;
+   height: 20px;
+   -webkit-filter: invert(1);
+   filter: invert(1);
+}
+
+.top-link-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.delete {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.delete img{
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.delete img:hover {
+    box-shadow: 0 4px 12px rgba(128, 162, 147, 1);
+}
+
+.deletereview {
+   position: absolute;
+    width: 100px;
+    top: 125%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: black;
+    font-size: 12px;
+}
+.delete:hover .cancelling {
+    opacity: 1;
+
+}
+
+body{
+    background-color: #1e4439;
+    }

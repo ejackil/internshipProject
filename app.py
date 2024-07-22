@@ -564,3 +564,29 @@ def giftcard():
             flash("Gift Card Purchased", "message")
 
     return render_template("giftcard.html")
+
+'''@app.route('/accountsettings', methods=["POST", "GET"])
+def accountdetails():
+    if request.method == 'POST':
+        new_email = request.form.get('email-change')
+        new_password = request.form.get('password-change')
+        confirm_new_password = request.form.get("confirm-password-change")
+        phone_no = request.form.get('phone-number-change')
+        user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+        
+        
+        if confirm_new_password == new_password:
+
+        elif phone_no == True:
+
+        elif new_email == True:
+
+
+        else:
+
+
+
+    return render_template("accountsettings.html")'''
+        
+
+
