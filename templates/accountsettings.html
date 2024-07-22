@@ -20,10 +20,10 @@
 <div id="settings">
     <div id="account-details" class="section">
         <h2>Change Account Details</h2>
-        <form id="details-form" action="/accountsettings" method="POST">
+        <form id="details-form" action="/api/accountsettings/changeaccountdetails" method="POST">
             <label for="email-change">Change Email:</label>
             <br>
-            <input value="{{ Email }}" id="email-change" type="email" name="email-change">
+            <input value="{{ email }}" id="email-change" type="email" name="email-change">
             <br>
 
             <label for="password-change">Change Password:</label>
@@ -37,7 +37,11 @@
 
             <label for="phone-number-change">Change your Phone Number:</label>
             <br>
-            <input id="phone-number-change" type="text" name="phone-number-change">
+            <input value="{{ phonenumber }}" id="phone-number-change" type="text" name="phonenumber-change" minlength="10">
+            <br>
+            
+            <label  class="required-field" for="old-password">Enter current password to submit:</label>
+            <input id="old-password" name="old-password" type="password" required>
             <br>
 
             <p id="password-error" hidden>*Your passwords don't match</p>
