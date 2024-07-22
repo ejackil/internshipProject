@@ -1,0 +1,124 @@
+/* Resetting some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #2c3e50;
+    background-color: #f8f9fa;
+}
+
+h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.about-section {
+    padding: 3em 2em;
+    background-color: #fff;
+    color: #2c3e50;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 2em 0;
+    border-radius: 15px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-header h2 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    text-align: center;
+    color: #000000;
+}
+
+.about-header p {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.about-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    justify-content: center;
+}
+
+.about-item {
+    flex: 1 1 calc(33.333% - 2em);
+    max-width: calc(33.333% - 2em);
+}
+
+.aspect-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    border: 3px solid #96084c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #fff;
+}
+
+.aspect-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.aspect-content {
+    padding: 2em;
+    background-color: #fff;
+    border-radius: 15px;
+}
+
+.aspect-item h3 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    color: #f3961c;
+}
+
+.aspect-item p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #7f8c8d;
+}
+
+.cta {
+    text-align: center;
+    margin-top: 3em;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1em 3em;
+    font-size: 1.25rem;
+    color: #fff;
+    background-color: #96084c;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.cta-button:hover {
+    background-color: #f3961c;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .about-item {
+        flex: 1 1 calc(50% - 2em);
+        max-width: calc(50% - 2em);
+    }
+}
+
+@media (max-width: 600px) {
+    .about-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}

@@ -40,7 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            table_display.innerHTML = `Booking for table ${table.dataset.id}`;
+            const display_text = table.dataset.interactive ? `Booking for table ${table.dataset.id} (Interactive: +€15.00)` : `Booking for table ${table.dataset.id}`
+            table_display.innerHTML = display_text;
             table_id_input.value = table.dataset.id;
 
             for (other_table of tables) {

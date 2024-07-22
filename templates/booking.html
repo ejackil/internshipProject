@@ -8,7 +8,7 @@
 {% block content %}
     <div id="tables">
         {% for table in tables %}
-            <div class="table-container" data-id="{{ table.id }}">
+            <div class="table-container" data-id="{{ table.id }}" {{"data-interactive=true" if table.capacity == 4 else ""}}>
             {% if table.capacity == 6 %}
                 <div class="booking-table-6"></div>
                 <div data-angle=0deg class="booking-chair-6" style="transform: translateX(-175%)"></div>
@@ -80,7 +80,7 @@
         {% if user %}
             <div id="personal-info-group" hidden>
                 <label for="phone_number">Phone Number:</label>
-                <input type="text" id="phone_number" name="phone_number" value="{{ user.phone_number if user.phone_number else '' }}" required><br>
+                <input type="text" id="phone_number" name="phone_number" value="{{ user.phone_number if user.phone_number else '' }}" minlength="10" required><br>
             </div>
         {% else %}
             <div id="personal-info-group" hidden>
@@ -91,15 +91,13 @@
                 <input type="text" id="last_name" name="last_name" placeholder="Enter last name.." required><br>
 
                 <label for="phone_number">Phone Number:</label>
-                <input type="text" id="phone_number_1" name="phone_number" placeholder="Enter your phone number.." minlength="10"><br>
+                <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number.." minlength="10"><br>
                 
-                <!-- <label for="robotserver">Robot Server</label>
-                <input type="radio" id="robotserver" name="waiter" value="robotserver">
-                
-                <label for="humanserver">Human Server</label>
-                <input type="radio" id="humanserver" name="waiter" value="humanserver"> -->
+                <label for="robotserver">Robot Server (+&euro;10.00)
+                    <input type="checkbox" id="robotserver" name="robot-server">
+                </label>
+
             </div>
-            <input id="submit" type="submit" value="Submit Reservation" hidden><br>
         {% endif %}
         <input id="submit" type="submit" value="Submit Reservation" hidden>
         <input id="table-id" type="number" name="table_id" hidden>

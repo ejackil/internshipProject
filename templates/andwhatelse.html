@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block title%}And What Else?{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/andwhatelse.css')}}">
+{% endblock %}
+    {% block content %}
+    <section id="about" class="about-section">
+        <div class="about-header">
+            <h2>And What Else?</h2>
+            <p>Along with these aspects, we have many more futuristic elements on offer here at Finch And Goose.</p>
+        </div>
+        <div class="about-items">
+            <div class="about-item aspect-item">
+                <div class="content aspect-content">
+                    <h3>AI-Powered Culinary Assistants</h3>
+                    <p>Advanced AI systems can assist chefs in the kitchen by optimizing recipes, suggesting ingredient combinations, and even controlling cooking techniques to ensure consistent quality.</p>
+                </div>
+            </div>
+            <div class="about-item aspect-item">
+                <div class="content aspect-content">
+                    <h3>Drone-Delivered Orders</h3>
+                    <p>For large or multi-level restaurants, drones can be used to deliver food and beverages directly to tables, adding a high-tech touch and improving service efficiency.</p>
+                </div>
+            </div>
+            <div class="about-item aspect-item">
+                <div class="content aspect-content">
+                    <h3>Wearable Technology For Staff</h3>
+                    <p>Equip staff with wearable devices like smartwatches or AR glasses to streamline communication, track orders, and enhance customer service by providing real-time information and updates.</p>
+                </div>
+            </div>
+            <div class="about-item aspect-item">
+                <div class="content aspect-content">
+                    <h3>Personalised Soundscapes</h3>
+                    <p>Individualized sound zones created through directional speakers that allow each table to have its own unique soundtrack or audio experience without disturbing other diners.</p>
+                </div>
+            </div>
+            <div class="about-item aspect-item">
+                <div class="content aspect-content">
+                    <h3>Self-Adjusting Furniture</h3>
+                    <p>Smart tables and chairs that adjust their height, temperature, and seating comfort based on the preferences of the diners, ensuring an optimal dining experience.</p>
+                </div>
+            </div>
+            <div class="about-item aspect-item">
+                <div class="content aspect-content">
+                    <h3>Biometric Payment</h3>
+                    <p>Biometric payments use unique physical traits like fingerprints or facial recognition for secure, quick transactions, enhancing convenience and reducing contact in restaurants.</p>
+                </div>
+            </div>
+            <div class="about-item aspect-item">
+                <div class="content aspect-content">
+                    <h3>Immersive Scenery</h3>
+                    <p>Immersive scenery in a restaurant uses advanced projection and VR/AR technology to transform the dining environment into various thematic settings, enhancing the overall dining experience with visually engaging and dynamic backgrounds.</p>
+                </div>
+            </div>
+            <div class="about-item aspect-item">
+                <div class="content aspect-content">
+                    <h3>Robotic Waiters</h3>
+                    <p>Robotic waiters in a restaurant autonomously deliver food and drinks to tables using advanced navigation systems. They enhance efficiency, reduce labor costs, and provide a unique, high-tech dining experience.</p>
+                </div>
+            </div>
+        </div>
+        <div class="cta">
+            <a href="https://blog.grubtech.com/post/the-future-of-dining-how-technology-is-shaping-the-restaurant-industry" class="cta-button">Discover More</a>
+        </div>
+    </section>
+    {% endblock %}
