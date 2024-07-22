@@ -199,14 +199,20 @@ def menu():
 @app.route("/reviews", methods=["GET", "POST"])
 def reviews():
     if request.method == "POST":
-        if not session.get("logged_in"):
-            return redirect(url_for("reviews"))
-
         title = request.form.get("heading")
         body = request.form.get("message")
         rating = int(request.form.get("rating"))
 
-        review = Review(session.get("user_id"), title, body, rating, date.today())
+        if not session.get("logged_in"):
+            user = User(request.form.get("first-name"), request.form.get("last-name"))
+            db.session.add(user)
+            db.session.flush()
+
+            user_id = user.user_id
+        else:
+            user_id = session.get("user_id")
+
+        review = Review(user_id, title, body, rating, date.today())
         db.session.add(review)
         db.session.commit()
 
