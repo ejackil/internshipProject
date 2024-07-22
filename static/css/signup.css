@@ -77,7 +77,8 @@ input[type="submit"]:hover {
 }
 
 #password-error {
-   font-size: 15px;
+   font-size: 17px;
+   text-align: center;
    border-width: 2px;
   border-style: solid;
   border-color: red;
