@@ -566,7 +566,7 @@ def forgotpassword():
 
             user.reset_password_token = token
 
-            content = f"""Click here to reset your password: {url_for("resetpassword", token=token.hex())}.
+            content = f"""Click here to reset your password: {url_for("resetpassword", token=token.hex(), _external=True, _scheme='http', _host='localhost:5000')}.
     This link will expire in 20 minutes."""
             subject = "Reset Password - Finch & Goose"
 
