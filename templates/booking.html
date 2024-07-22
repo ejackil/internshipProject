@@ -80,7 +80,7 @@
         {% if user %}
             <div id="personal-info-group" hidden>
                 <label for="phone_number">Phone Number:</label>
-                <input type="text" id="phone_number" name="phone_number" value="{{ user.phone_number if user.phone_number else '' }}" required><br>
+                <input type="text" id="phone_number" name="phone_number" value="{{ user.phone_number if user.phone_number else '' }}" minlength="10" required><br>
             </div>
         {% else %}
             <div id="personal-info-group" hidden>

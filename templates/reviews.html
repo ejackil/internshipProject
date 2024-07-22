@@ -17,7 +17,7 @@
                 <span class="star" data-rating="5">☆</span>
             </div>
             <p class="date">June 20, 2024 - Leah Ryan</p>
-            <p>Ferret and Goose is an absolute gem! The lakeside setting is stunning, and the food is exceptional. The Gooseberry Glazed Duck was perfectly cooked and bursting with flavor. The ambiance is warm and inviting, making it perfect for both a romantic dinner and a family gathering. Highly recommend. Will be returning!</p>
+            <p>Finch and Goose is an absolute gem! The lakeside setting is stunning, and the food is exceptional. The Gooseberry Glazed Duck was perfectly cooked and bursting with flavor. The ambiance is warm and inviting, making it perfect for both a romantic dinner and a family gathering. Highly recommend. Will be returning!</p>
         </div>
         <div class="separator"></div>
         <div class="review">
@@ -30,7 +30,7 @@
                 <span class="star" data-rating="5">★</span>
             </div>
             <p class="date">August 12, 2023 - Grace McGlynn</p>
-            <p>Dining at Ferret and Goose is an unforgettable experience. The attention to detail in both the dishes and the decor is remarkable. The Mushroom Risotto was creamy and rich, a true testament to their commitment to quality local ingredients. The view of the lake at sunset is breathtaking. Five stars!!</p>
+            <p>Dining at Finch and Goose is an unforgettable experience. The attention to detail in both the dishes and the decor is remarkable. The Mushroom Risotto was creamy and rich, a true testament to their commitment to quality local ingredients. The view of the lake at sunset is breathtaking. Five stars!!</p>
         </div>
         <div class="separator"></div>
         <div class="review">
@@ -43,7 +43,7 @@
                 <span class="star" data-rating="5">☆</span>
             </div>
             <p class="date">February 3, 2023 - Isabelle Madden</p>
-            <p>From the moment we arrived at Ferret and Goose, we were enchanted. The ambiance, with its blend of modern elegance and historic charm, is second to none. The dishes are creative and delicious, with a clear emphasis on local, fresh ingredients. Watching the sunset over the lake while enjoying our meal was pure magic.</p>
+            <p>From the moment we arrived at Finch and Goose, we were enchanted. The ambiance, with its blend of modern elegance and historic charm, is second to none. The dishes are creative and delicious, with a clear emphasis on local, fresh ingredients. Watching the sunset over the lake while enjoying our meal was pure magic.</p>
         </div>
         <div class="separator"></div>
         <div class="review">
@@ -56,7 +56,7 @@
                 <span class="star" data-rating="5">☆</span>
             </div>
             <p class="date">April 21, 2022 - Caoimhe Naughton</p>
-            <p> Ferret and Goose fell short in many ways. The wait time was excessive, and the food was cold when it finally arrived. The ambiance was nice, but it couldn't compensate for the lackluster meal. The Ferret Mushroom Risotto was underseasoned and boring. I expected much more for the price.</p>
+            <p> Finch and Goose fell short in many ways. The wait time was excessive, and the food was cold when it finally arrived. The ambiance was nice, but it couldn't compensate for the lackluster meal. The Finch Mushroom Risotto was underseasoned and boring. I expected much more for the price.</p>
         </div>
         <div class="separator"></div>
         <div class="review">
@@ -69,7 +69,7 @@
                 <span class="star" data-rating="5">☆</span>
             </div>
             <p class="date">October 5, 2023 - Luke Quilty</p>
-            <p> My experience at Ferret and Goose was a complete disaster from start to finish. We arrived for our reservation only to be told they had no record of it, despite my confirmation email. After waiting for 45 minutes, we were finally seated at a cramped table near the noisy kitchen. Our waiter was rude and inattentive, taking another 30 minutes to take our order. When the food eventually arrived, it was an utter mess. The Stuffed portobello mushrooms was burnt and inedible, and the Ferret Mushroom Risotto was cold and flavorless. To top it off, we found a hair in one of the dishes. We asked to speak with the manager, who was dismissive and unapologetic. The final insult was the exorbitant bill, which they refused to adjust despite the horrible experience. We left feeling utterly disappointed and ripped off. Avoid this place at all costs!</p>
+            <p> My experience at Finch and Goose was a complete disaster from start to finish. We arrived for our reservation only to be told they had no record of it, despite my confirmation email. After waiting for 45 minutes, we were finally seated at a cramped table near the noisy kitchen. Our waiter was rude and inattentive, taking another 30 minutes to take our order. When the food eventually arrived, it was an utter mess. The Stuffed portobello mushrooms was burnt and inedible, and the Finch Mushroom Risotto was cold and flavorless. To top it off, we found a hair in one of the dishes. We asked to speak with the manager, who was dismissive and unapologetic. The final insult was the exorbitant bill, which they refused to adjust despite the horrible experience. We left feeling utterly disappointed and ripped off. Avoid this place at all costs!</p>
         </div>
         <div class="separator"></div>
         <div class="review">
@@ -82,7 +82,7 @@
                 <span class="star" data-rating="5">☆</span>
             </div>
             <p class="date">January 14 2022- Kealan Ryan McIntyre </p>
-            <p>I can't say enough good things about Ferret and Goose. The service is impeccable, and the menu is innovative and delicious. We had the Seasonal Tasting Menu, and each course was a delight. The lakeside location adds a magical touch. It's my new favorite spot for special occasions.</p>
+            <p>I can't say enough good things about Finch and Goose. The service is impeccable, and the menu is innovative and delicious. We had the Seasonal Tasting Menu, and each course was a delight. The lakeside location adds a magical touch. It's my new favorite spot for special occasions.</p>
         </div>
         <div class="separator"></div>
         <div class="review">
@@ -124,8 +124,15 @@
     </div>
 
     <div id="submitbox" class="review">
-        {% if session["logged_in"] %}
         <form action="{{ url_for('reviews') }}" method="POST">
+            {% if not session.get("logged_in") %}
+                <label for="first-name">First Name:</label>
+                <textarea id="first-name" name="first-name" placeholder="Your fist name..."></textarea>
+
+                <label for="last-name">Last Name:</label>
+                <textarea id="last-name" name="last-name" placeholder="Your last name..."></textarea>
+            {% endif %}
+
             <label for="heading">Heading:</label>
             <textarea id="heading" name="heading" placeholder="Your title..."></textarea>
 
@@ -150,10 +157,6 @@
 <br>
             <input type="submit" value="Submit">
         </form>
-        {% else %}
-            <h2>Want to share your thoughts?</h2>
-            <p><a href="{{ url_for('signup') }}">Make an account</a> or <a href="{{ url_for('login') }}">login</a> to post a review</p>
-        {% endif %}
     </div>
 </div>
 {% endblock %}
