@@ -1,11 +1,6 @@
 /* Importing Google font - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
+
 /* Defining Custom Variables */
 :root {
     /* Colors */
@@ -22,6 +17,10 @@ html {
 }
 body {
     background-color: #151517;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
 #footer {
@@ -72,19 +71,13 @@ ul {
     margin: 7px auto 0;
     border-radius: 8px;
 }
-/* Styling for the header section */
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-    background: var(--primary-color);
-}
+
 /* Hero Section */
 .hero_section {
     min-height: 100vh;
     background: #151517;
 }
+
 .hero_container {
     display: flex;
     gap: 20px;

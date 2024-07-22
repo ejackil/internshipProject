@@ -90,9 +90,8 @@ body {
 
 
 .small-image{
-    height: 94px;
-    padding-top: 10px;
-    padding-bottom: 5px;
+    height: 85px;
+    padding-top: 5px;
     background-color: transparent;
     transition: filter 200ms ease;
 }
