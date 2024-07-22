@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block title %}Delivery{% endblock %}
+{% block head%}
+<link rel="stylesheet" href="../static/css/delivery.css">
+{% endblock %}
+{% block content %}
+    <section id="drone-delivery" class="hero-section">
+<div class="hero-content">
+    <img src="../static/images/drone_delivery8.png" alt="Drone Delivery"/>
+    <h2>Experience the Future of Dining</h2>
+    <p>Introducing our state-of-the-art drone delivery service, bringing gourmet meals directly to your doorstep.</p>
+    <a href="#order-now" class="btn">Order Now</a>
+</div>
+    </section>
+    <section id="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps-container">
+        <div class="step" onclick="triggerAnimation(this)">
+            <h3>1. Place Your Order</h3>
+            <p>Select your favorite dishes from our menu and place your order online.</p>
+        </div>
+            <div class="step" onclick="triggerAnimation(this)">
+            <h3>2. Await Drone Arrival</h3>
+            <p>The drone will deliver your order directly to your doorstep with impressive speed.</p>
+        </div>
+            <div class="step" onclick="triggerAnimation(this)">
+            <h3>3. Enjoy Your Meal</h3>
+            <p>Receive your gourmet meal at your doorstep and enjoy the exquisite flavors.</p>
+        </div>
+    </div>
+</section>
+   <section id="delivery" class="delivery-section">
+        <div class="container">
+            <h2>Futuristic Drone Delivery</h2>
+            <p>Experience the future of dining with our state-of-the-art drone delivery service. Enjoy your gourmet meals delivered directly to your location with unmatched speed and precision.</p>
+            <div class="drone-image">
+                <img src="../static/images/drone_delivery6.png " alt="Drone Delivery" style=" width: 80%; height: 40%;">
+            </div>
+            <div class="delivery-features">
+                <div class="feature">
+                    <h3>Speedy Delivery</h3>
+                    <p>Our drones speed up deliveries by flying directly from our kitchen to your door, bypassing traffic and roadblocks. This efficient route ensures your meals arrive hot and fresh, enhancing your dining experience with faster, reliable service..</p>
+                </div>
+                <div class="feature">
+                    <h3>Eco-Friendly</h3>
+                    <p>Delivery drones enhance sustainability for restaurants by reducing fuel use and carbon emissions with their electric-powered systems. By flying directly to destinations and avoiding traffic, they cut greenhouse gas emissions and support greener, eco-friendly operations.</p>
+                </div>
+                <div class="feature">
+                    <h3>Increased Accessibility</h3>
+                    <p>Drones enhance accessibility by quickly reaching remote locations, avoiding traffic, and delivering precisely to specific addresses, benefiting hard-to-reach areas and individuals with mobility issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="order-now">
+<h2>Order Now</h2>
+<form>
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required>
+<label for="address">Address:</label>
+<input type="text" id="address" name="address" required>
+<label for="order-details">Order Details:</label>
+<textarea id="order-details" name="order-details" required></textarea>
+<button type="submit" class="btn">Submit Order</button>
+</form>
+</section>
+    <script>
+        function triggerAnimation(element) {
+            element.classList.add('animated');
+        }
+    </script>
+{% endblock %}

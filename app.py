@@ -529,9 +529,49 @@ def logout():
 @app.route("/accountsettings", methods=["POST", "GET"])
 @require_login()
 def accountsettings():
-    return render_template("accountsettings.html")
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+    email = user.email
+    phonenumber = user.phone_number
 
+    if phonenumber is None:
+        phonenumber = ""
 
+    return render_template("accountsettings.html", email=email, phonenumber=phonenumber)
+
+@app.route("/api/accountsettings/changeaccountdetails", methods=["POST", "GET"])
+@require_login()
+def change_account_details():
+    entered_email = request.form.get("email-change")
+    entered_password = request.form.get("password-change")
+    entered_phonenumber = request.form.get("phonenumber-change")
+    old_password = request.form.get("old-password")
+
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+   
+    if old_password:
+        if bcrypt.check_password_hash(user.password, old_password):
+            if entered_email != user.email and entered_email:
+                check_email = list(db.session.execute(select(User).where(User.email == entered_email)))
+                if len(check_email) == 0:
+                    user.email = entered_email
+                else:
+                    flash("Email in use", "error")
+                    return redirect(url_for("accountsettings", _anchor="settings")) 
+        
+            if entered_phonenumber != user.phone_number and entered_phonenumber:
+                user.phone_number = entered_phonenumber
+
+            if not bcrypt.check_password_hash(user.password, entered_password) and entered_password:
+                user.password = bcrypt.generate_password_hash(entered_password)
+
+            db.session.commit()
+
+            flash("Account details changed successfully")
+            return redirect(url_for("accountsettings"))
+
+    flash("Incorrect password", "error")
+    return redirect(url_for("accountsettings", _anchor="settings")) 
+    
 @app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
 def delete_account():
     entered_password = request.form.get("password")
@@ -572,7 +612,7 @@ def forgotpassword():
 
             user.reset_password_token = token
 
-            content = f"""Click here to reset your password: {url_for("resetpassword", token=token.hex())}.
+            content = f"""Click here to reset your password: {url_for("resetpassword", token=token.hex(), _external=True, _scheme='http', _host='localhost:5000')}.
     This link will expire in 20 minutes."""
             subject = "Reset Password - Finch & Goose"
 
