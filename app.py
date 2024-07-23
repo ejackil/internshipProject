@@ -372,10 +372,34 @@ def get_booking(booking_id):
         "end_time": reservation.end_time.strftime("%H:%M"),
         "name": f"{first_name} {last_name}" if reservation.user_id else None,
         "phone_number": reservation.phone_number,
+        "reservation_id": reservation.reservation_id,
     }
 
     return reservation_info
 
+
+@app.route("/api/cancel_booking/<booking_id>", methods=["POST"])
+@require_login()
+def cancel_booking(booking_id):
+    row = db.session.execute(select(Reservation).where(Reservation.reservation_id == booking_id)).first()
+
+    if not row:
+        flash("Reservation could not be deleted", "error")
+        return redirect(url_for("mybookings"))
+
+    reservation = row[0]
+
+    if (reservation.user_id == session.get("user_id")
+            or session.get("user_type") == "employee"
+            or session.get("user_type") == "admin"):
+        db.session.delete(reservation)
+        db.session.commit()
+
+        flash("Reservation cancelled successfully", "message")
+    else:
+        flash("Reservation could not be deleted", "error")
+
+    return redirect(url_for("mybookings"))
 
 @app.route("/booking", methods=["GET", "POST"])
 def booking():
