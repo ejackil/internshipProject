@@ -100,3 +100,33 @@ tr:hover {
 .booked {
     border: none;
 }
+
+#cancel {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#cancel input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#cancel img{
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin: 0;
+    box-sizing: border-box;
+}

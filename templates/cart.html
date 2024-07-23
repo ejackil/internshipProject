@@ -7,6 +7,52 @@
 {% block content %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<div class="container1">
+    <div class="container01">
+    <h1>Order Summary</h1>
+    </div>
+    <div class="container02">
+    <p><strong>Value:</strong> {{ giftcard_value }}</p>
+    <p><strong>First Name:</strong> {{ giftcard_firstname }}</p>
+    <p><strong>Last Name:</strong> {{ giftcard_lastname }}</p>
+    <p><strong>Email:</strong> {{ giftcard_email }}</p>
+    <p><strong>Recipient:</strong> {{ giftcard_recipient }}</p>
+    <p><strong>Gifter:</strong> {{ giftcard_gifter }}</p>
+    </div>
+</div>
 
+<div class="container2">
+ <h1> Checkout </h1>
+
+    <form action="{{ url_for('cart') }}" method="POST" id="cartform">
+
+    <!-- Select/choose amount option on the right side-->
+    <label for="cart_country">Choose a Country:</label>
+    <select id="cart_country" name="cart_country" form="cartform" >
+      <option value="Select a Country below" disabled selected>Select the country your are from below ↓ </option>
+      <option value="Republic of Ireland">Republic of Ireland</option>
+      <option value="Northern Ireland">Northern Ireland</option>
+      <option value="United Kingdom">United Kingdom</option>
+      <option value="United States">United States</option>
+    </select>
+
+
+ <!-- All the green text boxes for the form -->
+      <label for="cart_cardfullname">Enter your card's Full Name</label>
+      <input type="text" id="cart_cardfullname" name="cart_cardfullname" placeholder="Enter your card's Full Name here">
+
+      <label for="cart_cardnumber">Enter your Card Number</label>
+      <input type="text" id="cart_cardnumber" name="cart_cardnumber" maxlength="16" placeholder="Enter your Card Number here">
+
+      <label for="cart_cardcsc">Enter your CSC</label>
+      <input type="text" id="cart_cardcsc" name="cart_cardcsc" maxlength="3" placeholder="Enter your CSC here">
+
+      <label for="cart_expirydate">Enter the Expiry Date of the card </label>
+      <input type="text" id="cart_expirydate" name="cart_expirydate" maxlength=5 placeholder="MM/YY">
+
+
+    <input type="submit" value="Submit">
+
+</div>
 
 {% endblock %}

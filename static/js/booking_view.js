@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("popup-time").innerHTML = reservation_info["start_time"] + " - " + reservation_info["end_time"];
         document.getElementById("popup-name").innerHTML = reservation_info["name"] ? reservation_info["name"] : "&lt;Deleted User&gt;";
         document.getElementById("popup-phone-number").innerHTML = reservation_info["phone_number"];
+        document.getElementById("cancel").action = `/api/cancel_booking/${reservation_info["reservation_id"]}`
 
         booking_popup.hidden = false;
     }

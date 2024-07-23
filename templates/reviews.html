@@ -126,11 +126,13 @@
     <div id="submitbox" class="review">
         <form action="{{ url_for('reviews') }}" method="POST">
             {% if not session.get("logged_in") %}
+            <div id="name-box">
                 <label for="first-name">First Name:</label>
-                <textarea id="first-name" name="first-name" placeholder="Your fist name..."></textarea>
+                <textarea id="first-name" name="first-name" placeholder="Your first name..."></textarea>
 
                 <label for="last-name">Last Name:</label>
                 <textarea id="last-name" name="last-name" placeholder="Your last name..."></textarea>
+            </div>
             {% endif %}
 
             <label for="heading">Heading:</label>

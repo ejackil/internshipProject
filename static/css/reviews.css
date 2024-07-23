@@ -108,6 +108,17 @@ textarea {
     resize: none;
 }
 
+#name-box {
+    display: flex;
+    flex-direction: row;
+}
+
+#first-name, #last-name {
+    margin: 0 16px 16px 16px;
+    padding-top: 12px;
+    padding-bottom: 0;
+}
+
 input[type="email"] {
     width: 100%;
     padding: 12px;

@@ -1,16 +1,15 @@
-import smtplib
-from datetime import datetime, timedelta, date, time
-from email.message import EmailMessage
-from functools import wraps
-from random import randint, seed
 import werkzeug.routing.exceptions
-from flask import Flask, render_template, url_for, request, redirect, session, flash
-from flask_bcrypt import Bcrypt
-from flask_sqlalchemy import SQLAlchemy
-from itsdangerous import TimestampSigner, SignatureExpired
-from mysql.connector import Error
-from sqlalchemy import select, func
+import smtplib
 from werkzeug.exceptions import HTTPException
+from sqlalchemy import select, func
+from flask import Flask, render_template, url_for, request, redirect, session, flash
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime, timedelta, date, time
+from functools import wraps
+from flask_bcrypt import Bcrypt
+from random import randint, seed
+from email.message import EmailMessage
+from itsdangerous import TimestampSigner, SignatureExpired
 
 USERNAME = "root"
 PASSWORD = ""
@@ -136,12 +135,27 @@ class Giftcard(db.Model):
 
     def __init__(self, giftcard_value, giftcard_firstname, giftcard_lastname,
                  giftcard_email, giftcard_recipient, giftcard_gifter):
-        self.giftcard_value = giftcard_value
-        self.giftcard_firstname = giftcard_firstname
-        self.giftcard_lastname = giftcard_lastname
-        self.giftcard_email = giftcard_email
-        self.giftcard_recipient = giftcard_recipient
-        self.giftcard_gifter = giftcard_gifter
+            self.giftcard_value = giftcard_value
+            self.giftcard_firstname = giftcard_firstname
+            self.giftcard_lastname = giftcard_lastname
+            self.giftcard_email = giftcard_email
+            self.giftcard_recipient = giftcard_recipient
+            self.giftcard_gifter = giftcard_gifter
+
+class Cart(db.Model):
+    __tablename__ = "cart"
+    cart_id = db.Column(db.Integer, primary_key=True)
+    cart_country = db.Column(db.String(255), nullable=False)
+    cart_cardfullname = db.Column(db.String(255), nullable=False)
+    cart_cardcsc = db.Column(db.String(255), nullable=False)
+    cart_expirydate = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, cart_country, cart_cardfullname, cart_cardnumber, cart_cardcsc, cart_expirydate):
+        self.cart_country = cart_country
+        self.cart_cardfullname = cart_cardfullname
+        self.cart_cardnumber = cart_cardnumber
+        self.cart_cardcsc = cart_cardcsc
+        self.cart_expirydate = cart_expirydate
 
 
 with app.app_context():
@@ -386,10 +400,36 @@ def get_booking(booking_id):
         "end_time": reservation.end_time.strftime("%H:%M"),
         "name": f"{first_name} {last_name}" if reservation.user_id else None,
         "phone_number": reservation.phone_number,
+        "reservation_id": reservation.reservation_id,
     }
 
     return reservation_info
 
+
+@app.route("/api/cancel_booking/<booking_id>", methods=["POST"])
+@require_login()
+def cancel_booking(booking_id):
+    redirect_to = "mybookings" if "mybookings" in request.referrer else "view_bookings"
+
+    row = db.session.execute(select(Reservation).where(Reservation.reservation_id == booking_id)).first()
+
+    if not row:
+        flash("Reservation could not be deleted", "error")
+        return redirect(url_for(redirect_to))
+
+    reservation = row[0]
+
+    if (reservation.user_id == session.get("user_id")
+            or session.get("user_type") == "employee"
+            or session.get("user_type") == "admin"):
+        db.session.delete(reservation)
+        db.session.commit()
+
+        flash("Reservation cancelled successfully", "message")
+    else:
+        flash("Reservation could not be deleted", "error")
+
+    return redirect(url_for(redirect_to))
 
 @app.route("/booking", methods=["GET", "POST"])
 def booking():
@@ -698,14 +738,58 @@ def giftcard():
                                 giftcard_recipient, giftcard_gifter)
             db.session.add(giftcard)
             db.session.commit()
-            flash("Gift Card Purchased", "message")
+            flash("Added to cart", "message")
+
+            return render_template(
+                "cart.html",
+                giftcard_value=giftcard_value,
+                giftcard_firstname=giftcard_firstname,
+                giftcard_lastname=giftcard_lastname,
+                giftcard_email=giftcard_email,
+                giftcard_recipient=giftcard_recipient,
+                giftcard_gifter=giftcard_gifter
+            )
 
     return render_template("giftcard.html")
 
-@app.route('/delivery')
-def delivery():
 
-    return render_template("delivery.html")
+@app.route('/cart', methods=["POST", "GET"])
+def cart():
+    if request.method == 'POST':
+        cart_country = request.form.get('cart_country')
+        cart_cardfullname = request.form.get('cart_cardfullname')
+        cart_cardnumber = request.form.get('cart_cardnumber')
+        cart_cardcsc = request.form.get('cart_cardcsc')
+        cart_expirydate = request.form.get('cart_expirydate')
+
+        if not (cart_country and cart_cardfullname and cart_cardnumber and cart_cardcsc and cart_expirydate):
+            flash("All fields are required!", "error")
+        else:
+            cart = Cart(cart_country, cart_cardfullname, cart_cardnumber, cart_cardcsc, cart_expirydate)
+            db.session.add(cart)
+            db.session.commit()
+            flash("Item Purchased", "message")
+
+    #statement = (select(Giftcard)
+                # .where(cart.giftcard_id == session["giftcard_id"])
+                 #.where(cart.giftcard_value > giftcard_value())
+                 #.where(cart.giftcard_firstname > giftcard_firstname())
+                 #.where(cart.giftcard_lastname > giftcard_lastname())
+                #.where(cart.giftcard_email > giftcard_email())
+                # .where(cart.giftcard_recipient > giftcard_recipient())
+                # .where(cart.giftcard_gifter > giftcard_gifter())
+               # )
+    #rows = db.session.execute(statement)
+    #cart_giftcard = [row[0] for row in rows]
+
+    #return render_template("cart.html", cart_giftcard=cart_giftcard)
+
+
+
+@app.route("/admin", methods=["GET"])
+@require_login("admin")
+def admin_page():
+    return render_template("admin.html")
 
 
 @app.route('/submit_order', methods=['POST'])
@@ -723,4 +807,61 @@ def submit_order():
         return render_template('delivery.html')
 
 
+@app.route("/admin/tables", methods=["GET"])
+@require_login("admin")
+def admin_tables():
+    return render_template("admintables.html")
 
+
+@app.route("/admin/users", methods=["GET"])
+@require_login("admin")
+def admin_users():
+    users = [row[0] for row in db.session.execute(select(User))]
+
+    return render_template("admin_users.html", users=users)
+
+
+@app.route("/admin/contact", methods=["GET"])
+@require_login("admin")
+def admin_contact():
+    return render_template("admincontact.html")
+
+
+@app.route("/api/update_user/<user_id>", methods=["POST"])
+@require_login("admin")
+def update_user(user_id):
+    row = db.session.execute(select(User).where(User.user_id == user_id)).first()
+
+    if not row:
+        flash("Could not delete user", "error")
+        return redirect(url_for("admin_users"))
+
+    user = row[0]
+
+    user_type = request.form.get("user_type")
+    if not user_type:
+        flash("Something went wrong", "error")
+        return redirect(url_for("admin_users"))
+
+    user.user_type = user_type
+    db.session.commit()
+
+    flash("User updated", "message")
+    return redirect(url_for("admin_users"))
+
+
+@app.route("/api/delete_user/<user_id>", methods=["POST"])
+@require_login("admin")
+def delete_user(user_id):
+    row = db.session.execute(select(User).where(User.user_id == user_id)).first()
+
+    if not row:
+        flash("Could not delete user", "error")
+        return redirect(url_for("admin_users"))
+
+    user = row[0]
+    db.session.delete(user)
+    db.session.commit()
+
+    flash("User deleted", "message")
+    return redirect(url_for("admin_users"))
