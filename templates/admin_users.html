@@ -22,6 +22,9 @@
             </select>
             <input type="submit" value="Update"> 
         </form>
+        <form class="delete-form" action="{{ url_for('delete_user', user_id = user.user_id) }}" method="POST">
+            <input type="submit" value="Delete">
+        </form>
     </li>
     {% endfor %}
 </ul>

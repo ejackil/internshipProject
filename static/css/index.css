@@ -27,6 +27,10 @@ body {
     margin-top: 0;
 }
 
+.hero_container h2 {
+    margin-bottom: 0.35em;
+}
+
 a {
     text-decoration: none;
 }
