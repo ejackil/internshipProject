@@ -95,6 +95,19 @@ class Complaint(db.Model):
         self.resolved = resolved
 
 
+class Order(db.Model):
+    __tablename__ = 'orders'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    phone_number = db.Column(db.String(100))
+    details = db.Column(db.String(100))
+
+    def __init__(self, name, phone_number, details):
+        self.name = name
+        self.phone_number = phone_number
+        self.details = details
+
+
 class Review(db.Model):
     __tablename__ = "reviews"
     id = db.Column(db.Integer, primary_key=True)
@@ -779,6 +792,22 @@ def cart():
 @require_login("admin")
 def admin_page():
     return render_template("admin.html")
+
+
+@app.route('/submit_order', methods=['POST'])
+def submit_order():
+    if request.method == 'POST':
+        name = request.form['name']
+        phone_number = request.form['phone_number']
+        details = request.form['order-details']
+
+        submit_order = Order(name, phone_number, details)
+        db.session.add(submit_order)
+        db.session.commit()
+        flash("Your Order has been placed!", "message")
+
+        return render_template('delivery.html')
+
 
 @app.route("/admin/tables", methods=["GET"])
 @require_login("admin")
