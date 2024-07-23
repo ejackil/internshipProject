@@ -770,3 +770,66 @@ def cart():
     #cart_giftcard = [row[0] for row in rows]
 
     #return render_template("cart.html", cart_giftcard=cart_giftcard)
+
+
+
+@app.route("/admin", methods=["GET"])
+@require_login("admin")
+def admin_page():
+    pass
+
+@app.route("/admin/tables", methods=["GET"])
+@require_login("admin")
+def admin_tables():
+    pass
+
+
+@app.route("/admin/users", methods=["GET"])
+@require_login("admin")
+def admin_users():
+    pass
+
+
+@app.route("/admin/contact", methods=["GET"])
+@require_login("admin")
+def admin_contact():
+    pass
+
+
+@app.route("/api/update_user/<user_id>", methods=["POST"])
+@require_login("admin")
+def update_user(user_id):
+    row = db.session.execute(select(User).where(User.user_id == user_id)).first()
+
+    if not row:
+        flash("Could not delete user", "error")
+        return redirect(url_for(admin_users))
+
+    user = row[0]
+
+    user_type = request.form.get("user_type")
+    if not user_type:
+        flash("Something went wrong", "error")
+        return redirect(url_for(admin_users))
+
+    user.user_type = user_type
+    db.session.commit()
+
+    flash("User updated", "message")
+    return redirect(url_for(admin_users))
+
+
+@app.route("/api/delete_user/<user_id>", methods=["POST"])
+@require_login("admin")
+def delete_user(user_id):
+    row = db.session.execute(select(User).where(User.user_id == user_id)).first()
+
+    if not row:
+        flash("Could not delete user", "error")
+        return redirect(url_for(admin_users))
+
+    user = row[0]
+    db.session.delete(user)
+
+    flash("User deleted", "message")
+    return redirect(url_for(admin_users))
