@@ -832,6 +832,7 @@ def delete_user(user_id):
 
     user = row[0]
     db.session.delete(user)
+    db.session.commit()
 
     flash("User deleted", "message")
     return redirect(url_for("admin_users"))

@@ -40,3 +40,17 @@
     border-radius: 4px;
     border: 1px solid lightgrey;
 }
+
+#users form {
+    margin-left: 10px;
+}
+
+#users .delete-form input {
+    background-color: red;
+    color: white;
+    border-color: red;
+}
+
+#users input[type="submit"] {
+    cursor: pointer;
+}
