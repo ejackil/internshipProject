@@ -85,12 +85,14 @@ class Complaint(db.Model):
     lname = db.Column(db.String(100))
     email = db.Column(db.String(100))
     complaint = db.Column(db.String(100))
+    resolved = db.Column(db.Boolean)
 
-    def __init__(self, fname, lname, email, complaint):
+    def __init__(self, fname, lname, email, complaint, resolved=False):
         self.fname = fname
         self.lname = lname
         self.email = email
         self.complaint = complaint
+        self.resolved = resolved
 
 
 class Review(db.Model):
@@ -795,8 +797,29 @@ def admin_users():
 @app.route("/admin/contact", methods=["GET"])
 @require_login("admin")
 def admin_contact():
-    return render_template("admincontact.html")
+    contacts = [row[0] for row in db.session.execute(select(Complaint).where(Complaint.resolved == False))]
 
+    return render_template("admincontact.html", contacts=contacts)
+
+
+@app.route("/api/resolve_complaint/<complaint_id>", methods=["POST"])
+@require_login("admin")
+def resolve_complaint(complaint_id):
+    complaint = db.session.execute(select(Complaint).where(Complaint.id == complaint_id)).first()[0]
+    complaint.resolved = True
+    db.session.commit()
+
+    return redirect(url_for("admin_contact"))
+
+
+@app.route("/api/delete_complaint/<complaint_id>", methods=["POST"])
+@require_login("admin")
+def delete_complaint(complaint_id):
+    complaint = db.session.execute(select(Complaint).where(Complaint.id == complaint_id)).first()[0]
+    db.session.delete(complaint)
+    db.session.commit()
+
+    return redirect(url_for("admin_contact"))
 
 @app.route("/api/update_user/<user_id>", methods=["POST"])
 @require_login("admin")
