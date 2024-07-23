@@ -122,12 +122,27 @@ class Giftcard(db.Model):
 
     def __init__(self, giftcard_value, giftcard_firstname, giftcard_lastname,
                  giftcard_email, giftcard_recipient, giftcard_gifter):
-        self.giftcard_value = giftcard_value
-        self.giftcard_firstname = giftcard_firstname
-        self.giftcard_lastname = giftcard_lastname
-        self.giftcard_email = giftcard_email
-        self.giftcard_recipient = giftcard_recipient
-        self.giftcard_gifter = giftcard_gifter
+            self.giftcard_value = giftcard_value
+            self.giftcard_firstname = giftcard_firstname
+            self.giftcard_lastname = giftcard_lastname
+            self.giftcard_email = giftcard_email
+            self.giftcard_recipient = giftcard_recipient
+            self.giftcard_gifter = giftcard_gifter
+
+class Cart(db.Model):
+    __tablename__ = "cart"
+    cart_id = db.Column(db.Integer, primary_key=True)
+    cart_country = db.Column(db.String(255), nullable=False)
+    cart_cardfullname = db.Column(db.String(255), nullable=False)
+    cart_cardcsc = db.Column(db.String(255), nullable=False)
+    cart_expirydate = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, cart_country, cart_cardfullname, cart_cardnumber, cart_cardcsc, cart_expirydate):
+        self.cart_country = cart_country
+        self.cart_cardfullname = cart_cardfullname
+        self.cart_cardnumber = cart_cardnumber
+        self.cart_cardcsc = cart_cardcsc
+        self.cart_expirydate = cart_expirydate
 
 
 with app.app_context():
@@ -675,8 +690,6 @@ def giftcard():
         giftcard_recipient = request.form.get('giftcard_recipient')
         giftcard_gifter = request.form.get('giftcard_gifter')
 
-
-
         if not (giftcard_firstname and giftcard_lastname and giftcard_email and giftcard_recipient and giftcard_gifter):
             flash("All fields are required!", "error")
         else:
@@ -684,9 +697,58 @@ def giftcard():
                                 giftcard_recipient, giftcard_gifter)
             db.session.add(giftcard)
             db.session.commit()
-            flash("Gift Card Purchased", "message")
+            flash("Added to cart", "message")
+
+            return render_template(
+                "cart.html",
+                giftcard_value=giftcard_value,
+                giftcard_firstname=giftcard_firstname,
+                giftcard_lastname=giftcard_lastname,
+                giftcard_email=giftcard_email,
+                giftcard_recipient=giftcard_recipient,
+                giftcard_gifter=giftcard_gifter
+            )
 
     return render_template("giftcard.html")
+
+
+
+
+
+
+@app.route('/cart', methods=["POST", "GET"])
+def cart():
+    if request.method == 'POST':
+        cart_country = request.form.get('cart_country')
+        cart_cardfullname = request.form.get('cart_cardfullname')
+        cart_cardnumber = request.form.get('cart_cardnumber')
+        cart_cardcsc = request.form.get('cart_cardcsc')
+        cart_expirydate = request.form.get('cart_expirydate')
+
+        if not (cart_country and cart_cardfullname and cart_cardnumber and cart_cardcsc and cart_expirydate):
+            flash("All fields are required!", "error")
+        else:
+            cart = Cart(cart_country, cart_cardfullname, cart_cardnumber, cart_cardcsc, cart_expirydate)
+            db.session.add(cart)
+            db.session.commit()
+            flash("Item Purchased", "message")
+
+    #statement = (select(Giftcard)
+                # .where(cart.giftcard_id == session["giftcard_id"])
+                 #.where(cart.giftcard_value > giftcard_value())
+                 #.where(cart.giftcard_firstname > giftcard_firstname())
+                 #.where(cart.giftcard_lastname > giftcard_lastname())
+                #.where(cart.giftcard_email > giftcard_email())
+                # .where(cart.giftcard_recipient > giftcard_recipient())
+                # .where(cart.giftcard_gifter > giftcard_gifter())
+               # )
+    #rows = db.session.execute(statement)
+    #cart_giftcard = [row[0] for row in rows]
+
+    #return render_template("cart.html", cart_giftcard=cart_giftcard)
+
+
+
 
 '''@app.route('/accountsettings', methods=["POST", "GET"])
 def accountdetails():
