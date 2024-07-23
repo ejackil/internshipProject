@@ -90,32 +90,34 @@ body {
 
 
 .small-image{
-     height: 165px;
-     width: 250px;
-     padding-top: 10px;
-     background-color: #004526;
-     transition: all 100ms ease;
-     box-sizing: border-box;
+    height: 85px;
+    padding-top: 5px;
+    background-color: transparent;
+    transition: filter 200ms ease;
 }
 
-.small-image:hover {
-    filter: brightness(0%);
-    background-color: transparent;
-}
 
 #logo {
     min-width: 250px;
     max-width: 250px;
     overflow: hidden;
+    background-color: #004526;
 }
 
 #home-page-button {
     height: 170px;
     width: 250px;
+    transition: all 200ms ease;
+    filter: brightness(100%);
+    background-color: transparent;
 }
 
 #home-page-button:hover {
     background-color: #f3961c;
+}
+
+#home-page-button:hover img {
+    filter: brightness(0);
 }
 
 nav {
