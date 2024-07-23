@@ -16,7 +16,10 @@
                 <h3>Reservation - {{ upcoming_booking.start_time.strftime("%d %B %Y") }}</h3>
                 <p><strong>Time:</strong> {{ upcoming_booking.start_time.strftime("%H:%M") }}</p>
                 <p><strong>Table:</strong> {{ upcoming_booking.table_id }}</p>
-                <button type="button" class="cancel" ><img src="static/images/cancel-button.svg" alt="Cancel"><span class="cancelling">Cancel Booking</span></button>
+                <form class="cancel" action="{{ url_for('cancel_booking', booking_id=upcoming_booking.reservation_id) }}", method="POST">
+                    <input type="submit" value="">
+                    <img src="static/images/cancel-button.svg" alt="Cancel"><span class="cancelling">Cancel Booking</span>
+                </form>
             </div>
         {% endfor %}
     </div>
@@ -24,10 +27,9 @@
         <h2>Previous Bookings</h2>
         {% for past_booking in past_bookings %}
             <div class="previous-booking">
-                    <h3>Reservation - {{ past_booking.start_time.strftime("%d %B %Y") }}</h3>
-                    <p><strong>Time:</strong> {{ past_booking.start_time.strftime("%H:%M") }}</p>
-                    <p><strong>Table:</strong> {{ past_booking.table_id }}</p>
-                     <button type="button" class="delete" ><img src="static/images/delete.svg" alt="Delete"><span class="del-booking">Delete Booking</span></button>
+                <h3>Reservation - {{ past_booking.start_time.strftime("%d %B %Y") }}</h3>
+                <p><strong>Time:</strong> {{ past_booking.start_time.strftime("%H:%M") }}</p>
+                <p><strong>Table:</strong> {{ past_booking.table_id }}</p>
             </div>
         {% endfor %}
     </div>
