@@ -1,15 +1,16 @@
-import werkzeug.routing.exceptions
 import smtplib
-from werkzeug.exceptions import HTTPException
-from sqlalchemy import select, func
-from flask import Flask, render_template, url_for, request, redirect, session, flash
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date, time
-from functools import wraps
-from flask_bcrypt import Bcrypt
-from random import randint, seed
 from email.message import EmailMessage
+from functools import wraps
+from random import randint, seed
+import werkzeug.routing.exceptions
+from flask import Flask, render_template, url_for, request, redirect, session, flash
+from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy
 from itsdangerous import TimestampSigner, SignatureExpired
+from mysql.connector import Error
+from sqlalchemy import select, func
+from werkzeug.exceptions import HTTPException
 
 USERNAME = "root"
 PASSWORD = ""
@@ -91,6 +92,19 @@ class Complaint(db.Model):
         self.lname = lname
         self.email = email
         self.complaint = complaint
+
+
+class Order(db.Model):
+    __tablename__ = 'orders'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    phone_number = db.Column(db.String(100))
+    details = db.Column(db.String(100))
+
+    def __init__(self, name, phone_number, details):
+        self.name = name
+        self.phone_number = phone_number
+        self.details = details
 
 
 class Review(db.Model):
@@ -692,5 +706,21 @@ def giftcard():
 def delivery():
 
     return render_template("delivery.html")
+
+
+@app.route('/submit_order', methods=['POST'])
+def submit_order():
+    if request.method == 'POST':
+        name = request.form['name']
+        phone_number = request.form['phone_number']
+        details = request.form['order-details']
+
+        submit_order = Order(name, phone_number, details)
+        db.session.add(submit_order)
+        db.session.commit()
+        flash("Your Order has been placed!", "message")
+
+        return render_template('delivery.html')
+
 
 

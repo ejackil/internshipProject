@@ -12,7 +12,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: linear-gradient(135deg, #152c24, #1e4439);
+    background-color: #152c24;
     background-size: 200% 200%;
     animation: gradientShift 10s ease infinite;
     position: relative;
@@ -24,13 +24,12 @@ body {
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 600px;
+    max-width: 80%;
     padding: 40px;
-    background: rgba(0, 0, 0, 0.6);
+    background-color: #1e4439;
     border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     animation: fadeInScale 1.5s ease-in-out;
-    backdrop-filter: blur(10px);
 }
 
 .hero-content img {
@@ -121,18 +120,12 @@ body {
     padding: 4rem 2rem;
 }
 
-#how-it-works h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    font-family: 'Playfair Display', serif;
-    color: #000000;
-}
-
 .steps-container {
     display: flex;
     justify-content: center;
     gap: 2rem;
     flex-wrap: wrap;
+    margin-bottom: 40px;
 }
 
 .step {
@@ -196,24 +189,7 @@ body {
     text-align: center;
 }
 
-/* Section title styling */
-#Futuristic-Drone-Delivery h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #2c3e50;
-}
-
 /* Section description styling */
-.section-description {
-    font-size: 1.1rem;
-    margin-bottom: 40px;
-    color: #7f8c8d;
-    line-height: 1.6;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .drone-image {
     margin-bottom: 40px;
     display: inline-block;
@@ -238,6 +214,7 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    margin-bottom: 40px;
 }
 
 .feature {
@@ -269,34 +246,125 @@ body {
     line-height: 1.6;
 }
 
+/* Menu */
+#picture-menu {
+    background: #e9ecef;
+    padding: 50px 0;
+}
 
+.menu-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
-form {
+.menu-item {
+    width: 30%;
+    min-width: 250px;
+    text-align: center;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover {
+    transform: scale(1.05);
+}
+
+.menu-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.menu-item .item-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-item .item-info h4 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.menu-item .item-info .price {
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Order Now Section */
+#order_form {
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 600px;
     margin: 0 auto;
+    color: #000000;
 }
 
-form label {
+#order_form label {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    font-weight: 600;
+    color: #ffffff
 }
 
-form input, form textarea {
+#order_form input, form textarea {
     padding: 0.75rem;
     margin-bottom: 1rem;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
+    color: #000000;
 }
 
-form textarea {
+#order_form textarea {
     height: 150px;
     resize: vertical;
+}
+
+/* Styling for the selected items list */
+#selected-items {
+    display: none; /* Hides the section */
+}
+
+#selected-items h4 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#order-list {
+    list-style-type: none; /* Remove default bullet points from <ul> */
+    margin-left: 0;
+    padding-left: 0;
+}
+
+#order-list li {
+    margin-bottom: 5px; /* Space between list items */
+}
+
+.delete-btn {
+        margin-left: 10px;
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 2px 5px;
+        font-size: 12px;
 }
 
 form button {
@@ -315,6 +383,18 @@ form button:hover {
     transform: translateY(-2px);
 }
 
+.section_title1 {
+    color: #000000;
+    font-size: 35px;
+    text-align: center;
+}
+
+.section_title2 {
+    color: #ffffff;
+    font-size: 35px;
+    text-align: center;
+}
+
 .section_title1::after {
     content: '';
     width: 100px;
@@ -324,6 +404,7 @@ form button:hover {
     margin: 7px auto 0;
     border-radius: 8px;
 }
+
 .section_title2::after {
     content: '';
     width: 100px;
