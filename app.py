@@ -791,7 +791,9 @@ def cart():
 @app.route("/admin", methods=["GET"])
 @require_login("admin")
 def admin_page():
-    return render_template("admin.html")
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+    current_user = user.email
+    return render_template("admin.html", current_user=current_user)
 
 
 @app.route('/submit_order', methods=['POST'])
