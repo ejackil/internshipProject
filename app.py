@@ -776,24 +776,26 @@ def cart():
 @app.route("/admin", methods=["GET"])
 @require_login("admin")
 def admin_page():
-    pass
+    return render_template("admin.html")
 
 @app.route("/admin/tables", methods=["GET"])
 @require_login("admin")
 def admin_tables():
-    pass
+    return render_template("admintables.html")
 
 
 @app.route("/admin/users", methods=["GET"])
 @require_login("admin")
 def admin_users():
-    pass
+    users = [row[0] for row in db.session.execute(select(User))]
+
+    return render_template("admin_users.html", users=users)
 
 
 @app.route("/admin/contact", methods=["GET"])
 @require_login("admin")
 def admin_contact():
-    pass
+    return render_template("admincontact.html")
 
 
 @app.route("/api/update_user/<user_id>", methods=["POST"])
@@ -803,20 +805,20 @@ def update_user(user_id):
 
     if not row:
         flash("Could not delete user", "error")
-        return redirect(url_for(admin_users))
+        return redirect(url_for("admin_users"))
 
     user = row[0]
 
     user_type = request.form.get("user_type")
     if not user_type:
         flash("Something went wrong", "error")
-        return redirect(url_for(admin_users))
+        return redirect(url_for("admin_users"))
 
     user.user_type = user_type
     db.session.commit()
 
     flash("User updated", "message")
-    return redirect(url_for(admin_users))
+    return redirect(url_for("admin_users"))
 
 
 @app.route("/api/delete_user/<user_id>", methods=["POST"])
@@ -826,10 +828,10 @@ def delete_user(user_id):
 
     if not row:
         flash("Could not delete user", "error")
-        return redirect(url_for(admin_users))
+        return redirect(url_for("admin_users"))
 
     user = row[0]
     db.session.delete(user)
 
     flash("User deleted", "message")
-    return redirect(url_for(admin_users))
+    return redirect(url_for("admin_users"))
