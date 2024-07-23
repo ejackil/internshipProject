@@ -381,11 +381,13 @@ def get_booking(booking_id):
 @app.route("/api/cancel_booking/<booking_id>", methods=["POST"])
 @require_login()
 def cancel_booking(booking_id):
+    redirect_to = "mybookings" if "mybookings" in request.path else "view_bookings"
+
     row = db.session.execute(select(Reservation).where(Reservation.reservation_id == booking_id)).first()
 
     if not row:
         flash("Reservation could not be deleted", "error")
-        return redirect(url_for("mybookings"))
+        return redirect(url_for(redirect_to))
 
     reservation = row[0]
 
@@ -399,7 +401,7 @@ def cancel_booking(booking_id):
     else:
         flash("Reservation could not be deleted", "error")
 
-    return redirect(url_for("mybookings"))
+    return redirect(url_for(redirect_to))
 
 @app.route("/booking", methods=["GET", "POST"])
 def booking():

@@ -135,30 +135,6 @@ html {
     box-shadow: 0 4px 12px rgba(128, 162, 147, 1);
 }
 
-.delete {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 50%;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.delete img{
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.delete img:hover {
-    box-shadow: 0 4px 12px rgba(128, 162, 147, 1);
-}
-
 .cancelling {
    position: absolute;
     width: 100px;
