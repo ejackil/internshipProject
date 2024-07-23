@@ -1,0 +1,72 @@
+#content {
+    position: relative;
+    height: calc(100vh - (135px + 90px));
+}
+
+#navbar-spacer {
+    margin-bottom: 0;
+}
+
+#footer {
+    margin-top: 0; 
+}
+
+#admin-title h1 {
+    position: absolute;
+    color: #ffffff;
+    display: flex;
+    margin-top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+}
+
+#admin-title h2 {
+    position: absolute;
+    color: #ffffff;
+    display: flex;
+    margin-top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 25px;
+    font-style: italic;
+}
+
+
+#admin-tabs {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.admin-form {
+    padding: 10px;
+    width: 15%;
+    height: 20%;
+    border: 2px solid #ffffff;
+    
+}
+
+label {
+    text-align: center;
+    display: block;
+    color: white;
+    font-size: 20px;
+}
+
+.admin-input {
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 15px;
+    background-color:transparent;
+    box-shadow: none;
+    height: 40px;
+    aspect-ratio: 3 / 2;
+}
