@@ -810,7 +810,7 @@ def delivery():
         db.session.commit()
         flash("Your Order has been placed!", "message")
 
-        return render_template('cart.html')
+        return render_template('delivery.html')
 
     return render_template("delivery.html")
 
