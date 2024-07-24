@@ -117,6 +117,7 @@
                     {% endif %}
                 <p>{{ review["review"].body }}</p>
                 {% if review["user"] and review["user"].user_id == session.get("user_id") %}
+                    <a class="edit-button" href="/api/edit_review/{{ review['review'].id }}">edit</a>
                     <a class="delete-button" href="/api/delete_review/{{ review['review'].id }}">delete</a>
                 {% endif %}
             </div>
