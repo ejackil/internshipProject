@@ -101,13 +101,13 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     phone_number = db.Column(db.String(100))
-    details = db.Column(db.String(100))
+    order_details = db.Column(db.String(100))
     specifications = db.Column(db.String(100))
 
-    def __init__(self, name, phone_number, details, specifications):
+    def __init__(self, name, phone_number, order_details, specifications):
         self.name = name
         self.phone_number = phone_number
-        self.details = details
+        self.order_details = order_details
         self.specifications = specifications
 
 
@@ -161,6 +161,8 @@ class Cart(db.Model):
         self.cart_cardnumber = cart_cardnumber
         self.cart_cardcsc = cart_cardcsc
         self.cart_expirydate = cart_expirydate
+
+
 
 
 with app.app_context():
@@ -651,9 +653,6 @@ def delete_account():
     flash("Account Deleted", "message")
     return redirect(url_for('index'))
 
-'''@app.route("/api/accountsettings/booking-settings", methods=["POST"])
-def delete_booking_history():'''
-
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
 def forgotpassword():
@@ -727,6 +726,9 @@ def resetpassword(token):
     flash("Password reset successfully")
     return redirect(url_for("login"))
 
+
+
+
 @app.route('/giftcard', methods=["POST", "GET"])
 def giftcard():
     if request.method == 'POST':
@@ -778,17 +780,16 @@ def cart():
             db.session.commit()
             flash("Item Purchased", "message")
 
-    #statement = (select(Giftcard)
-                # .where(cart.giftcard_id == session["giftcard_id"])
-                 #.where(cart.giftcard_value > giftcard_value())
-                 #.where(cart.giftcard_firstname > giftcard_firstname())
-                 #.where(cart.giftcard_lastname > giftcard_lastname())
-                #.where(cart.giftcard_email > giftcard_email())
-                # .where(cart.giftcard_recipient > giftcard_recipient())
-                # .where(cart.giftcard_gifter > giftcard_gifter())
-               # )
-    #rows = db.session.execute(statement)
-    #cart_giftcard = [row[0] for row in rows]
+            content = "{giftcard_value}{giftcard_firstname}{giftcard_lastname}{giftcard_email}{giftcard_recipient}{giftcard_gifter} "
+            send_email(giftcard_recipient, content, object)
+            return redirect(url_for('thankyou'))
+
+    return render_template("cart.html")
+
+
+@app.route('/thankyou')
+def thankyou():
+    return render_template("thankyou.html")
 
     #return render_template("cart.html", cart_giftcard=cart_giftcard)
 
@@ -801,22 +802,30 @@ def admin_page():
     current_user = user.email
     return render_template("admin.html", current_user=current_user)
 
-@app.route('/delivery', methods=["GET", 'POST'])
+
+@app.route('/delivery', methods=["POST", "GET"])
 def delivery():
     if request.method == 'POST':
-        name = request.form['name']
-        phone_number = request.form['phone_number']
-        details = request.form['order-details']
-        specifications = request.form['specifications']
+        name = request.form.get('name')
+        phone_number = request.form.get('phone_number')
+        order_details = request.form.get('order_details')
+        specifications = request.form.get('specifications')
 
-        delivery = Order(name, phone_number, details, specifications)
+        delivery = Order(name, phone_number, order_details, specifications)
         db.session.add(delivery)
         db.session.commit()
-        flash("Your Order has been placed!", "message")
+        flash("Added to cart", "message")
 
-        return render_template('delivery.html')
+        return render_template(
+            "delivery_cart.html",
+            name=name,
+            phone_number=phone_number,
+            order_details=order_details,
+            specifications=specifications,
+        )
 
     return render_template("delivery.html")
+
 
 @app.route("/admin/tables", methods=["GET"])
 @require_login("admin")
