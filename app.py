@@ -297,6 +297,28 @@ def delete_review(review_id):
     flash("Review deleted", "message")
     return redirect(url_for("reviews"))
 
+@app.route("/api/edit_review/<review_id>")
+def edit_review(review_id):
+    if not session.get("logged_in"):
+        flash("You must be logged in to edit a review", "error")
+        return redirect(url_for("reviews"))
+
+    statement = select(Review).where(Review.id == review_id)
+    rows = [row[0] for row in db.session.execute(statement)]
+
+    if len(rows) == 0:
+        flash("No review with that ID", "error")
+        return redirect(url_for("reviews"))
+
+    review = rows[0]
+    if review.user_id != session.get("user_id"):
+        flash("You may only delete your own reviews", "error")
+        return redirect(url_for("reviews"))
+
+    db.session.delete(review)
+    db.session.commit()
+
+    return redirect(url_for("reviews", _anchor="submitbox"))
 
 @app.route("/mybookings")
 @require_login()
