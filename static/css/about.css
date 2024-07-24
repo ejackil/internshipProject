@@ -11,25 +11,23 @@ body {
     margin: 0;
     padding: 0;
     background-color: #152c24;
-    color: #000000; /* Black body text */
+    color: #000000;
     font-family: 'Bodoni', bodoni;
     line-height: 1.6;
 }
 
-/* Styling for the main content area */
 #content {
     margin: 0;
     padding: 0;
     background-color: #152c24;
 }
 
-/* Styling for the central container */
 .container2 {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 15px auto 0;
-    padding: 15px; /* Adjust padding to make smaller */
+    padding: 15px;
     background-color: #152c24;
 }
 
@@ -37,7 +35,6 @@ body {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Dropdown menu styles */
 .dropdown {
     position: relative;
   display: inline-block;
@@ -82,7 +79,7 @@ body {
 
 h1 {
     color: #152c24;
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -90,15 +87,16 @@ h1 {
 
 .container {
     width: 100%;
-    max-width: 80%;
+    max-width: 70%;
     margin: auto;
     margin-top: 5px;
-    padding: 20px 100px 100px 100px;
+    padding: 20px;
+    font-size: 0.85rem;
     border: 8px solid #1e4439;
     background-color: #ffffff;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
-    color: #000000; /* Black text */
+    color: #000000;
 }
 
 .container:hover {
@@ -112,7 +110,8 @@ main {
 h2 {
     color: #000000;
     margin-bottom: 20px;
-    font-size: 3.5rem;
+    font-size: 3rem;
+    font-family: 'Bodoni', bodoni;
     border-bottom: 3px solid #96084c;
     padding-bottom: 10px;
     text-align: center;
@@ -121,11 +120,9 @@ h2 {
 p {
     margin: 15px 0;
     color: #000000;
-    font-size: 1.75rem;
+    font-size: 10.75rem;
     line-height: 1.8;
 }
-
-
 
 section {
     margin-bottom: 60px;
@@ -136,7 +133,7 @@ ul {
     padding: 0;
 }
 
-ul li {
+ul a {
     background: url('../static/images/check.png') no-repeat left center;
     background-size: 20px;
     padding: 15px 0 15px 40px;
@@ -147,8 +144,9 @@ ul li {
     transition: background-color 0.3s ease-in-out;
 }
 
-ul li b {
+ul a b {
     color: #000000;
+
 }
 
 .top-link {
@@ -163,105 +161,102 @@ ul li b {
     height: 20px;
 }
 
-.float-right {
-    float: right;
-    margin: 0 0 20px 20px;
-    width: 150px;
-    height: 150px;
-    border-radius: 20px;
-    border: 2px solid #000000;
-    box-shadow: 2.25px 2.25px grey;
-}
-
-.float-.center {
-    float: right;
-    margin-right: 100px;
-    margin-bottom: 20px;
-    width: 150px;
-    height: 150px;
-    border-radius: 20px;
-    border: 2px solid #000000;
-    box-shadow: 2.25px 2.25px grey;
-}
-
-.timeline {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+#our-story {
+    width: 100%
+    font-family: Arial, sans-serif;
     padding: 20px;
-    overflow-x: auto;
-    white-space: nowrap;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    max-width: 100%;
-    position: relative;
-    padding-top: 60px;
-    padding-bottom: 60px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
 }
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #ccc;
-    z-index: -1;
+.top-link {
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .timeline-event {
-    position: relative;
     display: flex;
-    flex-direction: column;
-    margin: 0 20px;
-    text-align: center;
-    transition: transform 0.3s ease-in-out;
+    align-items: flex-start;
+    margin: 20px 0;
+    width: 100%;
+    position: relative;
+    padding: 0 20px;
 }
 
+.timeline-event:nth-child(odd) {
+    flex-direction: row-reverse;
+}
 
 .timeline-date {
-    display: inline-block;
-    margin-bottom: 10px;
-    padding: 5px 10px;
+    width: 120px;
+    text-align: center;
+    padding: 4px 3px;
     background-color: #f3961c;
-    border: 1px solid #000000;
+    border: 1px solid #000;
     color: #fff;
     border-radius: 4px;
-    font-size: 19px;
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
+    font-size: 12px;
     white-space: nowrap;
+    position: absolute;
+    right: -20px;
+    top: 0;
+    transform: translateY(-20%);
+    z-index: 1;
+}
+
+.timeline-event:nth-child(odd) .timeline-date {
+    left: -60px;
+    right: auto;
 }
 
 .timeline-content {
-    padding: 40px;
+    padding: 20px;
     background-color: #fff;
-    border: 8px solid #ddd;
-    border-radius: 28px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     display: inline-block;
-    white-space: normal;
-    max-width: 200px;
+    width: calc(100% - 120px);
+    margin-left: 120px;
+    position: relative;
+}
+
+.timeline-event:nth-child(odd) .timeline-content {
+    margin-left: 0;
+    margin-right: 120px;
+}
+
+/* Additional Yellow Underline in Cards */
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #f3961c;
+    border-radius: 2px;
+}
+
+.timeline-event:not(:last-child) {
+    margin-bottom: 40px;
 }
 
 .timeline-content h2 {
     margin-top: 0;
-    font-size: 32px;
-    color: #000000;
+    font-size: 20px;
+    color: #000;
 }
 
 .timeline-content p {
-    margin: 0;
-    font-size: 22px;
+    margin: 10px 0 0;
+    font-size: 16px;
     color: #555;
 }
 
 .team-members {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
@@ -269,7 +264,8 @@ ul li b {
 }
 
 .member {
-    width: 320px;
+    width: 1%;
+    min-width: 255px;
     background-color: #e5e5e5;
     margin: 20px;
     padding: 30px;
@@ -300,6 +296,7 @@ ul li b {
     transition: transform 0.3s ease;
 }
 
+
 .member-info h2 {
     font-size: 2.5em;
     margin-bottom: 10px;
@@ -316,6 +313,19 @@ ul li b {
     font-size: 1.4em;
     color: #555;
     line-height: 1.6;
+
+}
+.member101 {
+    width: 80%;
+    background-color: #e5e5e5;
+    margin: 30px;
+    padding: 30px;
+    transform: translateX(7.5%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
 }
 
 .social-links {
@@ -330,7 +340,7 @@ ul li b {
     transition: transform 0.3s ease;
 }
 
-.social-links li:hover {
+.social-links a:hover {
     transform: scale(1.2);
 }
 
@@ -341,7 +351,7 @@ ul li b {
 }
 
 #our-mission {
-    padding: 3em 2em;
+    padding: 1em 2em;
     background-color: #fff;
     color: #2c3e50;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -360,16 +370,11 @@ ul li b {
     color: #000000;
 }
 
-.mission-header p {
-    margin-bottom: 1.5em;
-    font-size: 1.75rem;
-}
-
 .mission-items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2em;
-    padding: 2em 0;
+    grid-template-columns: repeat(auto-fill, minmax(200px, .5fr));
+    gap: 15px; /* 2em typically equals 32px */
+    padding: 2em;
 }
 
 .mission-item {
@@ -397,11 +402,12 @@ ul li b {
 }
 
 .mission-item h3 {
-    font-size: 2em;
+    font-size: 1.8em;
     margin-bottom: 0.5em;
-    color: #000000
+    color: #000000;
 }
 
+/* to change font, take this out*/
 .mission-item p {
     font-size: 1.5em;
     line-height: 1.6;
@@ -452,30 +458,31 @@ ul li b {
 }
 
 .hero h1 {
-    font-size: 2em;
+    font-size: 1.8em;
     margin-bottom: 0.5em;
+    color: #000000;
 }
 
 .hero p {
-    font-size: 1.5em;
+    font-size: 1.3em;
     margin-bottom: 0;
 }
 
 .aspect-grid {
     display: flex;
     justify-content: space-around;
-    gap: 200px;
+    gap: 25px;
     flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 400px;
+    margin-bottom: 0 auto;
+
 }
 
 .aspect-item {
-    flex: 1 1 400px;
+    flex: 1 1 calc(50% - 25px); /* Two items per row, minus the gap */
     background: #f9f9f9;
-    border: 1.5px solid #ddd;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
@@ -486,46 +493,32 @@ ul li b {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-.aspect-content {
-    padding: 30px;
-    text-align: center;
-}
-.aspect-content {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
 
 .aspect-item h2 {
-    font-size: 2.5em;
-    margin-bottom: 1.5em;
-    color: #4c4c4c;
-    border-bottom: 3px solid #1e4439;
-
-
+    font-size: 2em;
+    margin-bottom:
+    .5em;
+    color: #000000l;
+    border-bottom: 3px solid #000000;
 }
 
 .aspect-item p {
-    font-size: 1.8em;
+    font-size: 1.5em;
     line-height: 1.6;
     color: #000000
-
 }
 
-.cta, cta1, myBtn {
+.cta, cta1, myBtn, myBtn1 {
     margin-top: 50px;
 }
 
-.cta-button, cta1, myBtn{
+.cta-button, cta1, myBtn, myBtn1{
     display: inline-block;
     padding: 15px 30px;
     background-color: #f3961c;
     color: #fff;
     border-radius: 25px;
-    font-size: 1.2em;
+    font-size: 1em;
     text-decoration: none;
     transition: background-color 0.3s, transform 0.3s;
 }
@@ -556,7 +549,7 @@ ul {
 }
 
 li {
-    font-size: 1.1em;
+    font-size: 1.75em;
     line-height: 1.6;
     margin-bottom: 15px;
     padding: 10px;
@@ -582,10 +575,28 @@ img {
     display: none;
 }
 
-#myBtn {
-    display: inline-block;
-    padding: .3em .8em;
+#myBtn{
+    display: block;
+    margin: 0 auto;
+    padding: .3em .7em;
     font-size: 1.25rem;
+    align: center;
+    color: #000000;
+    background-color: #ffffff;
+    border: 2px solid #96084c;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+#myBtn1{
+    display: block;
+    margin: 0 auto;
+    padding: .3em .7em;
+    font-size: 1.25rem;
+    align: center;
     color: #000000;
     background-color: #ffffff;
     border: 2px solid #96084c;
@@ -598,4 +609,18 @@ img {
 
 #myBtn:hover {
     background-color: #f3961c;
+}
+
+#myBtn1:hover {
+    background-color: #f3961c;
+}
+
+.text1{
+    font-size: 20px;
+
+}
+
+#text1{
+    font-size: 20px;
+
 }
