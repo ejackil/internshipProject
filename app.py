@@ -20,6 +20,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = '0EHLMjwfynimjRhI6Nl3mOaZMmmTu7JE'
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}/{DB_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.jinja_env.filters['zip'] = zip
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
@@ -811,10 +812,25 @@ def submit_order():
         return render_template('delivery.html')
 
 
-@app.route("/admin/tables", methods=["GET"])
+@app.route("/admin/tables", methods=["GET", "POST"])
 @require_login("admin")
 def admin_tables():
-    return render_template("admintables.html")
+    return display_admin_tables()
+def display_admin_tables():
+    statement = select(Table)
+    rows = db.session.execute(statement)
+    tables = [{"id": row[0].table_id, "capacity": row[0].capacity} for row in rows]
+    
+    statement2 = select(Table.capacity)
+    capacity_rows = db.session.execute(statement2) 
+    capacities = [{row[0]} for row in capacity_rows]
+    
+    # print(tables)
+    # print(capacities)
+    
+
+    return render_template("admintables.html", tables=tables, capacities=capacities)
+    
 
 
 @app.route("/admin/users", methods=["GET"])
@@ -832,6 +848,13 @@ def admin_contact():
 
     return render_template("admincontact.html", contacts=contacts)
 
+@app.route("/api/update_layout", methods=["POST", "GET"])
+@require_login("admin")
+def update_layout():
+    if request.method == "POST":
+        
+
+        return redirect(url_for("index"))
 
 @app.route("/api/resolve_complaint/<complaint_id>", methods=["POST"])
 @require_login("admin")
