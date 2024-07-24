@@ -85,12 +85,27 @@ class Complaint(db.Model):
     lname = db.Column(db.String(100))
     email = db.Column(db.String(100))
     complaint = db.Column(db.String(100))
+    resolved = db.Column(db.Boolean)
 
-    def __init__(self, fname, lname, email, complaint):
+    def __init__(self, fname, lname, email, complaint, resolved=False):
         self.fname = fname
         self.lname = lname
         self.email = email
         self.complaint = complaint
+        self.resolved = resolved
+
+
+class Order(db.Model):
+    __tablename__ = 'orders'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    phone_number = db.Column(db.String(100))
+    details = db.Column(db.String(100))
+
+    def __init__(self, name, phone_number, details):
+        self.name = name
+        self.phone_number = phone_number
+        self.details = details
 
 
 class Review(db.Model):
@@ -779,7 +794,25 @@ def cart():
 @app.route("/admin", methods=["GET"])
 @require_login("admin")
 def admin_page():
-    return render_template("admin.html")
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+    current_user = user.email
+    return render_template("admin.html", current_user=current_user)
+
+
+@app.route('/submit_order', methods=['POST'])
+def submit_order():
+    if request.method == 'POST':
+        name = request.form['name']
+        phone_number = request.form['phone_number']
+        details = request.form['order-details']
+
+        submit_order = Order(name, phone_number, details)
+        db.session.add(submit_order)
+        db.session.commit()
+        flash("Your Order has been placed!", "message")
+
+        return render_template('delivery.html')
+
 
 @app.route("/admin/tables", methods=["GET"])
 @require_login("admin")
@@ -798,8 +831,29 @@ def admin_users():
 @app.route("/admin/contact", methods=["GET"])
 @require_login("admin")
 def admin_contact():
-    return render_template("admincontact.html")
+    contacts = [row[0] for row in db.session.execute(select(Complaint).where(Complaint.resolved == False))]
 
+    return render_template("admincontact.html", contacts=contacts)
+
+
+@app.route("/api/resolve_complaint/<complaint_id>", methods=["POST"])
+@require_login("admin")
+def resolve_complaint(complaint_id):
+    complaint = db.session.execute(select(Complaint).where(Complaint.id == complaint_id)).first()[0]
+    complaint.resolved = True
+    db.session.commit()
+
+    return redirect(url_for("admin_contact"))
+
+
+@app.route("/api/delete_complaint/<complaint_id>", methods=["POST"])
+@require_login("admin")
+def delete_complaint(complaint_id):
+    complaint = db.session.execute(select(Complaint).where(Complaint.id == complaint_id)).first()[0]
+    db.session.delete(complaint)
+    db.session.commit()
+
+    return redirect(url_for("admin_contact"))
 
 @app.route("/api/update_user/<user_id>", methods=["POST"])
 @require_login("admin")
