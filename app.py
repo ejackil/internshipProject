@@ -9,6 +9,7 @@ from functools import wraps
 from flask_bcrypt import Bcrypt
 from random import randint, seed
 from email.message import EmailMessage
+from itsdangerous import TimestampSigner, SignatureExpired
 
 USERNAME = "root"
 PASSWORD = ""
@@ -22,6 +23,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
+timestamp_signer = TimestampSigner(app.config["SECRET_KEY"])
 
 
 class Table(db.Model):
@@ -39,6 +41,7 @@ class User(db.Model):
     email = db.Column(db.String(64))
     password = db.Column(db.BINARY(60))
     user_type = db.Column(db.Enum("customer", "employee", "admin"), nullable=False)
+    reset_password_token = db.Column(db.BINARY)
 
     def __init__(self, first_name, last_name, phone_number=None, email=None, password=None, user_type="customer"):
         self.first_name = first_name
@@ -82,12 +85,29 @@ class Complaint(db.Model):
     lname = db.Column(db.String(100))
     email = db.Column(db.String(100))
     complaint = db.Column(db.String(100))
+    resolved = db.Column(db.Boolean)
 
-    def __init__(self, fname, lname, email, complaint):
+    def __init__(self, fname, lname, email, complaint, resolved=False):
         self.fname = fname
         self.lname = lname
         self.email = email
         self.complaint = complaint
+        self.resolved = resolved
+
+
+class Order(db.Model):
+    __tablename__ = 'orders'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    phone_number = db.Column(db.String(100))
+    details = db.Column(db.String(100))
+    specifications = db.Column(db.String(100))
+
+    def __init__(self, name, phone_number, details, specifications):
+        self.name = name
+        self.phone_number = phone_number
+        self.details = details
+        self.specifications = specifications
 
 
 class Review(db.Model):
@@ -119,12 +139,27 @@ class Giftcard(db.Model):
 
     def __init__(self, giftcard_value, giftcard_firstname, giftcard_lastname,
                  giftcard_email, giftcard_recipient, giftcard_gifter):
-        self.giftcard_value = giftcard_value
-        self.giftcard_firstname = giftcard_firstname
-        self.giftcard_lastname = giftcard_lastname
-        self.giftcard_email = giftcard_email
-        self.giftcard_recipient = giftcard_recipient
-        self.giftcard_gifter = giftcard_gifter
+            self.giftcard_value = giftcard_value
+            self.giftcard_firstname = giftcard_firstname
+            self.giftcard_lastname = giftcard_lastname
+            self.giftcard_email = giftcard_email
+            self.giftcard_recipient = giftcard_recipient
+            self.giftcard_gifter = giftcard_gifter
+
+class Cart(db.Model):
+    __tablename__ = "cart"
+    cart_id = db.Column(db.Integer, primary_key=True)
+    cart_country = db.Column(db.String(255), nullable=False)
+    cart_cardfullname = db.Column(db.String(255), nullable=False)
+    cart_cardcsc = db.Column(db.String(255), nullable=False)
+    cart_expirydate = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, cart_country, cart_cardfullname, cart_cardnumber, cart_cardcsc, cart_expirydate):
+        self.cart_country = cart_country
+        self.cart_cardfullname = cart_cardfullname
+        self.cart_cardnumber = cart_cardnumber
+        self.cart_cardcsc = cart_cardcsc
+        self.cart_expirydate = cart_expirydate
 
 
 with app.app_context():
@@ -196,14 +231,20 @@ def menu():
 @app.route("/reviews", methods=["GET", "POST"])
 def reviews():
     if request.method == "POST":
-        if not session.get("logged_in"):
-            return redirect(url_for("reviews"))
-
         title = request.form.get("heading")
         body = request.form.get("message")
         rating = int(request.form.get("rating"))
 
-        review = Review(session.get("user_id"), title, body, rating, date.today())
+        if not session.get("logged_in"):
+            user = User(request.form.get("first-name"), request.form.get("last-name"))
+            db.session.add(user)
+            db.session.flush()
+
+            user_id = user.user_id
+        else:
+            user_id = session.get("user_id")
+
+        review = Review(user_id, title, body, rating, date.today())
         db.session.add(review)
         db.session.commit()
 
@@ -363,10 +404,36 @@ def get_booking(booking_id):
         "end_time": reservation.end_time.strftime("%H:%M"),
         "name": f"{first_name} {last_name}" if reservation.user_id else None,
         "phone_number": reservation.phone_number,
+        "reservation_id": reservation.reservation_id,
     }
 
     return reservation_info
 
+
+@app.route("/api/cancel_booking/<booking_id>", methods=["POST"])
+@require_login()
+def cancel_booking(booking_id):
+    redirect_to = "mybookings" if "mybookings" in request.referrer else "view_bookings"
+
+    row = db.session.execute(select(Reservation).where(Reservation.reservation_id == booking_id)).first()
+
+    if not row:
+        flash("Reservation could not be deleted", "error")
+        return redirect(url_for(redirect_to))
+
+    reservation = row[0]
+
+    if (reservation.user_id == session.get("user_id")
+            or session.get("user_type") == "employee"
+            or session.get("user_type") == "admin"):
+        db.session.delete(reservation)
+        db.session.commit()
+
+        flash("Reservation cancelled successfully", "message")
+    else:
+        flash("Reservation could not be deleted", "error")
+
+    return redirect(url_for(redirect_to))
 
 @app.route("/booking", methods=["GET", "POST"])
 def booking():
@@ -453,7 +520,7 @@ def signup():
         flash("Email in use", "error")
         return render_template("signup.html")
 
-    hashed = bcrypt.generate_password_hash(password, 10)
+    hashed = bcrypt.generate_password_hash(password)
     user = User(first_name, last_name, email=email, password=hashed)
 
     db.session.add(user)
@@ -520,9 +587,49 @@ def logout():
 @app.route("/accountsettings", methods=["POST", "GET"])
 @require_login()
 def accountsettings():
-    return render_template("accountsettings.html")
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+    email = user.email
+    phonenumber = user.phone_number
 
+    if phonenumber is None:
+        phonenumber = ""
 
+    return render_template("accountsettings.html", email=email, phonenumber=phonenumber)
+
+@app.route("/api/accountsettings/changeaccountdetails", methods=["POST", "GET"])
+@require_login()
+def change_account_details():
+    entered_email = request.form.get("email-change")
+    entered_password = request.form.get("password-change")
+    entered_phonenumber = request.form.get("phonenumber-change")
+    old_password = request.form.get("old-password")
+
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+   
+    if old_password:
+        if bcrypt.check_password_hash(user.password, old_password):
+            if entered_email != user.email and entered_email:
+                check_email = list(db.session.execute(select(User).where(User.email == entered_email)))
+                if len(check_email) == 0:
+                    user.email = entered_email
+                else:
+                    flash("Email in use", "error")
+                    return redirect(url_for("accountsettings", _anchor="settings")) 
+        
+            if entered_phonenumber != user.phone_number and entered_phonenumber:
+                user.phone_number = entered_phonenumber
+
+            if not bcrypt.check_password_hash(user.password, entered_password) and entered_password:
+                user.password = bcrypt.generate_password_hash(entered_password)
+
+            db.session.commit()
+
+            flash("Account details changed successfully")
+            return redirect(url_for("accountsettings"))
+
+    flash("Incorrect password", "error")
+    return redirect(url_for("accountsettings", _anchor="settings")) 
+    
 @app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
 def delete_account():
     entered_password = request.form.get("password")
@@ -543,36 +650,81 @@ def delete_account():
     flash("Account Deleted", "message")
     return redirect(url_for('index'))
 
+'''@app.route("/api/accountsettings/booking-settings", methods=["POST"])
+def delete_booking_history():'''
+
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
 def forgotpassword():
-    message = ''  
+    message = ""
+
     if request.method == 'POST':
-        recipient_email = request.form['email']
-        try:
-            content = 'Click here to reset your password: http://127.0.0.1:5000/resetpassword'
+        recipient_email = request.form.get("email")
+        if not recipient_email:
+            flash("You must enter an email", "error")
+            return redirect(url_for("forgotpassword"))
 
-            msg = EmailMessage()
-            msg.set_content(content, subtype="plain", charset='us-ascii')
-            msg['Subject'] = 'Reset Password - Finch & Goose'
-            msg['From'] = 'finch.and.goose.com@gmail.com'
-            msg['To'] = recipient_email
+        row = db.session.execute(select(User).where(User.email == recipient_email)).first()
+        if not row:
+            message = f"An email has been sent to {recipient_email} if a user with that email exists in our system"
+        else:
+            user = row[0]
+            token = timestamp_signer.sign(int.to_bytes(user.user_id))
 
-            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
-                s.login("finchandgoose@gmail.com", "hhfw jzkl gpec ojlv")
-                s.send_message(msg)
-                s.quit()
+            user.reset_password_token = token
 
-            message = 'Email sent successfully!'
-        except Exception as e:
-            message = f'Failed to send email: {e}'
+            content = f"""Click here to reset your password: {url_for("resetpassword", token=token.hex(), _external=True, _scheme='http', _host='localhost:5000')}.
+    This link will expire in 20 minutes."""
+            subject = "Reset Password - Finch & Goose"
+
+            if send_email(recipient_email, content, subject):
+                message = f"An email has been sent to {recipient_email} if a user with that email exists in our system"
+            else:
+                message = "Something went wrong"
 
     return render_template('forgotpassword.html', message=message)
 
 
-@app.route('/resetpassword')
-def resetpassword():
-    return render_template('resetpassword.html')
+def send_email(recipient, content, subject):
+    try:
+        msg = EmailMessage()
+        msg.set_content(content, subtype="plain", charset="us-ascii")
+        msg['Subject'] = subject
+        msg['From'] = "finchandgoose@gmail.com"
+        msg['To'] = recipient
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
+            s.login("finchandgoose@gmail.com", "hhfw jzkl gpec ojlv")
+            s.send_message(msg)
+            s.quit()
+
+        return True
+    except:
+        return False
+
+@app.route('/resetpassword/<token>', methods=["GET", "POST"])
+def resetpassword(token):
+    if request.method == "GET":
+        return render_template('resetpassword.html')
+
+    try:
+        user_id = int.from_bytes(timestamp_signer.unsign(bytes.fromhex(token), max_age=20 * 60))
+    except SignatureExpired:
+        flash("Invalid token. You may need to create a new token if you last requested one more than 20 minutes ago.","error")
+        return redirect(url_for("forgotpassword"))
+
+    row = db.session.execute(select(User).where(User.user_id == user_id)).first()
+    if not row:
+        flash("Invalid token. You may need to create a new token if you last requested one more than 20 minutes ago.", "error")
+        return redirect(url_for("forgotpassword"))
+
+    user = row[0]
+    user.reset_password_token = None
+    user.password = bcrypt.generate_password_hash(request.form.get("new_password"))
+
+    db.session.commit()
+    flash("Password reset successfully")
+    return redirect(url_for("login"))
 
 @app.route('/giftcard', methods=["POST", "GET"])
 def giftcard():
@@ -593,6 +745,154 @@ def giftcard():
                                 giftcard_recipient, giftcard_gifter)
             db.session.add(giftcard)
             db.session.commit()
-            flash("Gift Card Purchased", "message")
+            flash("Added to cart", "message")
+
+            return render_template(
+                "cart.html",
+                giftcard_value=giftcard_value,
+                giftcard_firstname=giftcard_firstname,
+                giftcard_lastname=giftcard_lastname,
+                giftcard_email=giftcard_email,
+                giftcard_recipient=giftcard_recipient,
+                giftcard_gifter=giftcard_gifter
+            )
 
     return render_template("giftcard.html")
+
+
+@app.route('/cart', methods=["POST", "GET"])
+def cart():
+    if request.method == 'POST':
+        cart_country = request.form.get('cart_country')
+        cart_cardfullname = request.form.get('cart_cardfullname')
+        cart_cardnumber = request.form.get('cart_cardnumber')
+        cart_cardcsc = request.form.get('cart_cardcsc')
+        cart_expirydate = request.form.get('cart_expirydate')
+
+        if not (cart_country and cart_cardfullname and cart_cardnumber and cart_cardcsc and cart_expirydate):
+            flash("All fields are required!", "error")
+        else:
+            cart = Cart(cart_country, cart_cardfullname, cart_cardnumber, cart_cardcsc, cart_expirydate)
+            db.session.add(cart)
+            db.session.commit()
+            flash("Item Purchased", "message")
+
+    #statement = (select(Giftcard)
+                # .where(cart.giftcard_id == session["giftcard_id"])
+                 #.where(cart.giftcard_value > giftcard_value())
+                 #.where(cart.giftcard_firstname > giftcard_firstname())
+                 #.where(cart.giftcard_lastname > giftcard_lastname())
+                #.where(cart.giftcard_email > giftcard_email())
+                # .where(cart.giftcard_recipient > giftcard_recipient())
+                # .where(cart.giftcard_gifter > giftcard_gifter())
+               # )
+    #rows = db.session.execute(statement)
+    #cart_giftcard = [row[0] for row in rows]
+
+    #return render_template("cart.html", cart_giftcard=cart_giftcard)
+
+
+
+@app.route("/admin", methods=["GET"])
+@require_login("admin")
+def admin_page():
+    user = db.session.execute(select(User).where(User.user_id == session.get("user_id"))).first()[0]
+    current_user = user.email
+    return render_template("admin.html", current_user=current_user)
+
+@app.route('/delivery', methods=["GET", 'POST'])
+def delivery():
+    if request.method == 'POST':
+        name = request.form['name']
+        phone_number = request.form['phone_number']
+        details = request.form['order-details']
+        specifications = request.form['specifications']
+
+        delivery = Order(name, phone_number, details, specifications)
+        db.session.add(delivery)
+        db.session.commit()
+        flash("Your Order has been placed!", "message")
+
+        return render_template('delivery.html')
+
+    return render_template("delivery.html")
+
+@app.route("/admin/tables", methods=["GET"])
+@require_login("admin")
+def admin_tables():
+    return render_template("admintables.html")
+
+
+@app.route("/admin/users", methods=["GET"])
+@require_login("admin")
+def admin_users():
+    users = [row[0] for row in db.session.execute(select(User))]
+
+    return render_template("admin_users.html", users=users)
+
+
+@app.route("/admin/contact", methods=["GET"])
+@require_login("admin")
+def admin_contact():
+    contacts = [row[0] for row in db.session.execute(select(Complaint).where(Complaint.resolved == False))]
+
+    return render_template("admincontact.html", contacts=contacts)
+
+
+@app.route("/api/resolve_complaint/<complaint_id>", methods=["POST"])
+@require_login("admin")
+def resolve_complaint(complaint_id):
+    complaint = db.session.execute(select(Complaint).where(Complaint.id == complaint_id)).first()[0]
+    complaint.resolved = True
+    db.session.commit()
+
+    return redirect(url_for("admin_contact"))
+
+
+@app.route("/api/delete_complaint/<complaint_id>", methods=["POST"])
+@require_login("admin")
+def delete_complaint(complaint_id):
+    complaint = db.session.execute(select(Complaint).where(Complaint.id == complaint_id)).first()[0]
+    db.session.delete(complaint)
+    db.session.commit()
+
+    return redirect(url_for("admin_contact"))
+
+@app.route("/api/update_user/<user_id>", methods=["POST"])
+@require_login("admin")
+def update_user(user_id):
+    row = db.session.execute(select(User).where(User.user_id == user_id)).first()
+
+    if not row:
+        flash("Could not delete user", "error")
+        return redirect(url_for("admin_users"))
+
+    user = row[0]
+
+    user_type = request.form.get("user_type")
+    if not user_type:
+        flash("Something went wrong", "error")
+        return redirect(url_for("admin_users"))
+
+    user.user_type = user_type
+    db.session.commit()
+
+    flash("User updated", "message")
+    return redirect(url_for("admin_users"))
+
+
+@app.route("/api/delete_user/<user_id>", methods=["POST"])
+@require_login("admin")
+def delete_user(user_id):
+    row = db.session.execute(select(User).where(User.user_id == user_id)).first()
+
+    if not row:
+        flash("Could not delete user", "error")
+        return redirect(url_for("admin_users"))
+
+    user = row[0]
+    db.session.delete(user)
+    db.session.commit()
+
+    flash("User deleted", "message")
+    return redirect(url_for("admin_users"))

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Restaurant Menu{% endblock %}
+{% block title %}My Reservations{% endblock %}
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/mybookings.css') }}">
@@ -7,27 +7,29 @@
 {% block content %}
 
 <div class="container">
-    <h1>My Bookings</h1>
+    <h1>My Reservations</h1>
 
     <div class="booking-section">
-        <h2>Current Bookings</h2>
+        <h2>Current Reservations</h2>
         {% for upcoming_booking in upcoming_bookings %}
             <div class="current-booking">
                 <h3>Reservation - {{ upcoming_booking.start_time.strftime("%d %B %Y") }}</h3>
                 <p><strong>Time:</strong> {{ upcoming_booking.start_time.strftime("%H:%M") }}</p>
                 <p><strong>Table:</strong> {{ upcoming_booking.table_id }}</p>
-                <button type="button" class="cancel" ><img src="static/images/cancel-button.svg" alt="Cancel"><span class="cancelling">Cancel Booking</span></button>
+                <form class="cancel" action="{{ url_for('cancel_booking', booking_id=upcoming_booking.reservation_id) }}", method="POST">
+                    <input type="submit" value="">
+                    <img src="static/images/cancel-button.svg" alt="Cancel"><span class="cancelling">Cancel Reservation</span>
+                </form>
             </div>
         {% endfor %}
     </div>
     <div class="booking-section">
-        <h2>Previous Bookings</h2>
+        <h2>Previous Reservations</h2>
         {% for past_booking in past_bookings %}
             <div class="previous-booking">
-                    <h3>Reservation - {{ past_booking.start_time.strftime("%d %B %Y") }}</h3>
-                    <p><strong>Time:</strong> {{ past_booking.start_time.strftime("%H:%M") }}</p>
-                    <p><strong>Table:</strong> {{ past_booking.table_id }}</p>
-                     <button type="button" class="delete" ><img src="static/images/delete.svg" alt="Delete"><span class="del-booking">Delete Booking</span></button>
+                <h3>Reservation - {{ past_booking.start_time.strftime("%d %B %Y") }}</h3>
+                <p><strong>Time:</strong> {{ past_booking.start_time.strftime("%H:%M") }}</p>
+                <p><strong>Table:</strong> {{ past_booking.table_id }}</p>
             </div>
         {% endfor %}
     </div>

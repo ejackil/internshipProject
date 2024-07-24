@@ -10,20 +10,21 @@
 
 {% block content %}
 <div class="sidebar">
-    <a href="#account-details"><i class="fas fa-user icon"></i> Account Details</a>
-    <a href="#preferences"><i class="fas fa-cog icon"></i> Preferences</a>
-    <a href="#privacy"><i class="fas fa-lock icon"></i> Privacy Settings</a>
-    <a href="#support"><i class="fas fa-headset icon"></i> Support and Feedback</a>
-    <a href="#del-account"><i class="fas fa-trash icon"></i> Delete Account</a>
+    <a class="sidebar-link" href="#account-details"><i class="fas fa-user icon"></i> Account Details</a>
+    <a class="sidebar-link" href="#preferences"><i class="fas fa-cog icon"></i> Preferences</a>
+    <a class="sidebar-link" href="#privacy"><i class="fas fa-lock icon"></i> Privacy Settings</a>
+    <a class="sidebar-link" href="#support"><i class="fas fa-headset icon"></i> Support and Feedback</a>
+    <a class="sidebar-link" href="#booking-settings"><i class="fas fa-book icon"></i> Booking Settings</a>
+    <a class="sidebar-link" href="#del-account"><i class="fas fa-trash icon"></i> Delete Account</a>
 </div>
 
 <div id="settings">
     <div id="account-details" class="section">
         <h2>Change Account Details</h2>
-        <form id="details-form" action="/accountsettings" method="POST">
+        <form id="details-form" action="/api/accountsettings/changeaccountdetails" method="POST">
             <label for="email-change">Change Email:</label>
             <br>
-            <input value="{{ Email }}" id="email-change" type="email" name="email-change">
+            <input value="{{ email }}" id="email-change" type="email" name="email-change">
             <br>
 
             <label for="password-change">Change Password:</label>
@@ -37,7 +38,11 @@
 
             <label for="phone-number-change">Change your Phone Number:</label>
             <br>
-            <input id="phone-number-change" type="text" name="phone-number-change">
+            <input value="{{ phonenumber }}" id="phone-number-change" type="text" name="phonenumber-change" minlength="10">
+            <br>
+            
+            <label  class="required-field" for="old-password">Enter current password to submit:</label>
+            <input id="old-password" name="old-password" type="password" required>
             <br>
 
             <p id="password-error" hidden>*Your passwords don't match</p>
@@ -77,51 +82,38 @@
         </form>
     </div>
 
-  <div id="privacy" class="section">
-    <h2>Privacy Settings</h2>
-    <div class="accordion">
-        <div class="accordion-item">
-            <div class="accordion-header">
-                <label for="profile-visibility-switch"><b>Profile Visibility</b></label>
-                <div class="switch">
-                    <input type="checkbox" id="profile-visibility-switch" class="switch-input">
-                    <label for="profile-visibility-switch" class="switch-label" ></label>
+    <div id="privacy" class="section">
+        <h2>Privacy Settings</h2>
+        <div class="accordion">
+    
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <label for="email-visibility-switch"><b>Email Visibility</b></label>
+                    <div class="switch">
+                        <input type="checkbox" id="email-visibility-switch" class="switch-input">
+                        <label for="email-visibility-switch" class="switch-label"></label>
+                    </div>
                 </div>
-            </div>
-            <div class="accordion-content">
-                <p>Control who can see your profile. Public makes your profile visible to everyone, while Private restricts it to only your contacts.</p>
+                <div class="accordion-content">
+                    <p>Control who can see your email address. Public makes your email visible to everyone, while Private restricts it to only your contacts.</p>
+                </div>
             </div>
         </div>
-        <div class="accordion-item">
-            <div class="accordion-header">
-                <label for="email-visibility-switch"><b>Email Visibility</b></label>
-                <div class="switch">
-                    <input type="checkbox" id="email-visibility-switch" class="switch-input">
-                    <label for="email-visibility-switch" class="switch-label"></label>
-                </div>
-            </div>
-            <div class="accordion-content">
-                <p>Control who can see your email address. Public makes your email visible to everyone, while Private restricts it to only your contacts.</p>
+        <br>
+        <input type="submit" value="Save Settings" id="save-privacy-settings">
+
+        <div id="confirmation-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <p>Are you sure you want to save these settings?</p>
+                <button id="confirm-save">Yes</button>
+                <button id="cancel-save">No</button>
             </div>
         </div>
     </div>
-      <br>
-    <input type="submit" value="Save Settings" id="save-privacy-settings">
-
-    <div id="confirmation-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <p>Are you sure you want to save these settings?</p>
-            <button id="confirm-save">Yes</button>
-            <button id="cancel-save">No</button>
-        </div>
-    </div>
-</div>
-
-
 
     <div id="support" class="section">
-        <h2>Support and Feedback</h2>
+        <h2>Customer Support and Feedback</h2>
         <form id="support-form" action="/accountsettings" method="POST">
             <label for="email-feedback">Please enter your email:</label>
             <textarea id="email-feedback" name="email-feedback" rows="1" cols="50" placeholder="Please enter email here..."></textarea>
@@ -133,19 +125,27 @@
         </form>
     </div>
 
-  <div id="del-account" class="section">
-    <h2>Delete Account</h2>
-    <form id="delete-account-form" action="/api/accountsettings/deleteaccount" method="POST">
-        <input type="submit" id="delete-account" name="delete-account" value="Delete Account">
-        <div id="password-extension" class="extension">
-            <label for="password">Enter Account Password:</label>
-            <input type="password" id="password" name="password" required>
-            <input id="passmatch" type="submit"  value="Confirm Delete Account" >
-        </div>
-    </form>
+    <div id="booking-settings" class="section">
+        <h2>Booking Settings</h2>
+        <form id="support-form"  action="/api/accountsettings/booking-settings" method="POST">
+            <input type="submit" id="delete-booking-history" name="delete-booking-history" value="Delete Booking History">
+        </form>
+    </div>
+
+    <div id="del-account" class="section">
+        <h2>Delete Account</h2>
+        <form id="delete-account-form" action="/api/accountsettings/deleteaccount" method="POST">
+            <input type="submit" id="delete-account" name="delete-account" value="Delete Account">
+            <div id="password-extension" class="extension">
+                <label for="password">Enter Account Password:</label>
+                <input type="password" id="password" name="password" required>
+                <input id="passmatch" type="submit"  value="Confirm Delete Account" >
+            </div>
+        </form>
+    </div>
 </div>
 
-    <script>
+<script>
     document.getElementById("delete-account").addEventListener("click", function(event) {
         event.preventDefault();
 

@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const first_name_input = document.getElementById("first-name");
     const last_name_input = document.getElementById("last-name");
     const phone_number_input = document.getElementById("phone-number");
+    const server_input = document.getElementById("robotserver")
     const inputs = document.querySelectorAll("#create_form input:not([id='submit']), #create_form select");
 
     const chairs = document.querySelectorAll(".booking-chair-6, .booking-chair-4, .booking-chair-2");
@@ -71,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         date_group.hidden = true;
         time_group.hidden = true;
         personal_info_group.hidden = true;
+        server_input.hidden = true;
         submit_button.hidden = true;
 
         date_input.value = "";
@@ -150,6 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
             saved_info[input.id] = input.value;
         }
 
-        window.sessionStorage.setItem("saved_info", JSON.stringify(saved_info));
+        // window.sessionStorage.setItem("saved_info", JSON.stringify(saved_info));
     });
 });

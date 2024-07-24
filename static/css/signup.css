@@ -77,9 +77,16 @@ input[type="submit"]:hover {
 }
 
 #password-error {
-    font-size: 15px;
-    color: red;
-    margin-top: 5px;
+   font-size: 17px;
+   text-align: center;
+   border-width: 2px;
+  border-style: solid;
+  border-color: red;
+  padding: 2px;
+  border-radius: 5px;
+  background-color: white;
+   color: black;
+   margin-top: 5px;
 }
 
 #password-container {
@@ -162,3 +169,4 @@ input[type="text"] ~ .password-eye {
 body{
  background-color: #152c24;
  }
+

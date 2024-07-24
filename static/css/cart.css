@@ -1,0 +1,137 @@
+ /* CSS CODE */
+
+/* the big green box on the left */
+.container1 {
+  color: white;
+  width: 50%;
+  max-width: auto;
+  height: 600px;
+  margin: 100px auto;
+  background-color: #3e6347;
+  padding: 0px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+  Position: relative;
+  Float: left;
+  margin-left: 50px;
+}
+.container01 {
+  color: white;
+  width: 50%;
+  max-width: auto;
+  height: 100px;
+  margin: 100px auto;
+  background-color: #006347;
+  padding: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+.container02 {
+  color: white;
+  width: 50%;
+  max-width: auto;
+  height: 300px;
+  margin: 100px auto;
+  background-color: #006347;
+  padding: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+/* the big green box on the right */
+.container2 {
+  width: 30%;
+  max-width: auto;
+  height: 600px;
+  margin: 100px auto;
+  background-color: #3e6347;
+  padding: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+  Position: relative;
+  Float: right;
+  margin-right: 50px;
+}
+
+/* code for title */
+h1 {
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+
+/* title of the boxes colour */
+label {
+  color: white;
+  font-weight: bold;
+}
+
+/* darker green boxes css code (choose country) */
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+/* darker green boxes css code (enter card details boxes) */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+/* darker green boxes css code (idk) */
+input[type="submit"] {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+/* text enter areas color */
+select,
+input[type="text"] {
+  background-color: #004526;
+
+}
+
+/* submit button */
+input[type="submit"] {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+/* hovering over the submit */
+input[type="submit"]:hover {
+  background-color: #white;
+  color: black;
+  scale: 1.05;
+
+}

@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+{% block title %}Delivery{% endblock %}
+{% block head%}
+{{ super() }}
+<meta name="viewport" content="width = device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/delivery.css') }}">
+{% endblock %}
+{% block content %}
+    <section id="drone-delivery" class="hero-section">
+        <div class="hero-content">
+            <img src="../static/images/drone_delivery8.png" alt="Drone Delivery"/>
+            <h2>Experience the Future of Dining</h2>
+            <p>Introducing our state-of-the-art drone delivery service, bringing gourmet meals directly to your doorstep.</p>
+            <a href="#order-now" class="btn">Order Now</a>
+        </div>
+    </section>
+    <section id="how-it-works">
+        <h2 class="section_title1">How It Works</h2>
+        <div class="steps-container">
+            <div class="step">
+                <h3>1. Place Your Order</h3>
+                <p>Select your favorite dishes from our menu and place your order online.</p>
+            </div>
+            <div class="step">
+                <h3>2. Await Drone Arrival</h3>
+                <p>The drone will deliver your order directly to your doorstep with impressive speed.</p>
+            </div>
+            <div class="step">
+                <h3>3. Enjoy Your Meal</h3>
+                <p>Receive your gourmet meal at your doorstep and enjoy the exquisite flavors.</p>
+            </div>
+        </div>
+    </section>
+    <section id="delivery" class="delivery-section">
+        <div class="container">
+            <h2 class="section_title1">Futuristic Drone Delivery</h2>
+            <div class="drone-image">
+                <img src="../static/images/drone_delivery6.png " alt="Drone Delivery" style=" width: 80%; height: 40%;">
+            </div>
+            <div class="delivery-features">
+                <div class="feature">
+                    <h4>Speedy Delivery</h4>
+                    <p>Our drones speed up deliveries by flying directly from our kitchen to your door, bypassing traffic and roadblocks. This efficient route ensures your meals arrive hot and fresh, enhancing your dining experience with faster, reliable service.</p>
+                </div>
+                <div class="feature">
+                    <h4>Eco-Friendly</h4>
+                    <p>Delivery drones enhance sustainability for restaurants by reducing fuel use and carbon emissions with their electric-powered systems. By flying directly to destinations and avoiding traffic, they cut greenhouse gas emissions and support greener, eco-friendly operations.</p>
+                </div>
+                <div class="feature">
+                    <h4>Increased Accessibility</h4>
+                    <p>Drones enhance accessibility by quickly reaching remote locations, avoiding traffic, and delivering precisely to specific addresses, benefiting hard-to-reach areas and individuals with mobility issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section id="picture-menu">
+    <h2 class="section_title1">Menu à Emporter</h2>
+    <div class="menu-container">
+        <div class="menu-item" data-dish="Goose and Wild Mushroom Soup">
+                <img src="../static/images/soup.jpg" alt="Goose and Wild Mushroom Soup"/>
+                <div class="item-info">
+                    <h4>Goose and Wild Mushroom Soup</h4>
+                    <p class="price">€14.00</p>
+                </div>
+            </div>
+        <div class="menu-item" data-dish="Roasted Vegetable Satay Skewers">
+            <img src="../static/images/skewers.jpg" alt="Roasted Vegetable Satay Skewers"/>
+            <div class="item-info">
+                <h4>Roasted Vegetable Satay Skewers</h4>
+                <p class="price">€12.00</p>
+            </div>
+        </div>
+        <div class="menu-item" data-dish="Goose Confit with Berry Compote">
+            <img src="../static/images/goose_compote.jpg" alt="Goose Confit with Berry Compote"/>
+            <div class="item-info">
+                <h4>Goose Confit with Berry Compote</h4>
+                <p class="price">€28.00</p>
+            </div>
+        </div>
+        <div class="menu-item" data-dish="Mushroom Risotto">
+            <img src="../static/images/mushroom_risotto.jpg" alt="Wild Mushroom Risotto"/>
+            <div class="item-info">
+                <h4>Wild Mushroom Risotto</h4>
+                <p class="price">€22.00</p>
+            </div>
+        </div>
+        <div class="menu-item" data-dish="Gooseberry Glazed Duck">
+            <img src="../static/images/gooseberry_duck.jpg" alt="Gooseberry Glazed Duck"/>
+            <div class="item-info">
+                <h4>Gooseberry Glazed Duck</h4>
+                <p class="price">€32.50</p>
+            </div>
+        </div>
+        <div class="menu-item" data-dish="Spaghetti Bolognese">
+            <img src="../static/images/spag_bol.jpg" alt="Spaghetti Bolognese for kids"/>
+            <div class="item-info">
+                <h4>Spaghetti Bolognese</h4>
+                <p class="price">€16.00</p>
+            </div>
+        </div>
+        <div class="menu-item" data-dish="Maple Walnut Ice-Cream">
+            <img src="../static/images/gallery_icecream.jpg" alt="Maple Walnut Ice-Cream"/>
+            <div class="item-info">
+                <h4>Maple Walnut Ice-Cream</h4>
+                <p class="price">€18.00</p>
+            </div>
+        </div>
+        <div class="menu-item" data-dish="Expresso Chocolate Pots de Créme">
+            <img src="../static/images/espresso.jpg" alt="Espresso Chocolate Pots de Créme"/>
+            <div class="item-info">
+                <h4>Espresso Chocolate Pots de Créme</h4>
+                <p class="price">€26.50</p>
+            </div>
+        </div>
+        <div class="menu-item" data-dish="Pecan Pie">
+            <img src="../static/images/pie.jpg" alt="Pecan Pie"/>
+            <div class="item-info">
+                <h4>Pecan Pie</h4>
+                <p class="price">€24.00</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="order-now">
+        <h3 class="section_title2">Order Now</h3>
+        <form id="order_form" action="/delivery" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone_number" required minlength="10">
+            <label for="order-details">Order Details:</label>
+            <textarea id="order-details" name="order-details" required></textarea>
+            <label for="specifications">Specifications:</label>
+            <textarea id="specifications" name="specifications" ></textarea>
+            <button type="submit" class="btn">Submit Order</button>
+        </form>
+         <div id="selected-items">
+            <h4>Selected Items:</h4>
+            <ul id="order-list"></ul>
+        </div>
+    </section>
+     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all menu items
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        // Get the order details textarea and the order list
+        const orderDetailsTextarea = document.getElementById('order-details');
+        const orderList = document.getElementById('order-list');
+
+        // Add click event listeners to each menu item
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Get the dish name from data attribute
+                const dishName = this.getAttribute('data-dish');
+
+                // Create a new list item element
+                const listItem = document.createElement('li');
+                listItem.textContent = dishName;
+
+                // Create a delete button
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Remove';
+                deleteButton.classList.add('delete-btn');
+                listItem.appendChild(deleteButton);
+
+                // Append the new list item to the order list
+                orderList.appendChild(listItem);
+
+                // Update the order details textarea with bullet points
+                updateOrderDetails();
+
+                // Add click event listener to the delete button
+                deleteButton.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    orderList.removeChild(listItem);
+                    updateOrderDetails();
+                });
+            });
+        });
+
+        // Function to update the order details textarea
+        function updateOrderDetails() {
+            const orderItems = Array.from(orderList.querySelectorAll('li')).map(li => `• ${li.firstChild.textContent}`).join('\n');
+            orderDetailsTextarea.value = orderItems;
+        }
+    });
+    </script>
+{% endblock %}

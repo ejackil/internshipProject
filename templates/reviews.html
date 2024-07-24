@@ -124,8 +124,17 @@
     </div>
 
     <div id="submitbox" class="review">
-        {% if session["logged_in"] %}
         <form action="{{ url_for('reviews') }}" method="POST">
+            {% if not session.get("logged_in") %}
+            <div id="name-box">
+                <label for="first-name">First Name:</label>
+                <textarea id="first-name" name="first-name" placeholder="Your first name..."></textarea>
+
+                <label for="last-name">Last Name:</label>
+                <textarea id="last-name" name="last-name" placeholder="Your last name..."></textarea>
+            </div>
+            {% endif %}
+
             <label for="heading">Heading:</label>
             <textarea id="heading" name="heading" placeholder="Your title..."></textarea>
 
@@ -150,10 +159,6 @@
 <br>
             <input type="submit" value="Submit">
         </form>
-        {% else %}
-            <h2>Want to share your thoughts?</h2>
-            <p><a href="{{ url_for('signup') }}">Make an account</a> or <a href="{{ url_for('login') }}">login</a> to post a review</p>
-        {% endif %}
     </div>
 </div>
 {% endblock %}

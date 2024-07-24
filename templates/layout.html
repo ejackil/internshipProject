@@ -11,10 +11,17 @@
         <nav>
             <div class="nav-element" id="logo">
                 <a href="{{ url_for('index') }}" id="home-page-button">
-                    <img src="{{ url_for('static', filename='images/Finch&goose-logo-white.png') }}" class="small-image">
+                    <img src="{{ url_for('static', filename='images/Finch&goose-transparent-white.png') }}" class="small-image">
                 </a>
             </div>
-            <div class="nav-element"><a href="{{ url_for('menu') }}">Menu</a></div>
+            <div id="menu-tab" class="nav-element">
+                <div>Menu</div>
+                <div id="menu-dropdown">
+                    <a href="/menu">Restaurant</a>
+                    <div class="account-dropdown-spacer"></div>
+                    <a href="/delivery">Takeaway</a>
+                </div>
+            </div>
             <div class="nav-element"><a href="{{ url_for('booking') }}">Reservations</a></div>
             <div class="nav-element"><a href="{{ url_for('about') }}">About</a></div>
             <div class="nav-element"><a href="{{ url_for('reviews') }}">Reviews</a></div>
@@ -36,6 +43,10 @@
                             <div class="account-dropdown-spacer"></div>
                             <a href="/view_bookings">View Bookings</a>
                         {% endif %}
+                        {% if session.get("user_type") == "admin" %}
+                            <div class="account-dropdown-spacer"></div>
+                            <a href="/admin">Admin Panel</a>
+                        {% endif %}
                         <div class="account-dropdown-spacer"></div>
                         <form action="{{ url_for('logout') }}" method="POST">
                             <input type="submit" id="logout-button" value="Log Out">
@@ -46,19 +57,19 @@
         </nav>
         <div id="navbar-spacer"></div>
     {% with messages = get_flashed_messages(with_categories=true) %}
-
-        <ul id=flashes>
-        {% for category, message in messages %}
-            <li class="flash-{{ category }} flash">
-                <div>{{ message }}
-                    {% if category == "info" %}
-                    <div class="x-button">×</div>
-                    {% endif %}
-                </div>
-            </li>
-        {% endfor %}
-        </ul>
-
+        {% if messages %}
+            <ul id=flashes>
+            {% for category, message in messages %}
+                <li class="flash-{{ category }} flash">
+                    <div>{{ message }}
+                        {% if category == "info" %}
+                        <div class="x-button">×</div>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     {% endwith %}
         <div id="content">{% block content %}{% endblock %}</div>
         <div id="footer">

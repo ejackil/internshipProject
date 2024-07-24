@@ -67,7 +67,6 @@ form {
     border: none;
     margin-left: 30px;
     margin-right: 30px;
-    text-align: ;
 }
 
 /* Form Labels */
@@ -78,6 +77,19 @@ label, #star-label {
     font-size: 1.5em;
     color: white;
     text-shadow: 2.25px 2.25px black;
+}
+
+.small-label {
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    font-size: 1.5em;
+    color: #000000;
+    font-family: 'Bodoni',bodoni ;
 }
 
 input[type="text"],textarea, heading1 {
@@ -94,6 +106,17 @@ input[type="text"],textarea, heading1 {
 
 textarea {
     resize: none;
+}
+
+#name-box {
+    display: flex;
+    flex-direction: row;
+}
+
+#first-name, #last-name {
+    margin: 0 16px 16px 16px;
+    padding-top: 12px;
+    padding-bottom: 0;
 }
 
 input[type="email"] {
