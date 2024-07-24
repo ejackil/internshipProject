@@ -16,18 +16,15 @@
     <h1 class="section_title">Order Summary</h1>
     </div>
 
-    <!-- list of purchased items box -->
-<div class="container02">
-    <form  action="/cart" method="post">
-    <h1 class="section_title">Ferret and Goose Giftcard</h1>
-    <h3><p><strong>Value:</strong> {{ giftcard_value }}</p></h3>
-    <h3><p><strong>First Name:</strong> {{ giftcard_firstname }}</p></h3>
-    <h3><p><strong>Last Name:</strong> {{ giftcard_lastname }} </p></h3>
-    <h3><p><strong>Email:</strong> {{ giftcard_email }}</p></h3>
-    <h3><p><strong id="email">Recipient:</strong> {{ giftcard_recipient }}</p></h3>
-    <h3><p><strong>Gifter:</strong> {{ giftcard_gifter }}</p></h3>
-    </form>
-</div>
+
+    <div class="container02">
+    <h1 class="section_title">Ferret and Goose Delivery</h1>
+    <h3><p><strong>Name:</strong> {{ name }}</p></h3>
+    <h3><p><strong>Phone Number:</strong> {{ phone_number }}</p></h3>
+    <h3><p><strong>Order Details:</strong> {{ order_details }}</p></h3>
+    <h3><p><strong>Specifications:</strong> {{ specifications }}</p></h3>
+    </div>
+
 </div>
 
 
@@ -35,13 +32,6 @@
 <div class="container2">
  <h1 class="section_title"> Checkout </h1>
     <form action="{{ url_for('cart') }}" method="POST" id="cartform">
- <!-- Hidden fields to pass data from container02 -->
-            <input type="hidden" name="giftcard_value" value="{{ giftcard_value }}">
-            <input type="hidden" name="giftcard_firstname" value="{{ giftcard_firstname }}">
-            <input type="hidden" name="giftcard_lastname" value="{{ giftcard_lastname }}">
-            <input type="hidden" name="giftcard_email" value="{{ giftcard_email }}">
-            <input type="hidden" name="giftcard_recipient" value="{{ giftcard_recipient }}">
-            <input type="hidden" name="giftcard_gifter" value="{{ giftcard_gifter }}">
 
     <!-- Select/choose amount option on the right side-->
     <label for="cart_country">Choose a Country:</label>
@@ -54,7 +44,7 @@
     </select>
 
  <!-- All the green text boxes for the form -->
-      <label for="cart_cardfullname">Enter your card's Full Name </label>
+      <label for="cart_cardfullname">Enter your card's Full Name</label>
       <input type="text" id="cart_cardfullname" name="cart_cardfullname" placeholder="Enter your card's Full Name here">
 
       <label for="cart_cardnumber">Enter your Card Number</label>
@@ -66,10 +56,8 @@
       <label for="cart_expirydate">Enter the Expiry Date of the card </label>
       <input type="text" id="cart_expirydate" name="cart_expirydate" maxlength=5 placeholder="MM/YY">
 
-      <input type="submit" value="Comfirm Purchase">
 
-</form>
-
+    <input type="submit" value="Comfirm Purchase">
 </div>
 
 

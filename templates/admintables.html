@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %}Admin View{% endblock %}
+{% block head %}
+  {{ super() }}
+  <meta name="viewport" content="width = device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admintables.css') }}">
+  <script src="{{ url_for('static', filename='js/admin_tables.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div id="tables">
+    {% for table in tables %}
+        <div class="table-container" data-id="{{ table.table_id }}" {{"data-interactive=true" if table.capacity == 4 else ""}}>
+        {% if table.capacity == 6 %}
+            <div class="booking-table-6"></div>
+            <div data-angle=0deg class="booking-chair-6" style="transform: translateX(-175%)"></div>
+            <div data-angle=0deg class="booking-chair-6" style="transform: translateX(-50%)"></div>
+            <div data-angle=0deg class="booking-chair-6" style="transform: translateX(75%)"></div>
+            <div data-angle=180deg class="booking-chair-6" style="transform: translateX(-175%)"></div>
+            <div data-angle=180deg class="booking-chair-6" style="transform: translateX(-50%)"></div>
+            <div data-angle=180deg class="booking-chair-6" style="transform: translateX(75%)"></div>
+        {% elif table.capacity == 4 %}
+            <div class="booking-table-4"></div>
+            <div data-angle=0deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+            <div data-angle=90deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+            <div data-angle=180deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+            <div data-angle=270deg class="booking-chair-4" style="transform: translateY(-50%)"></div>
+        {% elif table.capacity == 2 %}
+            <div class="booking-table-2"></div>
+            <div data-angle=0deg class="booking-chair-2" style="transform: translateY(-50%)"></div>
+            <div data-angle=180deg class="booking-chair-2" style="transform: translateY(-50%)"></div>
+        {% else %}
+            Error displaying table
+        {% endif %}
+        </div>
+    {% endfor %}
+</div>
+<div id="layout-changer">
+    <form action="/api/update_layout" method="POST">
+        <table id="table-layout">
+            <tr>
+                <th>Table Layout</th>
+            </tr>
+            {% for table in tables %}
+                <tr>
+                    <td>
+                    Table {{ table.table_id }}
+                    </td>
+                    <td>
+                        <select name="{{ table.table_id }}">
+                            <option value="2" {{ "selected" if table.capacity == 2 }}>2</option>
+                            <option value="4" {{ "selected" if table.capacity == 4 }}>4</option>
+                            <option value="6" {{ "selected" if table.capacity == 6 }}>6</option>
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <input type="submit" value="Change Layout">
+    </form>
+</div>
+{% endblock %}
+

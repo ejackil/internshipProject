@@ -5,56 +5,92 @@
   color: white;
   width: 50%;
   max-width: auto;
-  height: 600px;
+  height: 700px;
   margin: 100px auto;
-  background-color: #3e6347;
+  background-color: #1e4439;
   padding: 0px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.9);
   border-radius: 10px;
 
   Position: relative;
   Float: left;
   margin-left: 50px;
 }
+
 .container01 {
   color: white;
-  width: 50%;
+  width: 90%;
+  positon relative;
   max-width: auto;
   height: 100px;
-  margin: 100px auto;
-  background-color: #006347;
-  padding: 20px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-.container02 {
-  color: white;
-  width: 50%;
-  max-width: auto;
-  height: 300px;
-  margin: 100px auto;
-  background-color: #006347;
-  padding: 20px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-/* the big green box on the right */
-.container2 {
-  width: 30%;
-  max-width: auto;
-  height: 600px;
-  margin: 100px auto;
+  margin: 50px ;
   background-color: #3e6347;
   padding: 20px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+}
 
+.container02 {
+  color: white;
+  width: 90%;
+  positon: relative;
+  max-width: auto;
+  height: 370px;
+  margin: 50px auto;
+  background-color: #3e6347;
+  padding: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+/* Detail items styling */
+.container02 h3 {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    color: #ccc;
+    margin: 10px 0;
+}
+
+/* Strong tags in detail items */
+.container02 h3 strong {
+    font-weight: bold;
+    color: #ccc;
+}
+
+/* Paragraph tags inside h3 for spacing and alignment */
+.container02 h3 p {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+/* the big green box on the right */
+.container2 {
+  width: 30%;
+  max-width: auto;
+  height: 700px;
+  margin: 100px auto;
+  background-color: #1e4439;
+  padding: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
   Position: relative;
   Float: right;
   margin-right: 50px;
 }
 
-/* code for title */
+.section_title::after {
+    content: '';
+    width: 100px;
+    background: #f3961c;
+    height: 5px;
+    display: block;
+    margin: 7px auto 0;
+    border-radius: 8px;
+}
+
+
+
 h1 {
   color: white;
   text-align: center;
@@ -62,13 +98,12 @@ h1 {
 }
 
 
-/* title of the boxes colour */
 label {
   color: white;
   font-weight: bold;
 }
 
-/* darker green boxes css code (choose country) */
+
 select {
   width: 100%;
   padding: 10px;
@@ -79,16 +114,6 @@ select {
   color: white;
 }
 
-/* darker green boxes css code (enter card details boxes) */
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin: 15px 0;
-  border: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  color: white;
-}
 
 input[type="text"] {
   width: 100%;
@@ -100,7 +125,17 @@ input[type="text"] {
   color: white;
 }
 
-/* darker green boxes css code (idk) */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+
 input[type="submit"] {
   width: 100%;
   padding: 5px;
@@ -111,14 +146,14 @@ input[type="submit"] {
   color: white;
 }
 
-/* text enter areas color */
+
 select,
 input[type="text"] {
-  background-color: #004526;
+  background-color: #3e6347;
 
 }
 
-/* submit button */
+
 input[type="submit"] {
   background-color: white;
   color: black;
@@ -128,10 +163,31 @@ input[type="submit"] {
   margin-top: 20px;
 }
 
-/* hovering over the submit */
+
 input[type="submit"]:hover {
   background-color: #white;
   color: black;
   scale: 1.05;
 
+}
+
+/* Style the placeholder text */
+#cart_cardfullname::placeholder {
+  color: white;
+  opacity:0.85;
+}
+
+#cart_cardnumber::placeholder {
+  color: white;
+  opacity:0.85;
+}
+
+#cart_cardcsc::placeholder {
+  color: white;
+  opacity:0.85;
+}
+
+#cart_expirydate::placeholder {
+  color: white;
+  opacity:0.85;
 }

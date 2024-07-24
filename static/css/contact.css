@@ -2,15 +2,16 @@ h1 {
   p.solid {border-style: solid;}
   text-align: centre;
   color:white;
-  font-family: "Bookman Old Style", Times, serif;
+  font-family: "Arial", Times, serif;
   text-align: center;
+  font-size: 40px;
 }
 
 label {
 font-size: 20px;
 }
 form {
-font-family: "Bookman Old Style";
+font-family: "Arial";
 text-align: center;
 color:white
 }

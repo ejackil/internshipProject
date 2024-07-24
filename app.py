@@ -1,7 +1,7 @@
 import werkzeug.routing.exceptions
 import smtplib
 from werkzeug.exceptions import HTTPException
-from sqlalchemy import select, func
+from sqlalchemy import select, func, update
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date, time
@@ -20,6 +20,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = '0EHLMjwfynimjRhI6Nl3mOaZMmmTu7JE'
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}/{DB_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.jinja_env.filters['zip'] = zip
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
@@ -100,13 +101,13 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     phone_number = db.Column(db.String(100))
-    details = db.Column(db.String(100))
+    order_details = db.Column(db.String(100))
     specifications = db.Column(db.String(100))
 
-    def __init__(self, name, phone_number, details, specifications):
+    def __init__(self, name, phone_number, order_details, specifications):
         self.name = name
         self.phone_number = phone_number
-        self.details = details
+        self.order_details = order_details
         self.specifications = specifications
 
 
@@ -200,6 +201,10 @@ def index():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/thankyou")
+def thankyou():
+    return render_template("thankyou.html")
 
 @app.route("/about/andwhatelse")
 def andwhatelse():
@@ -650,9 +655,6 @@ def delete_account():
     flash("Account Deleted", "message")
     return redirect(url_for('index'))
 
-'''@app.route("/api/accountsettings/booking-settings", methods=["POST"])
-def delete_booking_history():'''
-
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
 def forgotpassword():
@@ -726,6 +728,9 @@ def resetpassword(token):
     flash("Password reset successfully")
     return redirect(url_for("login"))
 
+
+
+
 @app.route('/giftcard', methods=["POST", "GET"])
 def giftcard():
     if request.method == 'POST':
@@ -791,6 +796,7 @@ def cart():
 
     #return render_template("cart.html", cart_giftcard=cart_giftcard)
 
+        return render_template("thankyou.html")
 
 
 @app.route("/admin", methods=["GET"])
@@ -800,27 +806,43 @@ def admin_page():
     current_user = user.email
     return render_template("admin.html", current_user=current_user)
 
-@app.route('/delivery', methods=["GET", 'POST'])
+
+@app.route('/delivery', methods=["POST", "GET"])
 def delivery():
     if request.method == 'POST':
-        name = request.form['name']
-        phone_number = request.form['phone_number']
-        details = request.form['order-details']
-        specifications = request.form['specifications']
+        name = request.form.get('name')
+        phone_number = request.form.get('phone_number')
+        order_details = request.form.get('order_details')
+        specifications = request.form.get('specifications')
 
-        delivery = Order(name, phone_number, details, specifications)
+        delivery = Order(name, phone_number, order_details, specifications)
         db.session.add(delivery)
         db.session.commit()
-        flash("Your Order has been placed!", "message")
+        flash("Added to cart", "message")
 
-        return render_template('delivery.html')
+        return render_template(
+            "delivery_cart.html",
+            name=name,
+            phone_number=phone_number,
+            order_details=order_details,
+            specifications=specifications,
+        )
 
     return render_template("delivery.html")
 
+
 @app.route("/admin/tables", methods=["GET"])
+@app.route("/admin/tables", methods=["GET", "POST"])
 @require_login("admin")
 def admin_tables():
-    return render_template("admintables.html")
+    return display_admin_tables()
+def display_admin_tables():
+    statement = select(Table)
+    rows = db.session.execute(statement)
+    tables = [row[0] for row in rows]
+
+    return render_template("admintables.html", tables=tables, capacities=capacities)
+
 
 
 @app.route("/admin/users", methods=["GET"])
@@ -838,6 +860,21 @@ def admin_contact():
 
     return render_template("admincontact.html", contacts=contacts)
 
+@app.route("/api/update_layout", methods=["POST"])
+@require_login("admin")
+def update_layout():
+    for table in request.form:
+        capacity = int(request.form[table])
+        statment = (
+            update(Table)
+            .where(Table.table_id == int(table))
+            .values(capacity=capacity)
+        )
+
+        db.session.execute(statment)
+    db.session.commit()
+
+    return redirect(url_for("admin_tables"))
 
 @app.route("/api/resolve_complaint/<complaint_id>", methods=["POST"])
 @require_login("admin")

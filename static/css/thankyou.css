@@ -1,0 +1,54 @@
+
+
+.container1 {
+  color: white;
+  width: 50%;
+  max-width: auto;
+  height: 200px;
+  margin: 100px auto;
+  background-color: #3e6347;
+  padding: 100px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  Position: relative;
+}
+
+.section_title::after {
+    content: '';
+    width: 100px;
+    background: #f3961c;
+    height: 5px;
+    display: block;
+    margin: 7px auto 0;
+    border-radius: 8px;
+}
+
+/* darker green boxes css code (idk) */
+input[type="submit"] {
+  width: 50%;
+  padding: 10px;
+  margin: 5px 0;
+  border: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+}
+
+
+/* submit button */
+input[type="submit"] {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* hovering over the submit */
+input[type="submit"]:hover {
+  background-color: #white;
+  color: black;
+  scale: 1.05;
+
+}
