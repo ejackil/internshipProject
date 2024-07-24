@@ -8,9 +8,9 @@
 {% block content %}
 
 <a id="back-button" href="{{ url_for('admin_page') }}">Back</a>
-
+<h1>Contact</h1>
 <div id="contact-container">
-    <h1>Contact</h1>
+    
     {% for contact in contacts %}
         <div class="contact">
             <h3>{{ contact.fname.capitalize() }} {{ contact.lname.capitalize() }} <small>({{ contact.email }})</small></h3>
@@ -29,6 +29,7 @@
                 </form>
             </div>
         </div>
+        <br>
     {% endfor %}
 </div>
 

@@ -650,6 +650,9 @@ def delete_account():
     flash("Account Deleted", "message")
     return redirect(url_for('index'))
 
+'''@app.route("/api/accountsettings/booking-settings", methods=["POST"])
+def delete_booking_history():'''
+
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
 def forgotpassword():
