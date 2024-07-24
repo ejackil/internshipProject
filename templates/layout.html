@@ -14,7 +14,14 @@
                     <img src="{{ url_for('static', filename='images/Finch&goose-transparent-white.png') }}" class="small-image">
                 </a>
             </div>
-            <div class="nav-element"><a href="{{ url_for('menu') }}">Menu</a></div>
+            <div id="menu-tab" class="nav-element">
+                <div>Menu</div>
+                <div id="menu-dropdown">
+                    <a href="/menu">Restaurant</a>
+                    <div class="account-dropdown-spacer"></div>
+                    <a href="/delivery">Takeaway</a>
+                </div>
+            </div>
             <div class="nav-element"><a href="{{ url_for('booking') }}">Reservations</a></div>
             <div class="nav-element"><a href="{{ url_for('about') }}">About</a></div>
             <div class="nav-element"><a href="{{ url_for('reviews') }}">Reviews</a></div>
