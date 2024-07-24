@@ -163,8 +163,6 @@ class Cart(db.Model):
         self.cart_expirydate = cart_expirydate
 
 
-
-
 with app.app_context():
     db.create_all()
 
@@ -203,6 +201,10 @@ def index():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/thankyou")
+def thankyou():
+    return render_template("thankyou.html")
 
 @app.route("/about/andwhatelse")
 def andwhatelse():
@@ -780,19 +782,21 @@ def cart():
             db.session.commit()
             flash("Item Purchased", "message")
 
-            content = "{giftcard_value}{giftcard_firstname}{giftcard_lastname}{giftcard_email}{giftcard_recipient}{giftcard_gifter} "
-            send_email(giftcard_recipient, content, object)
-            return redirect(url_for('thankyou'))
-
-    return render_template("cart.html")
-
-
-@app.route('/thankyou')
-def thankyou():
-    return render_template("thankyou.html")
+    #statement = (select(Giftcard)
+                # .where(cart.giftcard_id == session["giftcard_id"])
+                 #.where(cart.giftcard_value > giftcard_value())
+                 #.where(cart.giftcard_firstname > giftcard_firstname())
+                 #.where(cart.giftcard_lastname > giftcard_lastname())
+                #.where(cart.giftcard_email > giftcard_email())
+                # .where(cart.giftcard_recipient > giftcard_recipient())
+                # .where(cart.giftcard_gifter > giftcard_gifter())
+               # )
+    #rows = db.session.execute(statement)
+    #cart_giftcard = [row[0] for row in rows]
 
     #return render_template("cart.html", cart_giftcard=cart_giftcard)
 
+        return render_template("thankyou.html")
 
 
 @app.route("/admin", methods=["GET"])
@@ -828,13 +832,17 @@ def delivery():
 
 
 @app.route("/admin/tables", methods=["GET"])
+@app.route("/admin/tables", methods=["GET", "POST"])
 @require_login("admin")
 def admin_tables():
+    return display_admin_tables()
+def display_admin_tables():
     statement = select(Table)
     rows = db.session.execute(statement)
     tables = [row[0] for row in rows]
 
-    return render_template("admintables.html", tables=tables)
+    return render_template("admintables.html", tables=tables, capacities=capacities)
+
 
 
 @app.route("/admin/users", methods=["GET"])

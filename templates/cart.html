@@ -18,14 +18,16 @@
 
     <!-- list of purchased items box -->
 <div class="container02">
+    <form  action="/cart" method="post">
     <h1 class="section_title">Ferret and Goose Giftcard</h1>
     <h3><p><strong>Value:</strong> {{ giftcard_value }}</p></h3>
     <h3><p><strong>First Name:</strong> {{ giftcard_firstname }}</p></h3>
     <h3><p><strong>Last Name:</strong> {{ giftcard_lastname }} </p></h3>
     <h3><p><strong>Email:</strong> {{ giftcard_email }}</p></h3>
-    <h3><p><strong>Recipient:</strong> {{ giftcard_recipient }}</p></h3>
+    <h3><p><strong id="email">Recipient:</strong> {{ giftcard_recipient }}</p></h3>
     <h3><p><strong>Gifter:</strong> {{ giftcard_gifter }}</p></h3>
-    </div>
+    </form>
+</div>
 </div>
 
 
@@ -40,7 +42,7 @@
             <input type="hidden" name="giftcard_email" value="{{ giftcard_email }}">
             <input type="hidden" name="giftcard_recipient" value="{{ giftcard_recipient }}">
             <input type="hidden" name="giftcard_gifter" value="{{ giftcard_gifter }}">
-        
+
     <!-- Select/choose amount option on the right side-->
     <label for="cart_country">Choose a Country:</label>
     <select id="cart_country" name="cart_country" form="cartform" >
@@ -64,10 +66,9 @@
       <label for="cart_expirydate">Enter the Expiry Date of the card </label>
       <input type="text" id="cart_expirydate" name="cart_expirydate" maxlength=5 placeholder="MM/YY">
 
-<form method="POST">
-    <input type="submit" value="Comfirm Purchase">
-<form>
+      <input type="submit" value="Comfirm Purchase">
 
+</form>
 
 </div>
 
