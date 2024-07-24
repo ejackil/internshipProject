@@ -9,7 +9,7 @@
 {% block content %}
 <div id="tables">
     {% for table in tables %}
-        <div class="table-container" data-id="{{ table.id }}" {{"data-interactive=true" if table.capacity == 4 else ""}}>
+        <div class="table-container" data-id="{{ table.table_id }}" {{"data-interactive=true" if table.capacity == 4 else ""}}>
         {% if table.capacity == 6 %}
             <div class="booking-table-6"></div>
             <div data-angle=0deg class="booking-chair-6" style="transform: translateX(-175%)"></div>
@@ -35,30 +35,29 @@
     {% endfor %}
 </div>
 <div id="layout-changer">
-    <table id="table-layout">
-        <tr>
-            <th>Table Layout</th>
-        </tr>
-        {% for table in tables %}
+    <form action="/api/update_layout" method="POST">
+        <table id="table-layout">
             <tr>
-                <td>
-                Table {{ table.id }}
-                </td>
-                <td>
-                    <form class="table-type" action="/api/update_layout">
-                        <select id="table-{{ id }}-seats" name="table-seats">
-                            <option>Current - {{ table.capacity }}</option>
-                            <option disabled style="border-bottom: 1px solid #000000; background-color: #ffffff; color: #000000;">Change Table:</option>
-                            <option >2</option>
-                            <option>4</option>
-                            <option>6</option>
-                    </form>
-                </td>
+                <th>Table Layout</th>
             </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <input type="submit" value="Change Layout">
+            {% for table in tables %}
+                <tr>
+                    <td>
+                    Table {{ table.table_id }}
+                    </td>
+                    <td>
+                        <select name="{{ table.table_id }}">
+                            <option value="2" {{ "selected" if table.capacity == 2 }}>2</option>
+                            <option value="4" {{ "selected" if table.capacity == 4 }}>4</option>
+                            <option value="6" {{ "selected" if table.capacity == 6 }}>6</option>
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <input type="submit" value="Change Layout">
+    </form>
 </div>
 {% endblock %}
 

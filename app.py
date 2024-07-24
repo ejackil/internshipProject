@@ -1,7 +1,7 @@
 import werkzeug.routing.exceptions
 import smtplib
 from werkzeug.exceptions import HTTPException
-from sqlalchemy import select, func
+from sqlalchemy import select, func, update
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date, time
@@ -818,25 +818,14 @@ def delivery():
 
     return render_template("delivery.html")
 
-@app.route("/admin/tables", methods=["GET", "POST"])
+@app.route("/admin/tables", methods=["GET"])
 @require_login("admin")
 def admin_tables():
-    return display_admin_tables()
-def display_admin_tables():
     statement = select(Table)
     rows = db.session.execute(statement)
-    tables = [{"id": row[0].table_id, "capacity": row[0].capacity} for row in rows]
-    
-    statement2 = select(Table.capacity)
-    capacity_rows = db.session.execute(statement2) 
-    capacities = [{row[0]} for row in capacity_rows]
-    
-    # print(tables)
-    # print(capacities)
-    
+    tables = [row[0] for row in rows]
 
-    return render_template("admintables.html", tables=tables, capacities=capacities)
-    
+    return render_template("admintables.html", tables=tables)
 
 
 @app.route("/admin/users", methods=["GET"])
@@ -854,13 +843,21 @@ def admin_contact():
 
     return render_template("admincontact.html", contacts=contacts)
 
-@app.route("/api/update_layout", methods=["POST", "GET"])
+@app.route("/api/update_layout", methods=["POST"])
 @require_login("admin")
 def update_layout():
-    if request.method == "POST":
-        
+    for table in request.form:
+        capacity = int(request.form[table])
+        statment = (
+            update(Table)
+            .where(Table.table_id == int(table))
+            .values(capacity=capacity)
+        )
 
-        return redirect(url_for("index"))
+        db.session.execute(statment)
+    db.session.commit()
+
+    return redirect(url_for("admin_tables"))
 
 @app.route("/api/resolve_complaint/<complaint_id>", methods=["POST"])
 @require_login("admin")
