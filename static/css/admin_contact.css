@@ -3,7 +3,9 @@
     position: relative;
 }
 
-
+h1 {
+    text-align: center;
+}
 #back-button {
     position: absolute;
     top: 0;
@@ -20,10 +22,9 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    
     width: 60%;
-    background-color: #3e6347;
-    border-radius: 8px;
+    background-color: #152c24;
+    border: 1px solid lightgrey;
     padding: 30px;
     box-sizing: border-box;
 }
@@ -37,11 +38,7 @@
 
 .contact {
     width: 100%;
-    background-color: white;
-    border-radius: 8px;
-    color: black;
-    padding: 30px;
-    padding-top: 15px;
+    color: white;
     box-sizing: border-box;
     position: relative;
     margin-bottom: 20px;
@@ -50,11 +47,13 @@
 .contact h3 {
     border-bottom: 1px solid lightgrey;
     padding-bottom: 5px;
+    width: 50%;
+    position: relative;
 }
 
 .contact-buttons {
     position: absolute;
-    top: calc(15px + 1em);
+    top: calc(-25px + 1em);
     right: 30px;
     display: flex;
     flex-direction: row;
@@ -64,8 +63,6 @@
 .contact-buttons form {
     width: 30px;
     height: 30px;
-    border: none;
-    border-radius: 50%;
     padding: 0;
     box-sizing: border-box;
     position: relative;
@@ -93,4 +90,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
+    
+}
+.contact-content {
+    color: white;
 }
