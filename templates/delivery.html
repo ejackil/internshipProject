@@ -2,6 +2,7 @@
 {% block title %}Delivery{% endblock %}
 {% block head%}
 {{ super() }}
+<meta name="viewport" content="width = device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/delivery.css') }}">
 {% endblock %}
 {% block content %}
@@ -91,11 +92,11 @@
                 <p class="price">€32.50</p>
             </div>
         </div>
-        <div class="menu-item" data-dish="Pecan Pie">
-            <img src="../static/images/pie.jpg" alt="Pecan Pie"/>
+        <div class="menu-item" data-dish="Spaghetti Bolognese">
+            <img src="../static/images/spag_bol.jpg" alt="Spaghetti Bolognese for kids"/>
             <div class="item-info">
-                <h4>Pecan Pie</h4>
-                <p class="price">€24.00</p>
+                <h4>Spaghetti Bolognese</h4>
+                <p class="price">€16.00</p>
             </div>
         </div>
         <div class="menu-item" data-dish="Maple Walnut Ice-Cream">
@@ -112,11 +113,11 @@
                 <p class="price">€26.50</p>
             </div>
         </div>
-        <div class="menu-item" data-dish="Spaghetti Bolognese">
-            <img src="../static/images/spag_bol.jpg" alt="Spaghetti Bolognese for kids"/>
+        <div class="menu-item" data-dish="Pecan Pie">
+            <img src="../static/images/pie.jpg" alt="Pecan Pie"/>
             <div class="item-info">
-                <h4>Spaghetti Bolognese</h4>
-                <p class="price">€16.00</p>
+                <h4>Pecan Pie</h4>
+                <p class="price">€24.00</p>
             </div>
         </div>
     </div>
@@ -124,13 +125,15 @@
 
     <section id="order-now">
         <h3 class="section_title2">Order Now</h3>
-        <form id="order_form" action="/submit_order" method="POST">
+        <form id="order_form" action="/delivery" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <label for="phone">Phone Number:</label>
             <input type="text" id="phone" name="phone_number" required minlength="10">
             <label for="order-details">Order Details:</label>
             <textarea id="order-details" name="order-details" required></textarea>
+            <label for="specifications">Specifications:</label>
+            <textarea id="specifications" name="specifications" ></textarea>
             <button type="submit" class="btn">Submit Order</button>
         </form>
          <div id="selected-items">

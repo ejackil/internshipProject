@@ -101,11 +101,13 @@ class Order(db.Model):
     name = db.Column(db.String(100))
     phone_number = db.Column(db.String(100))
     details = db.Column(db.String(100))
+    specifications = db.Column(db.String(100))
 
-    def __init__(self, name, phone_number, details):
+    def __init__(self, name, phone_number, details, specifications):
         self.name = name
         self.phone_number = phone_number
         self.details = details
+        self.specifications = specifications
 
 
 class Review(db.Model):
@@ -798,21 +800,22 @@ def admin_page():
     current_user = user.email
     return render_template("admin.html", current_user=current_user)
 
-
-@app.route('/submit_order', methods=['POST'])
-def submit_order():
+@app.route('/delivery', methods=["GET", 'POST'])
+def delivery():
     if request.method == 'POST':
         name = request.form['name']
         phone_number = request.form['phone_number']
         details = request.form['order-details']
+        specifications = request.form['specifications']
 
-        submit_order = Order(name, phone_number, details)
-        db.session.add(submit_order)
+        delivery = Order(name, phone_number, details, specifications)
+        db.session.add(delivery)
         db.session.commit()
         flash("Your Order has been placed!", "message")
 
         return render_template('delivery.html')
 
+    return render_template("delivery.html")
 
 @app.route("/admin/tables", methods=["GET"])
 @require_login("admin")
