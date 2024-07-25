@@ -5,7 +5,7 @@
   color: white;
   width: 50%;
   max-width: auto;
-  height: 700px;
+  height: 800px;
   margin: 100px auto;
   background-color: #1e4439;
   padding: 0px;
@@ -19,11 +19,9 @@
 
 .container01 {
   color: white;
-  width: 90%;
   positon relative;
-  max-width: auto;
   height: 100px;
-  margin: 50px ;
+  margin: 20px ;
   background-color: #3e6347;
   padding: 20px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
@@ -32,13 +30,22 @@
 
 .container02 {
   color: white;
-  width: 90%;
   positon: relative;
   max-width: auto;
-  height: 370px;
-  margin: 50px auto;
+  height: 450px;
+  margin: 20px ;
   background-color: #3e6347;
   padding: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+.container03 {
+  color: white;
+  max-width: auto;
+  height: 100px;
+  margin-bottom: 30px;
+  background-color: #3e6347;
+  padding: 5px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
@@ -68,11 +75,11 @@
 .container2 {
   width: 30%;
   max-width: auto;
-  height: 700px;
+  height: 750px;
   margin: 100px auto;
   background-color: #1e4439;
   padding: 20px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.9);
   border-radius: 10px;
   Position: relative;
   Float: right;
