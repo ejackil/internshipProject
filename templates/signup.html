@@ -24,9 +24,9 @@
         <label for="signup-password">Create Password:</label>
         <input type="password" id="signup-password" name="password" placeholder="Enter password.." pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&€£#^-_])[A-Za-z\d@$!%*?&€£#^-_]{8,64}" required>
         <img class="password-eye" src="">
-        <div id="password-popup">
+        <div id="password-popup" class="popup">
             <p>Password must contain:</p>
-            <ul id="requirements">
+            <ul class="requirements">
                 <li id="length-req" class="req">At least 8 characters</li>
                 <li id="lowercase-req" class="req">At least 1 lowercase letter</li>
                 <li id="uppercase-req" class="req">At least 1 uppercase letter</li>
@@ -40,12 +40,14 @@
         <label for="signup-confirm-password">Confirm Password:</label>
         <input type="password" id="signup-confirm-password" name="" placeholder="Enter password.." required>
         <img class="password-eye" src="">
+        <div id="confirm-password-popup" class="popup">
+            <ul class="requirements">
+                <li id="match-req" class="req">Passwords must match</li>
+            </ul>
+        </div>
     </div>
 
-    <div class="popup">
-  <span class="popuptext" id="password-error" hidden>*Your passwords don't match!</span>
  <input type="submit" value="Submit">
-</div>
 
 </form>
 {% endblock %}

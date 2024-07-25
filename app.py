@@ -1,7 +1,7 @@
 import werkzeug.routing.exceptions
 import smtplib
 from werkzeug.exceptions import HTTPException
-from sqlalchemy import select, func
+from sqlalchemy import select, func, update, delete
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date, time
@@ -20,6 +20,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = '0EHLMjwfynimjRhI6Nl3mOaZMmmTu7JE'
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}/{DB_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.jinja_env.filters['zip'] = zip
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
@@ -99,16 +100,15 @@ class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    address = db.Column(db.String(100))
     phone_number = db.Column(db.String(100))
-    details = db.Column(db.String(100))
+    order_details = db.Column(db.String(100))
     specifications = db.Column(db.String(100))
 
-    def __init__(self, name, address, phone_number, details, specifications):
+    def __init__(self, name, address, phone_number, order_details, specifications):
         self.name = name
         self.address = address
         self.phone_number = phone_number
-        self.details = details
+        self.order_details = order_details
         self.specifications = specifications
 
 
@@ -203,6 +203,10 @@ def index():
 def about():
     return render_template("about.html")
 
+@app.route("/thankyou")
+def thankyou():
+    return render_template("thankyou.html")
+
 @app.route("/about/andwhatelse")
 def andwhatelse():
     return render_template("andwhatelse.html")
@@ -271,7 +275,10 @@ def reviews():
         "user": pair[1]
     } for pair in zip(reviews, users)]
 
-    return render_template("reviews.html", reviews=reviews)
+    return render_template("reviews.html",
+                           reviews=reviews,
+                           edit_review_heading=request.args.get("edit_review_heading", ""),
+                           edit_review_message=request.args.get("edit_review_message", ""))
 
 
 @app.route("/api/delete_review/<review_id>")
@@ -298,6 +305,31 @@ def delete_review(review_id):
     flash("Review deleted", "message")
     return redirect(url_for("reviews"))
 
+@app.route("/api/edit_review/<review_id>")
+def edit_review(review_id):
+    if not session.get("logged_in"):
+        flash("You must be logged in to edit a review", "error")
+        return redirect(url_for("reviews"))
+
+    statement = select(Review).where(Review.id == review_id)
+    rows = [row[0] for row in db.session.execute(statement)]
+
+    if len(rows) == 0:
+        flash("No review with that ID", "error")
+        return redirect(url_for("reviews"))
+
+    review = rows[0]
+    if review.user_id != session.get("user_id"):
+        flash("You may only edit your own reviews", "error")
+        return redirect(url_for("reviews"))
+
+    edit_review_heading = review.title
+    edit_review_message = review.body
+
+    db.session.delete(review)
+    db.session.commit()
+
+    return redirect(url_for("reviews", _anchor="submitbox", edit_review_message=edit_review_message, edit_review_heading=edit_review_heading))
 
 @app.route("/mybookings")
 @require_login()
@@ -479,6 +511,11 @@ def booking():
         flash("Reservation created", "message")
 
         if session.get("logged_in"):
+            user_email = db.session.execute(select(User.email).where(User.user_id == session.get("user_id"))).first()[0]
+            content = f"""Reservation made for {time} on {date}. If this was not you or you want to change the details of your booking, please call us at 083-123-4567."""
+            subject = f"Reservation for {date} - Finch & Goose"
+
+            send_email(user_email, content, subject)
             return redirect(url_for("mybookings"))
 
     return display_tables()
@@ -633,6 +670,7 @@ def change_account_details():
     return redirect(url_for("accountsettings", _anchor="settings")) 
     
 @app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
+@require_login
 def delete_account():
     entered_password = request.form.get("password")
 
@@ -652,8 +690,19 @@ def delete_account():
     flash("Account Deleted", "message")
     return redirect(url_for('index'))
 
-'''@app.route("/api/accountsettings/booking-settings", methods=["POST"])
-def delete_booking_history():'''
+@app.route("/api/accountsettings/booking-settings", methods=["POST"])
+@require_login()
+def delete_account():
+    statement = (delete(Reservation)
+                 .where(Reservation.user_id == session["user_id"])
+                 .where(Reservation.start_time <= datetime.now())
+                 )
+
+    db.session.execute(statement)
+    db.session.commit()
+
+    flash("Booking History Deleted", "message")
+    return redirect(url_for('accountsettings'))
 
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
@@ -793,6 +842,7 @@ def cart():
 
     #return render_template("cart.html", cart_giftcard=cart_giftcard)
 
+        return render_template("thankyou.html")
 
 
 @app.route("/admin", methods=["GET"])
@@ -808,22 +858,34 @@ def delivery():
         name = request.form['name']
         address = request.form['address']
         phone_number = request.form['phone_number']
-        details = request.form['order-details']
+        order_details = request.form['order_details']
         specifications = request.form['specifications']
 
-        delivery = Order(name, address, phone_number, details, specifications)
+        delivery = Order(name, address, phone_number, order_details, specifications)
         db.session.add(delivery)
         db.session.commit()
         flash("Your Order has been placed!", "message")
 
-        return render_template('delivery.html')
+        return render_template(
+            "delivery_cart.html",
+            name=name,
+            address=address,
+            phone_number=phone_number,
+            order_details=order_details,
+            specifications=specifications,
+        )
 
     return render_template("delivery.html")
 
 @app.route("/admin/tables", methods=["GET"])
 @require_login("admin")
 def admin_tables():
-    return render_template("admintables.html")
+    statement = select(Table)
+    rows = db.session.execute(statement)
+    tables = [row[0] for row in rows]
+
+    return render_template("admintables.html", tables=tables)
+
 
 
 @app.route("/admin/users", methods=["GET"])
@@ -841,6 +903,21 @@ def admin_contact():
 
     return render_template("admincontact.html", contacts=contacts)
 
+@app.route("/api/update_layout", methods=["POST"])
+@require_login("admin")
+def update_layout():
+    for table in request.form:
+        capacity = int(request.form[table])
+        statment = (
+            update(Table)
+            .where(Table.table_id == int(table))
+            .values(capacity=capacity)
+        )
+
+        db.session.execute(statment)
+    db.session.commit()
+
+    return redirect(url_for("admin_tables"))
 
 @app.route("/api/resolve_complaint/<complaint_id>", methods=["POST"])
 @require_login("admin")

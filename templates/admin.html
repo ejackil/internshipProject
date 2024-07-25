@@ -11,20 +11,8 @@
     <h2 id="current-user">Logged in as {{ current_user }}</h2>
 </div>
 <div id="admin-tabs">
-    <form class="admin-form" action="/admin/tables">
-        <label for="tables-link">Edit Table Layout</label>
-        <br>
-        <input class="admin-input" id="tables-link" type="submit" value="Go">
-    </form>
-    <form class="admin-form" action="/admin/users">
-        <label for="users-link">Manage Users</label>
-        <br>
-        <input class="admin-input" id="users-link" type="submit" value="Go">
-    </form>
-    <form class="admin-form" action="/admin/contact">
-        <label for="contact-link">View Contact Form</label>
-        <br>
-        <input class="admin-input" id="contact-link" type="submit" value="Go">
-    </form>
+    <a class="admin-link" href="/admin/tables">Edit Table Layout</a>
+    <a class="admin-link" href="/admin/users">Manage Users</a>
+    <a class="admin-link" href="/admin/contact">View contact Forms</a>
 </div>
 {% endblock %}

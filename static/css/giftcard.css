@@ -6,7 +6,7 @@
   max-width: auto;
   height: 750px;
   margin: 100px auto;
-  background-color: #3e6347;
+  background-color: #1e4439;
   padding: 20px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -14,49 +14,43 @@
   Position: relative;
   Float: left;
   margin-left: 50px;
+}
 
+.section_title::after {
+    content: '';
+    width: 100px;
+    background: #f3961c;
+    height: 5px;
+    display: block;
+    margin: 7px auto 0;
+    border-radius: 8px;
 }
 
 /* Gift card live preview */
 /* Gift card live preview (giftcard) */
-#giftcard_value, #displaySection1 {
+#giftcard_value, #displaySection1, #inputSection1, #displaySection2, #inputSection2, #displaySection3{
   margin-bottom: 20px;
 }
 
-#displaySection1 {
-  border: 10px solid #ccc;
+#displaySection1, #displaySection2, #displaySection3{
+  border: 3px solid #fff;
   border-radius: 10px;
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: #3e6347;
 }
 
-/* Gift card live preview (recipient) */
-#inputSection1, #displaySection2 {
+#displayText1, #displayText2, #displayText3 {
+    color: white;
+}
+
+h3 {
+    color: white;
+}
+
+#inputSection,
+#displaySection {
   margin-bottom: 20px;
 }
-
-#displaySection2 {
-  border: 10px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: #f9f9f9;
-}
-
-/* Gift card live preview (Gifter) */
-#inputSection2, #displaySection3 {
-  margin-bottom: 20px;
-}
-
-#displaySection3 {
-  border: 10px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: #f9f9f9;
-}
-
-
-
-
 
 /* the big green box on the right */
 .container2 {
@@ -64,7 +58,7 @@
   max-width: auto;
   height: 750px;
   margin: 100px auto;
-  background-color: #3e6347;
+  background-color: #1e4439;
   padding: 20px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -81,15 +75,16 @@ h1 {
   padding: 20px;
 }
 
-#inputSection,
-#displaySection {
-  margin-bottom: 20px;
-}
+
 
 /* title of the boxes colour */
 label {
   color: white;
   font-weight: bold;
+}
+
+input::placeholder {
+  color: lightgrey;
 }
 
 /* darker green boxes css code (choose amount) */
@@ -111,7 +106,7 @@ input[type="text"] {
   border: white;
   border-radius: 5px;
   box-sizing: border-box;
-  color: white;
+  color: #fff;
 }
 
 /* darker green boxes css code (idk) */
@@ -128,7 +123,7 @@ input[type="submit"] {
 /* text enter areas color */
 select,
 input[type="text"] {
-  background-color: #004526;
+  background-color: #3e6347;
 
 }
 

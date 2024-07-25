@@ -5,71 +5,19 @@
     min-height: calc(100vh - 225px);
     overflow: visible;
     background-color: #152c24;
-}
-#create_form {
-    background-color: #1e4439;;
-    align-self: start;
-    padding: 20px;
-    width: 30%;
-
-    border-radius: 0 0 0 4px;
+    position: relative;
 }
 
-#create_form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: white;
-}
-
-#create_form input, #create_form select {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+#back-button {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    padding: 10px .75%;
+    background-color: white;
+    border: 2px solid lightgrey;
     border-radius: 4px;
-}
-
-#create_form input[type="submit"] {
-    background-color: #ffffff;
+    text-decoration: none;
     color: black;
-    border: none;
-    cursor: pointer;
-    transition: all 100ms ease;
-}
-
-#create_form input[type="submit"]:hover {
-    background-color: #ffffff;
-}
-
-#create_form input[type="checkbox"] {
-    display: inline-block;
-    width: 15px;
-}
-
-#booking-title {
-    text-align: center;
-    Color: white;
-}
-
-#booking-info {
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-#user-info {
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-#user-info span {
-    color: fff;
-    font-size: 14px;
-    font-weight: normal;
-    font-style: italic;
 }
 
 #tables {
@@ -183,4 +131,43 @@
 .booking-chair-2 {
     left: 5%;
     transform-origin: 225% 50%;
+}
+
+#table-layout th {
+    font-size: 18px;
+}
+
+#table-layout, #table-layout tr, #table-layout td {
+    color: #ffffff;
+    padding: 10px;
+}
+
+#table-layout tr, #table-layout td {
+    border: 1px solid #ffffff;
+}
+
+#table-layout select {
+    border: none;
+    background-color: transparent;
+    color: #ffffff;
+    
+}
+
+#table-layout option {
+    
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#layout-changer {
+    display: flex;
+    flex-direction: column;
+}
+
+#layout-changer input {
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    background-color: transparent;
+    font-size: 18px;
+    width: 100%;
 }
