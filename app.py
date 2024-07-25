@@ -867,8 +867,6 @@ def cart():
             # Send email
             if send_email(giftcard_email, email_content, "Your Finch & Goose Gift Card"):
                 flash("Email sent successfully!", "success")
-            else:
-                flash("Failed to send email.", "error")
 
             return render_template("thankyou.html")
 
@@ -894,7 +892,7 @@ def delivery():
         name = request.form['name']
         address = request.form['address']
         phone_number = request.form['phone_number']
-        order_details = request.form['order-details']
+        order_details = request.form['order_details']
         specifications = request.form['specifications']
 
         delivery = Order(name, address, phone_number, order_details, specifications)
