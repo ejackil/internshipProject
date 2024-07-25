@@ -361,17 +361,14 @@ body {
 #selected-items {
     flex: 1;
     margin-top: 1rem;
-    padding: 1rem; /* Add padding for spacing */
-    /* No background color or border-radius */
-    /* Removed box-shadow to make it plain */
+    padding: 1rem;
 }
 
 #selected-items h4 {
-    font-size: 1.6rem; /* Slightly larger font size */
+    font-size: 1.6rem;
     margin-bottom: 15px;
-    margin-top: 5px;
-    color: #e0f2e9; /* Lighter green for better contrast */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Enhanced text shadow */
+    color: #e0f2e9;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 #order-list {
@@ -386,7 +383,7 @@ body {
     align-items: center;
     color: #ffffff;
     margin: 10px 0;
-    padding: 20px;
+    padding: 30px; /* Increase padding for elongation */
     background: linear-gradient(135deg, #4a7d64, #3e6252); /* Gradient background */
     border: 1px solid #345b44; /* Darker green border */
     border-radius: 10px;
@@ -395,30 +392,30 @@ body {
 }
 
 #order-list li:hover {
-    background: linear-gradient(135deg, #5a9b76, #4a7d64); /* Darker gradient on hover */
+    background: linear-gradient(135deg, #5a9b76, #4a7d64);
     transform: scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .delete-button {
-    margin-left: 15px;
+    margin-left: 10px; /* Reduce margin to make the button more compact */
     color: #fff;
     background: linear-gradient(135deg, #ff6f61, #e67e22); /* Gradient background */
-    padding: 8px 15px;
-    border-radius: 5px;
+    padding: 6px 12px; /* Smaller padding */
+    border-radius: 5px; /* Slightly rounded corners */
     cursor: pointer;
     font-weight: bold;
-    text-transform: uppercase; /* Capitalize text for emphasis */
-    border: none;
+    text-transform: uppercase;
+    border: 1px solid #ffffff;
     transition: background 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-    font-size: 0.875rem; /* Slightly smaller font size */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Slightly smaller shadow */
+    font-size: 0.75rem; /* Smaller font size */
 }
 
 .delete-button:hover {
-    background: linear-gradient(135deg, #96084C, #D00F6C); /* Darker gradient on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+    background: linear-gradient(135deg, #96084C, #D00F6C);
+    transform: scale(1.03); /* Slightly smaller scale transformation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slightly smaller shadow on hover */
 }
 
 /*submit button*/
