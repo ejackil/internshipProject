@@ -1,7 +1,7 @@
 import werkzeug.routing.exceptions
 import smtplib
 from werkzeug.exceptions import HTTPException
-from sqlalchemy import select, func, update
+from sqlalchemy import select, func, update, delete
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date, time
@@ -664,6 +664,7 @@ def change_account_details():
     return redirect(url_for("accountsettings", _anchor="settings")) 
     
 @app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
+@require_login
 def delete_account():
     entered_password = request.form.get("password")
 
@@ -682,6 +683,20 @@ def delete_account():
 
     flash("Account Deleted", "message")
     return redirect(url_for('index'))
+
+@app.route("/api/accountsettings/booking-settings", methods=["POST"])
+@require_login()
+def delete_account():
+    statement = (delete(Reservation)
+                 .where(Reservation.user_id == session["user_id"])
+                 .where(Reservation.start_time <= datetime.now())
+                 )
+    
+    db.session.execute(statement)
+    db.session.commit()
+
+    flash("Booking History Deleted", "message")
+    return redirect(url_for('accountsettings'))
 
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
