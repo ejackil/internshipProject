@@ -840,16 +840,18 @@ def cart():
             # Construct email content
             email_content = f"""
             Dear {giftcard_recipient},
-
+            .
             You have received a gift card from {giftcard_gifter}!
-
+            .
+            This Giftcard is for the Finch and Goose Restraunt!
+            YOu can use this card to pay for meal!
+            .
             Gift Card Details:
-            Value: {giftcard_value}
+            Value of the Card: {giftcard_value}
             Giver's Name: {giftcard_firstname} {giftcard_lastname}
-            Giver's Email: {giftcard_email}
-
+            .
             Enjoy your gift!
-
+            .
             Best regards,
             Finch & Goose
             """
