@@ -11,9 +11,9 @@
 <!-- Container 1 is the green box on the left -->
 <div class="container1">
   <div class="giftcard2">
-
+<div class="container02">
     <h1 class="section_title">Finch & Goose Gift Cards</h1>
-
+</div>
       <!-- White boxes on the left -->
  <div id="displaySection1">
       <h3>Value of the Giftcard</h3>
@@ -32,7 +32,9 @@
 
 <!-- Green box on the right -->
 <div class="container2">
+    <div class="container01">
   <h1 class="section_title">Finch & Goose Gift Cards</h1>
+        </div>
   <form action="{{ url_for('giftcard') }}" method="POST" id="Giftcardform">
 
       <!-- Select/choose amount option on the right side-->
@@ -59,7 +61,7 @@
       <label for="giftcard_lastname">Enter your Last Name</label>
       <input type="text" id="giftcard_lastname" name="giftcard_lastname" placeholder="Enter your last name here">
 
-      <label for="giftcard_email">Enter your Email</label>
+      <label for="giftcard_email">Enter the recipients Email</label>
       <input type="text" id="giftcard_email" name="giftcard_email" placeholder="Enter your email here">
 
       <label for="giftcard_recipient">Enter the name of the Recipient</label>
@@ -72,6 +74,7 @@
 
 </form>
 </div>
+
 
 <!-- Javascript so that the white boxes on the left update based on what is being filled in on the right -->
 <script>

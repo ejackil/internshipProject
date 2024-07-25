@@ -18,11 +18,11 @@
 
 
     <div class="container02">
-    <h1 class="section_title">Ferret and Goose Delivery</h1>
-    <h3><p><strong>Name:</strong> {{ name }}</p></h3>
-    <h3><p><strong>Phone Number:</strong> {{ phone_number }}</p></h3>
-    <h3><p><strong>Order Details:</strong> {{ order_details }}</p></h3>
-    <h3><p><strong>Specifications:</strong> {{ specifications }}</p></h3>
+    <h1 class="section_title">Finch and Goose Delivery</h1>
+    <h2><p><strong>Name:</strong> {{ name }}</p></h2>
+    <h2><p><strong>Phone Number:</strong> {{ phone_number }}</p></h2>
+    <h2><p><strong>Order Details:</strong> {{ order_details }}</p></h2>
+    <h2><p><strong>Specifications:</strong> {{ specifications }}</p></h2>
     </div>
 
 </div>
@@ -30,7 +30,9 @@
 
 <!-- green box on right -->
 <div class="container2">
+    <div class="container03">
  <h1 class="section_title"> Checkout </h1>
+    </div>
     <form action="{{ url_for('cart') }}" method="POST" id="cartform">
 
     <!-- Select/choose amount option on the right side-->
