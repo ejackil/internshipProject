@@ -5,7 +5,18 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
 {% endblock %}
 {% block content %}
-<div class="container">
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Categories</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="#entrees">Entrées</a>
+    <a href="#resistance">Plat de Résistance</a>
+    <a href="#desserts">Desserts</a>
+    <a href="#kids">Kids Menu</a>
+    <a href="#refreshments">Refreshments</a>
+    <a href="#allergens">Allergens</a>
+  </div>
+</div>
+<div class="container" id="entrees">
     <h1 class="section_title">Entrées</h1>
     <div class="menu-item">
         <h2>Goose and Mushroom Tartlets</h2>
@@ -37,7 +48,7 @@
     <img src="static/images/allergy icons/wheat.svg" class="small-svg">
     </div>
 </div>
-<div class="container">
+<div class="container" id="resistance">
         <h1 class="section_title">Plat de Résistance</h1>
         <div class="menu-item">
             <h2>Seared Mahi-Mahi with Mango Salsa</h2>
@@ -79,7 +90,7 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container" id="desserts">
         <h1 class="section_title">Desserts</h1>
         <div class="menu-item">
             <h2>Gooseberry Pie</h2>
@@ -113,7 +124,7 @@
         </div>
     </div>
 </div><div>
-<div class="container">
+<div class="container" id="kids">
         <h1 class="section_title">Kids Menu</h1>
         <div class="menu-item">
             <h2>Chicken Goujons and Chips</h2>
@@ -149,7 +160,7 @@
 
         </div>
     </div>
-<div class="container">
+<div class="container" id="refreshments">
     <h1 class="section_title">Refreshments</h1>
     <div class="menu-item">
         <h2>Grey Goose Delight</h2>
@@ -173,7 +184,7 @@
     </div>
 </div>
 
- <div class="container">
+ <div class="container" id="allergens">
   <table style="width: 100%; text-align: center; table-layout: fixed;">
     <thead>
       <tr>
@@ -240,6 +251,27 @@
     </tbody>
   </table>
 </div>
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
 
 
 {% endblock %}

@@ -269,6 +269,7 @@ body {
     background: #f0f0f0;
     cursor: pointer;
     transition: transform 0.3s ease;
+    position: relative;
 }
 
 .menu-item:hover {
@@ -283,27 +284,38 @@ body {
 
 .menu-item .item-info {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    height: 100%; /* Cover the whole image */
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
     color: #fff;
-    padding: 10px;
+    padding: 20px; /* Increased padding */
     box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
     align-items: center;
+    opacity: 0; /* Initially hide the item-info */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+.menu-item:hover .item-info {
+    opacity: 1; /* Show the item-info on hover */
 }
 
 .menu-item .item-info h4 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 2rem; /* Larger font size for the name */
+    text-align: center;
 }
 
 .menu-item .item-info .price {
-    font-size: 1rem;
+    font-size: 2rem; /* Larger font size for the price */
     color: #ffffff;
     font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
 }
 
 /* Order Now Section */
@@ -311,7 +323,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto;
     color: #000000;
 }
@@ -319,10 +331,11 @@ body {
 #order_form label {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
-    color: #ffffff
+    color: #ffffff;
 }
 
-#order_form input, form textarea {
+#order_form input,
+#order_form textarea {
     padding: 0.75rem;
     margin-bottom: 1rem;
     width: 100%;
@@ -337,47 +350,82 @@ body {
 }
 
 #order-details {
-    height: 150px; /* Specific height for order-details textarea */
+    height: 150px;
 }
 
 #specifications {
-    height: 80px; /* Specific height for specifications textarea */
+    height: 80px;
 }
 
-/* Styling for the selected items list */
+/* Selected Items */
 #selected-items {
-    display: none; /* Hides the section */
+    flex: 1;
+    margin-top: 1rem;
+    padding: 1rem; /* Add padding for spacing */
+    /* No background color or border-radius */
+    /* Removed box-shadow to make it plain */
 }
 
 #selected-items h4 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
+    font-size: 1.6rem; /* Slightly larger font size */
+    margin-bottom: 15px;
+    margin-top: 5px;
+    color: #e0f2e9; /* Lighter green for better contrast */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Enhanced text shadow */
 }
 
 #order-list {
-    list-style-type: none; /* Remove default bullet points from <ul> */
-    margin-left: 0;
-    padding-left: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 #order-list li {
-    margin-bottom: 5px; /* Space between list items */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    margin: 10px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #4a7d64, #3e6252); /* Gradient background */
+    border: 1px solid #345b44; /* Darker green border */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-.delete-btn {
-        margin-left: 10px;
-        background-color: red;
-        color: white;
-        border: none;
-        cursor: pointer;
-        padding: 2px 5px;
-        font-size: 12px;
+#order-list li:hover {
+    background: linear-gradient(135deg, #5a9b76, #4a7d64); /* Darker gradient on hover */
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
 }
 
+.delete-button {
+    margin-left: 15px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff6f61, #e67e22); /* Gradient background */
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase; /* Capitalize text for emphasis */
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    font-size: 0.875rem; /* Slightly smaller font size */
+}
+
+.delete-button:hover {
+    background: linear-gradient(135deg, #96084C, #D00F6C); /* Darker gradient on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/*submit button*/
 form button {
     padding: 0.75rem 2rem;
-    margin-top: 10px;
-    background: #ff6f61;
+    margin-top: 20px;
+    background: #f3961c;
     color: #fff;
     border: none;
     border-radius: 25px;
@@ -387,10 +435,11 @@ form button {
 }
 
 form button:hover {
-    background: #ff3b2e;
+    background: #96084C;
     transform: translateY(-2px);
 }
 
+/*title bar*/
 .section_title1 {
     color: #000000;
     font-size: 35px;

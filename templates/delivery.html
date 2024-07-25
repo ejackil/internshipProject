@@ -31,6 +31,8 @@
             </div>
         </div>
     </section>
+
+
     <section id="delivery" class="delivery-section">
         <div class="container">
             <h2 class="section_title1">Futuristic Drone Delivery</h2>
@@ -58,134 +60,142 @@
     <h2 class="section_title1">Menu à Emporter</h2>
     <div class="menu-container">
         <div class="menu-item" data-dish="Goose and Wild Mushroom Soup">
-                <img src="../static/images/soup.jpg" alt="Goose and Wild Mushroom Soup"/>
-                <div class="item-info">
+            <img src="../static/images/soup.jpg" alt="Goose and Wild Mushroom Soup"/>
+            <div class="item-info">
                     <h4>Goose and Wild Mushroom Soup</h4>
-                    <p class="price">€14.00</p>
-                </div>
+                    <div class="price">€14.00</div>
             </div>
+        </div>
         <div class="menu-item" data-dish="Roasted Vegetable Satay Skewers">
             <img src="../static/images/skewers.jpg" alt="Roasted Vegetable Satay Skewers"/>
             <div class="item-info">
                 <h4>Roasted Vegetable Satay Skewers</h4>
-                <p class="price">€12.00</p>
+                <div class="price">€12.00</div>
             </div>
         </div>
         <div class="menu-item" data-dish="Goose Confit with Berry Compote">
             <img src="../static/images/goose_compote.jpg" alt="Goose Confit with Berry Compote"/>
             <div class="item-info">
                 <h4>Goose Confit with Berry Compote</h4>
-                <p class="price">€28.00</p>
+                <div class="price">€28.00</div>
             </div>
         </div>
-        <div class="menu-item" data-dish="Mushroom Risotto">
+        <div class="menu-item" data-dish="Wild Mushroom Risotto">
             <img src="../static/images/mushroom_risotto.jpg" alt="Wild Mushroom Risotto"/>
             <div class="item-info">
                 <h4>Wild Mushroom Risotto</h4>
-                <p class="price">€22.00</p>
+                <div class="price">€22.00</div>
             </div>
         </div>
         <div class="menu-item" data-dish="Gooseberry Glazed Duck">
             <img src="../static/images/gooseberry_duck.jpg" alt="Gooseberry Glazed Duck"/>
             <div class="item-info">
                 <h4>Gooseberry Glazed Duck</h4>
-                <p class="price">€32.50</p>
+                <div class="price">€32.50</div>
             </div>
         </div>
         <div class="menu-item" data-dish="Spaghetti Bolognese">
             <img src="../static/images/spag_bol.jpg" alt="Spaghetti Bolognese for kids"/>
             <div class="item-info">
                 <h4>Spaghetti Bolognese</h4>
-                <p class="price">€16.00</p>
+                <div class="price">€16.00</div>
             </div>
         </div>
         <div class="menu-item" data-dish="Maple Walnut Ice-Cream">
             <img src="../static/images/gallery_icecream.jpg" alt="Maple Walnut Ice-Cream"/>
             <div class="item-info">
-                <h4>Maple Walnut Ice-Cream</h4>
-                <p class="price">€18.00</p>
+                <h4>Maple Walnut Ice Cream</h4>
+                <div class="price">€18.00</div>
             </div>
         </div>
         <div class="menu-item" data-dish="Expresso Chocolate Pots de Créme">
             <img src="../static/images/espresso.jpg" alt="Espresso Chocolate Pots de Créme"/>
             <div class="item-info">
-                <h4>Espresso Chocolate Pots de Créme</h4>
-                <p class="price">€26.50</p>
+                <h4>Expresso Chocolate Pots de Créme</h4>
+                <div class="price">€26.50</div>
             </div>
         </div>
         <div class="menu-item" data-dish="Pecan Pie">
             <img src="../static/images/pie.jpg" alt="Pecan Pie"/>
             <div class="item-info">
                 <h4>Pecan Pie</h4>
-                <p class="price">€24.00</p>
+                <div class="price">€24.00</div>
             </div>
         </div>
     </div>
 </section>
-
-    <section id="order-now">
-        <h3 class="section_title2">Order Now</h3>
-        <form id="order_form" action="/delivery" method="POST">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="phone">Phone Number:</label>
-            <input type="text" id="phone" name="phone_number" required minlength="10">
-            <label for="order-details">Order Details:</label>
-            <textarea id="order-details" name="order-details" required></textarea>
-            <label for="specifications">Specifications:</label>
-            <textarea id="specifications" name="specifications" ></textarea>
-            <button type="submit" class="btn">Submit Order</button>
-        </form>
-         <div id="selected-items">
+<section id="order-now">
+    <h3 class="section_title2">Order Now</h3>
+    <form id="order_form" action="/delivery" method="POST">
+        <div id="selected-items">
             <h4>Selected Items:</h4>
             <ul id="order-list"></ul>
         </div>
-    </section>
-     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all menu items
-        const menuItems = document.querySelectorAll('.menu-item');
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone_number" required minlength="10">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+        <label for="order-details">Final Order Details:</label>
+        <textarea id="order-details" name="order-details" readonly></textarea>
+        <label for="specifications">Specifications:</label>
+        <textarea id="specifications" name="specifications"></textarea>
 
-        // Get the order details textarea and the order list
-        const orderDetailsTextarea = document.getElementById('order-details');
-        const orderList = document.getElementById('order-list');
+        <button type="submit" class="btn">Submit Order</button>
+    </form>
+</section>
+<script>
+     document.addEventListener('DOMContentLoaded', function() {
+            // Get all menu items
+            const menuItems = document.querySelectorAll('.menu-item');
 
-        // Add click event listeners to each menu item
-        menuItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Get the dish name from data attribute
-                const dishName = this.getAttribute('data-dish');
+            // Get the order details textarea and the order list
+            const orderDetailsTextarea = document.getElementById('order-details');
+            const orderList = document.getElementById('order-list');
 
-                // Create a new list item element
-                const listItem = document.createElement('li');
-                listItem.textContent = dishName;
+            // Add click event listeners to each menu item
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Get the dish name from data attribute
+                    const dishName = this.getAttribute('data-dish');
 
-                // Create a delete button
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Remove';
-                deleteButton.classList.add('delete-btn');
-                listItem.appendChild(deleteButton);
+                    // Create a new list item element
+                    const listItem = document.createElement('li');
 
-                // Append the new list item to the order list
-                orderList.appendChild(listItem);
+                    // Create a span for the dish name
+                    const dishSpan = document.createElement('span');
+                    dishSpan.textContent = dishName;
 
-                // Update the order details textarea with bullet points
-                updateOrderDetails();
+                    // Create a delete button element
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.classList.add('delete-button');
 
-                // Add click event listener to the delete button
-                deleteButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    orderList.removeChild(listItem);
+                    // Append the dish span and delete button to the list item
+                    listItem.appendChild(dishSpan);
+                    listItem.appendChild(deleteButton);
+
+                    // Append the new list item to the order list
+                    orderList.appendChild(listItem);
+
+                    // Update the order details textarea with bullet points
                     updateOrderDetails();
+
+                    // Add click event listener to the delete button
+                    deleteButton.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        orderList.removeChild(listItem);
+                        updateOrderDetails();
+                    });
                 });
             });
-        });
 
-        // Function to update the order details textarea
-        function updateOrderDetails() {
-            const orderItems = Array.from(orderList.querySelectorAll('li')).map(li => `• ${li.firstChild.textContent}`).join('\n');
-            orderDetailsTextarea.value = orderItems;
-        }
-    });
-    </script>
+            // Function to update the order details textarea
+            function updateOrderDetails() {
+                const orderItems = Array.from(orderList.querySelectorAll('li')).map(li => `• ${li.querySelector('span').textContent}`).join('\n');
+                orderDetailsTextarea.value = orderItems;
+            }
+        });
+</script>
 {% endblock %}

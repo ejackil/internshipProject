@@ -99,12 +99,14 @@ class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
+    address = db.Column(db.String(100))
     phone_number = db.Column(db.String(100))
     details = db.Column(db.String(100))
     specifications = db.Column(db.String(100))
 
-    def __init__(self, name, phone_number, details, specifications):
+    def __init__(self, name, address, phone_number, details, specifications):
         self.name = name
+        self.address = address
         self.phone_number = phone_number
         self.details = details
         self.specifications = specifications
@@ -804,11 +806,12 @@ def admin_page():
 def delivery():
     if request.method == 'POST':
         name = request.form['name']
+        address = request.form['address']
         phone_number = request.form['phone_number']
         details = request.form['order-details']
         specifications = request.form['specifications']
 
-        delivery = Order(name, phone_number, details, specifications)
+        delivery = Order(name, address, phone_number, details, specifications)
         db.session.add(delivery)
         db.session.commit()
         flash("Your Order has been placed!", "message")
