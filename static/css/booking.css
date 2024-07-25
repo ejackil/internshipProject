@@ -123,9 +123,9 @@
     box-sizing: border-box;
 }
 
-.table-container:has(.booking-table-6) {
+/* .table-container:has(.booking-table-6) {
     transform: rotate(90deg);
-}
+} */
 
 .booking-table-6 {
     height: 50%;

@@ -14,6 +14,9 @@
 
 #content {
     min-height: calc(100vh - 225px);
+    overflow: visible;
+    display: flex;
+    width: 100%;
 }
 
 body{
@@ -21,12 +24,14 @@ body{
  }
 
 .sidebar {
+    top: 90px;
+    left: 0;
     margin: 0;
     padding-left: 20px;
     width: 251.5px;
     background-color: #1e4439;
-    position: fixed;
-    height: calc(100% - (135px));
+    position: sticky;
+    height: calc(100vh - 90px);
     overflow: hidden;
     box-shadow: 2px 0 5px var(--shadow-color);
     border-right: 2px solid #ffffff;
@@ -34,6 +39,7 @@ body{
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
+        margin-bottom: -2%;
 }
 
 #sidebar-logo {
@@ -73,14 +79,16 @@ body{
 }
 
 #settings {
-    margin-left: 15%;
+    margin-left: 20px;
     margin-top: 1%;
+    margin-bottom: -2%;
     padding: 48px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     background-color: #f9f9f9;
     background-color: #152c24;
+    width: 100%;
 }
 
 .section {
@@ -101,7 +109,7 @@ body{
     font-weight: 600;
     color: #333;
     text-align: center;
-    color: #f3961c;
+    color: #ffffff;
 }
 
 form {
@@ -141,7 +149,7 @@ textarea:focus {
 
 input[type="submit"] {
     padding: 12px 20px;
-    background-color: dodgerblue;
+    background-color: #f3961c;
     color: var(--text-color);
     border: none;
     border-radius: 4px;
@@ -198,6 +206,7 @@ html {
 
 #delete-account {
     background-color: #d11a2a;
+    width: 100%;
 }
 
 #delete-booking-history {
@@ -381,12 +390,21 @@ html {
 .modal button#cancel-save:hover {
     background-color: #bbb;
 }
+
+#delete-account-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+
 .extension {
     display: none;
     margin-top: 10px;
-    background-color: #fff;
+    background-color: #3e6347;
     padding: 10px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     position: relative;
     width: 50%;
     text-align: center;
@@ -396,7 +414,7 @@ html {
     margin: 10px auto;
 }
 .extension label {
-    color: #000000;
+    color: #ffffff;
     display: block;
     margin-bottom: 10px;
 }
