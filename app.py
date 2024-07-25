@@ -866,7 +866,7 @@ def cart():
 
             # Send email
             if send_email(giftcard_email, email_content, "Your Finch & Goose Gift Card"):
-                flash("Email sent successfully!", "success")
+                flash("Email sent successfully!", "message")
 
             return render_template("thankyou.html")
 
