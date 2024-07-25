@@ -877,8 +877,6 @@ def delivery():
 @app.route("/admin/tables", methods=["GET", "POST"])
 @require_login("admin")
 def admin_tables():
-    return display_admin_tables()
-def display_admin_tables():
     statement = select(Table)
     rows = db.session.execute(statement)
     tables = [row[0] for row in rows]
