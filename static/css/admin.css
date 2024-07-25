@@ -44,29 +44,15 @@
 }
 
 
-.admin-form {
-    padding: 10px;
-    width: 15%;
-    height: 20%;
-    border: 2px solid #ffffff;
-    
-}
-
-label {
-    text-align: center;
-    display: block;
-    color: white;
-    font-size: 20px;
-}
-
-.admin-input {
-    display: block;
-    margin: 0 auto;
-    padding: 10px;
-    color: #ffffff;
-    font-size: 15px;
-    background-color:transparent;
-    box-shadow: none;
-    height: 40px;
-    aspect-ratio: 3 / 2;
+.admin-link {
+    top: 0;
+    left: 20px;
+    padding: 20px 10px;
+    margin: 0 1%;
+    background-color: white;
+    border: 2px solid lightgrey;
+    border-radius: 4px;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
 }

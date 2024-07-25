@@ -1,7 +1,7 @@
 import werkzeug.routing.exceptions
 import smtplib
 from werkzeug.exceptions import HTTPException
-from sqlalchemy import select, func, update
+from sqlalchemy import select, func, update, delete
 from flask import Flask, render_template, url_for, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta, date, time
@@ -274,7 +274,10 @@ def reviews():
         "user": pair[1]
     } for pair in zip(reviews, users)]
 
-    return render_template("reviews.html", reviews=reviews)
+    return render_template("reviews.html", 
+                           reviews=reviews, 
+                           edit_review_heading=request.args.get("edit_review_heading", ""), 
+                           edit_review_message=request.args.get("edit_review_message", ""))
 
 
 @app.route("/api/delete_review/<review_id>")
@@ -316,13 +319,16 @@ def edit_review(review_id):
 
     review = rows[0]
     if review.user_id != session.get("user_id"):
-        flash("You may only delete your own reviews", "error")
+        flash("You may only edit your own reviews", "error")
         return redirect(url_for("reviews"))
+
+    edit_review_heading = review.title
+    edit_review_message = review.body
 
     db.session.delete(review)
     db.session.commit()
 
-    return redirect(url_for("reviews", _anchor="submitbox"))
+    return redirect(url_for("reviews", _anchor="submitbox", edit_review_message=edit_review_message, edit_review_heading=edit_review_heading))
 
 @app.route("/mybookings")
 @require_login()
@@ -658,6 +664,7 @@ def change_account_details():
     return redirect(url_for("accountsettings", _anchor="settings")) 
     
 @app.route("/api/accountsettings/deleteaccount", methods=["POST", "GET"])
+@require_login
 def delete_account():
     entered_password = request.form.get("password")
 
@@ -676,6 +683,20 @@ def delete_account():
 
     flash("Account Deleted", "message")
     return redirect(url_for('index'))
+
+@app.route("/api/accountsettings/booking-settings", methods=["POST"])
+@require_login()
+def delete_account():
+    statement = (delete(Reservation)
+                 .where(Reservation.user_id == session["user_id"])
+                 .where(Reservation.start_time <= datetime.now())
+                 )
+    
+    db.session.execute(statement)
+    db.session.commit()
+
+    flash("Booking History Deleted", "message")
+    return redirect(url_for('accountsettings'))
 
 
 @app.route('/forgotpassword', methods=['GET', 'POST'])
@@ -853,17 +874,14 @@ def delivery():
     return render_template("delivery.html")
 
 
-@app.route("/admin/tables", methods=["GET"])
 @app.route("/admin/tables", methods=["GET", "POST"])
 @require_login("admin")
 def admin_tables():
-    return display_admin_tables()
-def display_admin_tables():
     statement = select(Table)
     rows = db.session.execute(statement)
     tables = [row[0] for row in rows]
 
-    return render_template("admintables.html", tables=tables, capacities=capacities)
+    return render_template("admintables.html", tables=tables)
 
 
 
