@@ -207,6 +207,14 @@ def about():
 def thankyou():
     return render_template("thankyou.html")
 
+@app.route("/delivery_cart")
+def delivery_cart():
+    return render_template("delivery_cart.html")
+
+@app.route("/thankyoudelivery")
+def thankyoudelivery():
+    return render_template("thankyoudelivery.html")
+
 @app.route("/about/andwhatelse")
 def andwhatelse():
     return render_template("andwhatelse.html")
