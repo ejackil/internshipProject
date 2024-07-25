@@ -207,6 +207,14 @@ def about():
 def thankyou():
     return render_template("thankyou.html")
 
+@app.route("/delivery_cart")
+def delivery_cart():
+    return render_template("delivery_cart.html")
+
+@app.route("/thankyoudelivery")
+def thankyoudelivery():
+    return render_template("thankyoudelivery.html")
+
 @app.route("/about/andwhatelse")
 def andwhatelse():
     return render_template("andwhatelse.html")
@@ -886,7 +894,7 @@ def delivery():
         name = request.form['name']
         address = request.form['address']
         phone_number = request.form['phone_number']
-        order_details = request.form['order_details']
+        order_details = request.form['order-details']
         specifications = request.form['specifications']
 
         delivery = Order(name, address, phone_number, order_details, specifications)
