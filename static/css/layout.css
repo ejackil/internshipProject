@@ -94,6 +94,9 @@ body {
     padding-top: 5px;
     background-color: transparent;
     transition: filter 200ms ease;
+    display: inline;
+    margin: 0;
+    box-shadow: none;
 }
 
 
@@ -110,6 +113,7 @@ body {
     transition: all 200ms ease;
     filter: brightness(100%);
     background-color: transparent;
+    line-height: normal;
 }
 
 #home-page-button:hover {
@@ -363,6 +367,7 @@ nav * {
     height: 40px;
     margin: 5px;
     filter: invert();
+    display: inline;
 }
 
 #mailing-list {
@@ -395,6 +400,7 @@ nav * {
     padding-top: 80px;
     margin: 0px;
     color: white;
+    font-size: 18px;
 }
 
 #content {
@@ -410,6 +416,7 @@ nav * {
 
     color: #ffffff;
     margin: 0;
+    font-size: 18px;
 }
 
 #footer > #hours {
