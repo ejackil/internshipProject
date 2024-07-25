@@ -866,7 +866,7 @@ def cart():
 
             # Send email
             if send_email(giftcard_email, email_content, "Your Finch & Goose Gift Card"):
-                flash("Email sent successfully!", "message")
+                flash("The giftcard has been sent to your email!", "message")
 
             return render_template("thankyou.html")
 
@@ -951,6 +951,7 @@ def update_layout():
         db.session.execute(statment)
     db.session.commit()
 
+    flash("Layout updated successfully", "message")
     return redirect(url_for("admin_tables"))
 
 @app.route("/api/resolve_complaint/<complaint_id>", methods=["POST"])
@@ -960,6 +961,7 @@ def resolve_complaint(complaint_id):
     complaint.resolved = True
     db.session.commit()
 
+    flash("Contact form marked as resolved", "message")
     return redirect(url_for("admin_contact"))
 
 
@@ -970,6 +972,7 @@ def delete_complaint(complaint_id):
     db.session.delete(complaint)
     db.session.commit()
 
+    flash("Contact form deleted", "message")
     return redirect(url_for("admin_contact"))
 
 @app.route("/api/update_user/<user_id>", methods=["POST"])
