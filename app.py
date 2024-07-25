@@ -510,6 +510,11 @@ def booking():
         flash("Reservation created", "message")
 
         if session.get("logged_in"):
+            user_email = db.session.execute(select(User.email).where(User.user_id == session.get("user_id"))).first()[0]
+            content = f"""Reservation made for {time} on {date}. If this was not you or you want to change the details of your booking, please call us at 083-123-4567."""
+            subject = f"Reservation for {date} - Finch & Goose"
+
+            send_email(user_email, content, subject)
             return redirect(url_for("mybookings"))
 
     return display_tables()
