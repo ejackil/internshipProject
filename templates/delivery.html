@@ -126,8 +126,14 @@
     <section id="order-now">
         <h3 class="section_title2">Order Now</h3>
         <form id="order_form" action="/delivery" method="POST">
+            <div id="selected-items">
+            <h4>Selected Items:</h4>
+            <ul id="order-list"></ul>
+            </div>
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required>
             <label for="phone">Phone Number:</label>
             <input type="text" id="phone" name="phone_number" required minlength="10">
             <label for="order-details">Order Details:</label>
@@ -136,10 +142,6 @@
             <textarea id="specifications" name="specifications" ></textarea>
             <button type="submit" class="btn">Submit Order</button>
         </form>
-         <div id="selected-items">
-            <h4>Selected Items:</h4>
-            <ul id="order-list"></ul>
-        </div>
     </section>
      <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -162,7 +164,7 @@
 
                 // Create a delete button
                 const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Remove';
+                deleteButton.textContent = 'Delete';
                 deleteButton.classList.add('delete-btn');
                 listItem.appendChild(deleteButton);
 
