@@ -8,7 +8,7 @@ body {
 
 #flashes {
     position: fixed;
-    right: 0;
+    left: 0;
     top: 90px;
     display: block;
     list-style: none;
