@@ -93,13 +93,12 @@ input[type="submit"]:hover {
     position: relative;
 }
 
-#signup-password:not(:placeholder-shown) ~ #password-popup,
-#signup-password:focus ~ #password-popup {
+input:focus ~ .popup {
     opacity: 1;
     transform: none;
 }
 
-#password-popup {
+.popup {
     opacity: 0;
     transform: translateY(15px);
     transition: all 200ms ease-out;
@@ -118,7 +117,7 @@ input[type="submit"]:hover {
     font-size: 14px;
 }
 
-#requirements {
+.requirements {
     list-style: none;
     padding-left: 25px;
 }

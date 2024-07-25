@@ -7,6 +7,7 @@
   <script src="{{ url_for('static', filename='js/admin_tables.js') }}"></script>
 {% endblock %}
 {% block content %}
+<a id="back-button" href="/admin">Back</a>
 <div id="tables">
     {% for table in tables %}
         <div class="table-container" data-id="{{ table.table_id }}" {{"data-interactive=true" if table.capacity == 4 else ""}}>

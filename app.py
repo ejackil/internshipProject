@@ -104,8 +104,9 @@ class Order(db.Model):
     order_details = db.Column(db.String(100))
     specifications = db.Column(db.String(100))
 
-    def __init__(self, name, phone_number, order_details, specifications):
+    def __init__(self, name, address, phone_number, order_details, specifications):
         self.name = name
+        self.address = address
         self.phone_number = phone_number
         self.order_details = order_details
         self.specifications = specifications
@@ -274,9 +275,9 @@ def reviews():
         "user": pair[1]
     } for pair in zip(reviews, users)]
 
-    return render_template("reviews.html", 
-                           reviews=reviews, 
-                           edit_review_heading=request.args.get("edit_review_heading", ""), 
+    return render_template("reviews.html",
+                           reviews=reviews,
+                           edit_review_heading=request.args.get("edit_review_heading", ""),
                            edit_review_message=request.args.get("edit_review_message", ""))
 
 
@@ -510,6 +511,11 @@ def booking():
         flash("Reservation created", "message")
 
         if session.get("logged_in"):
+            user_email = db.session.execute(select(User.email).where(User.user_id == session.get("user_id"))).first()[0]
+            content = f"""Reservation made for {time} on {date}. If this was not you or you want to change the details of your booking, please call us at 083-123-4567."""
+            subject = f"Reservation for {date} - Finch & Goose"
+
+            send_email(user_email, content, subject)
             return redirect(url_for("mybookings"))
 
     return display_tables()
@@ -691,7 +697,7 @@ def delete_account():
                  .where(Reservation.user_id == session["user_id"])
                  .where(Reservation.start_time <= datetime.now())
                  )
-    
+
     db.session.execute(statement)
     db.session.commit()
 
@@ -733,7 +739,7 @@ def forgotpassword():
 def send_email(recipient, content, subject):
     try:
         msg = EmailMessage()
-        msg.set_content(content, subtype="plain", charset="us-ascii")
+        msg.set_content(content, subtype="plain", charset="utf-8")
         msg['Subject'] = subject
         msg['From'] = "finchandgoose@gmail.com"
         msg['To'] = recipient
@@ -770,9 +776,6 @@ def resetpassword(token):
     db.session.commit()
     flash("Password reset successfully")
     return redirect(url_for("login"))
-
-
-
 
 @app.route('/giftcard', methods=["POST", "GET"])
 def giftcard():
@@ -811,11 +814,20 @@ def giftcard():
 @app.route('/cart', methods=["POST", "GET"])
 def cart():
     if request.method == 'POST':
+        # Extracting payment details
         cart_country = request.form.get('cart_country')
         cart_cardfullname = request.form.get('cart_cardfullname')
         cart_cardnumber = request.form.get('cart_cardnumber')
         cart_cardcsc = request.form.get('cart_cardcsc')
         cart_expirydate = request.form.get('cart_expirydate')
+
+        # Extracting gift card details
+        giftcard_value = request.form.get('giftcard_value')
+        giftcard_firstname = request.form.get('giftcard_firstname')
+        giftcard_lastname = request.form.get('giftcard_lastname')
+        giftcard_email = request.form.get('giftcard_email')
+        giftcard_recipient = request.form.get('giftcard_recipient')
+        giftcard_gifter = request.form.get('giftcard_gifter')
 
         if not (cart_country and cart_cardfullname and cart_cardnumber and cart_cardcsc and cart_expirydate):
             flash("All fields are required!", "error")
@@ -825,21 +837,38 @@ def cart():
             db.session.commit()
             flash("Item Purchased", "message")
 
-    #statement = (select(Giftcard)
-                # .where(cart.giftcard_id == session["giftcard_id"])
-                 #.where(cart.giftcard_value > giftcard_value())
-                 #.where(cart.giftcard_firstname > giftcard_firstname())
-                 #.where(cart.giftcard_lastname > giftcard_lastname())
-                #.where(cart.giftcard_email > giftcard_email())
-                # .where(cart.giftcard_recipient > giftcard_recipient())
-                # .where(cart.giftcard_gifter > giftcard_gifter())
-               # )
-    #rows = db.session.execute(statement)
-    #cart_giftcard = [row[0] for row in rows]
+            # Construct email content
+            email_content = f"""
+            Dear {giftcard_recipient},
 
-    #return render_template("cart.html", cart_giftcard=cart_giftcard)
+            You have received a gift card from {giftcard_gifter}!
 
-        return render_template("thankyou.html")
+            Gift Card Details:
+            Value: {giftcard_value}
+            Giver's Name: {giftcard_firstname} {giftcard_lastname}
+            Giver's Email: {giftcard_email}
+
+            Enjoy your gift!
+
+            Best regards,
+            Finch & Goose
+            """
+
+            # Send email
+            if send_email(giftcard_email, email_content, "Your Finch & Goose Gift Card"):
+                flash("Email sent successfully!", "success")
+            else:
+                flash("Failed to send email.", "error")
+
+            return render_template("thankyou.html")
+
+    return render_template("cart.html")
+
+
+
+
+
+
 
 
 @app.route("/admin", methods=["GET"])
@@ -849,23 +878,24 @@ def admin_page():
     current_user = user.email
     return render_template("admin.html", current_user=current_user)
 
-
-@app.route('/delivery', methods=["POST", "GET"])
+@app.route('/delivery', methods=["GET", 'POST'])
 def delivery():
     if request.method == 'POST':
-        name = request.form.get('name')
-        phone_number = request.form.get('phone_number')
-        order_details = request.form.get('order_details')
-        specifications = request.form.get('specifications')
+        name = request.form['name']
+        address = request.form['address']
+        phone_number = request.form['phone_number']
+        order_details = request.form['order_details']
+        specifications = request.form['specifications']
 
-        delivery = Order(name, phone_number, order_details, specifications)
+        delivery = Order(name, address, phone_number, order_details, specifications)
         db.session.add(delivery)
         db.session.commit()
-        flash("Added to cart", "message")
+        flash("Your Order has been placed!", "message")
 
         return render_template(
             "delivery_cart.html",
             name=name,
+            address=address,
             phone_number=phone_number,
             order_details=order_details,
             specifications=specifications,
@@ -873,12 +903,9 @@ def delivery():
 
     return render_template("delivery.html")
 
-
-@app.route("/admin/tables", methods=["GET", "POST"])
+@app.route("/admin/tables", methods=["GET"])
 @require_login("admin")
 def admin_tables():
-    return display_admin_tables()
-def display_admin_tables():
     statement = select(Table)
     rows = db.session.execute(statement)
     tables = [row[0] for row in rows]
