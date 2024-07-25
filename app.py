@@ -739,7 +739,7 @@ def forgotpassword():
 def send_email(recipient, content, subject):
     try:
         msg = EmailMessage()
-        msg.set_content(content, subtype="plain", charset="us-ascii")
+        msg.set_content(content, subtype="plain", charset="utf-8")
         msg['Subject'] = subject
         msg['From'] = "finchandgoose@gmail.com"
         msg['To'] = recipient
@@ -814,11 +814,20 @@ def giftcard():
 @app.route('/cart', methods=["POST", "GET"])
 def cart():
     if request.method == 'POST':
+        # Extracting payment details
         cart_country = request.form.get('cart_country')
         cart_cardfullname = request.form.get('cart_cardfullname')
         cart_cardnumber = request.form.get('cart_cardnumber')
         cart_cardcsc = request.form.get('cart_cardcsc')
         cart_expirydate = request.form.get('cart_expirydate')
+
+        # Extracting gift card details
+        giftcard_value = request.form.get('giftcard_value')
+        giftcard_firstname = request.form.get('giftcard_firstname')
+        giftcard_lastname = request.form.get('giftcard_lastname')
+        giftcard_email = request.form.get('giftcard_email')
+        giftcard_recipient = request.form.get('giftcard_recipient')
+        giftcard_gifter = request.form.get('giftcard_gifter')
 
         if not (cart_country and cart_cardfullname and cart_cardnumber and cart_cardcsc and cart_expirydate):
             flash("All fields are required!", "error")
@@ -828,21 +837,38 @@ def cart():
             db.session.commit()
             flash("Item Purchased", "message")
 
-    #statement = (select(Giftcard)
-                # .where(cart.giftcard_id == session["giftcard_id"])
-                 #.where(cart.giftcard_value > giftcard_value())
-                 #.where(cart.giftcard_firstname > giftcard_firstname())
-                 #.where(cart.giftcard_lastname > giftcard_lastname())
-                #.where(cart.giftcard_email > giftcard_email())
-                # .where(cart.giftcard_recipient > giftcard_recipient())
-                # .where(cart.giftcard_gifter > giftcard_gifter())
-               # )
-    #rows = db.session.execute(statement)
-    #cart_giftcard = [row[0] for row in rows]
+            # Construct email content
+            email_content = f"""
+            Dear {giftcard_recipient},
 
-    #return render_template("cart.html", cart_giftcard=cart_giftcard)
+            You have received a gift card from {giftcard_gifter}!
 
-        return render_template("thankyou.html")
+            Gift Card Details:
+            Value: {giftcard_value}
+            Giver's Name: {giftcard_firstname} {giftcard_lastname}
+            Giver's Email: {giftcard_email}
+
+            Enjoy your gift!
+
+            Best regards,
+            Finch & Goose
+            """
+
+            # Send email
+            if send_email(giftcard_email, email_content, "Your Finch & Goose Gift Card"):
+                flash("Email sent successfully!", "success")
+            else:
+                flash("Failed to send email.", "error")
+
+            return render_template("thankyou.html")
+
+    return render_template("cart.html")
+
+
+
+
+
+
 
 
 @app.route("/admin", methods=["GET"])
