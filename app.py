@@ -843,8 +843,8 @@ def cart():
             .
             You have received a gift card from {giftcard_gifter}!
             .
-            This Giftcard is for the Finch and Goose Restraunt!
-            YOu can use this card to pay for meal!
+            This Giftcard is for the Finch and Goose Restauraunt!
+            You can use this card to pay for meal!
             .
             Gift Card Details:
             Value of the Card: {giftcard_value}
@@ -853,7 +853,7 @@ def cart():
             Enjoy your gift!
             .
             Best regards,
-            Finch & Goose
+            Finch & Goose Restaurant
             """
 
             # Send email
