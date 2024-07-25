@@ -5,6 +5,19 @@
     min-height: calc(100vh - 225px);
     overflow: visible;
     background-color: #152c24;
+    position: relative;
+}
+
+#back-button {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    padding: 10px .75%;
+    background-color: white;
+    border: 2px solid lightgrey;
+    border-radius: 4px;
+    text-decoration: none;
+    color: black;
 }
 
 #tables {
